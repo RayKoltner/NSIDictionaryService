@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSIDictionaryService.Data", "NSIDictionaryService.Data\NSIDictionaryService.Data.csproj", "{6413E9A6-AEEF-4B11-8BEA-DB601D99328B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSIDictionaryService.Data", "NSIDictionaryService.Data\NSIDictionaryService.Data.csproj", "{6413E9A6-AEEF-4B11-8BEA-DB601D99328B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSIDictionaryService.Share", "NSIDictionaryService.Share\NSIDictionaryService.Share.csproj", "{42399D27-E085-48C3-92AD-F3A97E6B4AEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSIDictionaryService.Share", "NSIDictionaryService.Share\NSIDictionaryService.Share.csproj", "{42399D27-E085-48C3-92AD-F3A97E6B4AEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSIDictionaryService.Api", "NSIDictionaryService.Api\NSIDictionaryService.Api.csproj", "{EE0CDA6B-5109-4613-98E1-851456CDA337}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{42399D27-E085-48C3-92AD-F3A97E6B4AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42399D27-E085-48C3-92AD-F3A97E6B4AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42399D27-E085-48C3-92AD-F3A97E6B4AEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE0CDA6B-5109-4613-98E1-851456CDA337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE0CDA6B-5109-4613-98E1-851456CDA337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE0CDA6B-5109-4613-98E1-851456CDA337}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE0CDA6B-5109-4613-98E1-851456CDA337}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

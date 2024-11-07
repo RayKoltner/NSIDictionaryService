@@ -2,7 +2,7 @@
 
 namespace NSIDictionaryService.Data.Models.Dictionaries
 {
-    internal class V021Dictionary:BaseDictionaryType
+    public class V021Dictionary:BaseDictionaryType
     {
         [Display(Name = "Название должности")]
         public string PostName { get; set; } = String.Empty;
