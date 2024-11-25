@@ -1,6 +1,6 @@
 ﻿namespace NSIDictionaryService.Data.Models
 {
-    internal class Upload
+    public class Upload
     {
         //Загрузки
     }

@@ -1,6 +1,6 @@
 ﻿namespace NSIDictionaryService.Data.Models
 {
-    internal class Change
+    public class Change
     {
         //Класс записей логов изменений
     }

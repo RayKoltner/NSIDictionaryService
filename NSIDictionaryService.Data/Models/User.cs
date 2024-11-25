@@ -1,6 +1,6 @@
 ﻿namespace NSIDictionaryService.Data.Models
 {
-    internal class User
+    public class User
     {
         //Пользователи
     }

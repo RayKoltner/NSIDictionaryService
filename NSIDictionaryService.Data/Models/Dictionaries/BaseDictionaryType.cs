@@ -2,7 +2,7 @@
 
 namespace NSIDictionaryService.Data.Models.Dictionaries
 {
-    public class BaseDictionaryType
+    public class BaseDictionaryType: BaseEntity
     {
         //Базовый класс словаря, хранит общие поля записей
         [Display(Name = "Код")]
