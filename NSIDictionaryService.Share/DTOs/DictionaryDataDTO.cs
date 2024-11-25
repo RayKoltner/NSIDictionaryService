@@ -2,9 +2,9 @@
 
 namespace NSIDictionaryService.Share.DTOs
 {
-    public class JsonResponseDTO
+    public class DictionaryDataDTO
     {
         [JsonPropertyName("list")]
-        public List<JsonEntryDTO> ResponseData { get; set; } = null!;
+        public List<List<JsonPair>> ResponseData { get; set; } = null!;
     }
 }

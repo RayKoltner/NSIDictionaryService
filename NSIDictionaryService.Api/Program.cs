@@ -1,4 +1,7 @@
 
+using NSIDictionaryService.Api.Services;
+using NSIDictionaryService.Api.Settings;
+
 namespace NSIDictionaryService.Api
 {
     public class Program
@@ -7,7 +10,11 @@ namespace NSIDictionaryService.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.Configure<FFOMSApiSettings>(
+                builder.Configuration.GetSection(FFOMSApiSettings.position));
+
             // Add services to the container.
+            builder.Services.AddSingleton<IFFOMSApiService, FFOMSApiService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
