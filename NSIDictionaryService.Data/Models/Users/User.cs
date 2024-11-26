@@ -1,6 +1,6 @@
 ﻿namespace NSIDictionaryService.Data.Models
 {
-    public class User
+    public class User: BaseEntity
     {
         //Пользователи
     }

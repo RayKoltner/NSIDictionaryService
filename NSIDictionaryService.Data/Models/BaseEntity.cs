@@ -1,17 +1,36 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NSIDictionaryService.Data.Models
 {
     public class BaseEntity
     {
-        [Display(Name = "Id в базе")]
-        public int Id;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public int Id { get; set; }
 
-        [Display(Name = "Признак удаления")]
-        public bool IsDeleted;
+        [Column(TypeName = "date")]
+        public DateTime CreateDate { get; set; }
+        public int EditUserId { get; set; }
 
-        [Display(Name = "Пользователь, удаливший запись")]
-        public int deletedUserId;
+        [Column(TypeName = "date")]
+        public DateTime EditDate { get; set; }
+
+        public int DeletedUserId { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? DeleteDate { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public BaseEntity()
+        {
+            CreateDate = DateTime.Today;
+            EditDate = DateTime.Today;
+            DeleteDate = DateTime.MaxValue;
+            DeletedUserId = 0;
+            IsDeleted = false;
+        }
     }
 }

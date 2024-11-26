@@ -2,7 +2,7 @@
 
 namespace NSIDictionaryService.Data.Models
 {
-    public class Version: BaseEntity
+    public class DictVersion: BaseEntity
     {
         [Display(Name = "Код словаря")]
         public string DictionaryCode { get; set; } = string.Empty;

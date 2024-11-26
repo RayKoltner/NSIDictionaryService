@@ -1,6 +1,6 @@
 ﻿namespace NSIDictionaryService.Data.Models
 {
-    public class Role
+    public class Role: BaseEntity
     {
         //Роли пользователей
     }
