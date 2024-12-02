@@ -34,26 +34,26 @@ namespace NSIDictionaryService.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getVersions")]
-        public IActionResult GetVersions(string identifier)
-        {
-            var result = _apiService.GetVersionData(identifier);
-            if (result == null)
-            {
-                return BadRequest();
-            }
-            return Ok(result);
-        }
+        //[HttpGet("getVersions")]
+        //public IActionResult GetVersions(string identifier)
+        //{
+        //    var result = _apiService.GetVersionData(identifier);
+        //    if (result == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    return Ok(result);
+        //}
 
-        [HttpGet("getFedPack")]
-        public IActionResult GetFedPack()
-        {
-            var result = _apiService.GetFedPackDictVersions();
-            if (result == null)
-            {
-                return BadRequest();
-            }
-            return Ok(result);
-        }
+        //[HttpGet("getFedPack")]
+        //public IActionResult GetFedPack()
+        //{
+        //    var result = _apiService.GetFedPackDictVersions();
+        //    if (result == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    return Ok(result);
+        //}
     }
 }
