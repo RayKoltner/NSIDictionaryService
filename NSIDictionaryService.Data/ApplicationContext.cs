@@ -35,6 +35,8 @@ namespace NSIDictionaryService.Data
         #region Dicts
         public DbSet<DictVersion> Versions => Set<DictVersion>();
 
+        public DbSet<DictProperty> Properties => Set<DictProperty>();   
+
         //public DbSet<Change> Changes => Set<Change>(); //TODO : Finish this entity
 
         public DbSet<V006Dictionary> V006 => Set<V006Dictionary>();

@@ -1,5 +1,7 @@
 
+using NSIDictionaryService.Api.Repositories;
 using NSIDictionaryService.Api.Services;
+using NSIDictionaryService.Api.Services.UploadDictionary;
 using NSIDictionaryService.Api.Settings;
 
 namespace NSIDictionaryService.Api
@@ -15,6 +17,9 @@ namespace NSIDictionaryService.Api
 
             // Add services to the container.
             builder.Services.AddSingleton<IFFOMSApiService, FFOMSApiService>();
+            // Move these to extensions
+            builder.Services.AddScoped<IDictPropertyRepository, DictPropertyRepository>();
+            builder.Services.AddScoped<V006Uploader>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

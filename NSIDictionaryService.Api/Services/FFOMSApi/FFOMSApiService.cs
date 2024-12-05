@@ -51,11 +51,10 @@ namespace NSIDictionaryService.Api.Services
 
         public DictionaryVersionDTO GetVersionData(string identifier)
         {
-            //var response = _httpClient.GetAsync($"{_httpClient.BaseAddress}/api/versions?identifier={identifier}").Result;
-            //string data = response.Content.ReadAsStringAsync().Result;
-            //var DTO = JsonSerializer.Deserialize<DictionaryVersionDTO>(data);
-            //return DTO;
-            throw new NotImplementedException();
+            var response = _httpClient.GetAsync($"{_httpClient.BaseAddress}/api/versions?identifier={identifier}").Result;
+            string data = response.Content.ReadAsStringAsync().Result;
+            var DTO = JsonSerializer.Deserialize<DictionaryVersionDTO>(data);
+            return DTO;
         }
     }
 }
