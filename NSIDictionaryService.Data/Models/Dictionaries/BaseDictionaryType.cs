@@ -21,6 +21,9 @@ namespace NSIDictionaryService.Data.Models.Dictionaries
         [MaxLength(350)]
         public string Comments { get; set; } = string.Empty;
 
+        public int DictVersionId { get; set; }
+        public DictVersion? DictVersion { get; set; }
+
         public BaseDictionaryType()
         {
         }

@@ -29,7 +29,7 @@ namespace NSIDictionaryService.Data
 
         public DbSet<UploadMethod> UploadMethods => Set<UploadMethod>();
 
-        public DbSet<Upload> Uploads => Set<Upload>();
+        public DbSet<UploadDict> Uploads => Set<UploadDict>();
         #endregion
 
         #region Dicts

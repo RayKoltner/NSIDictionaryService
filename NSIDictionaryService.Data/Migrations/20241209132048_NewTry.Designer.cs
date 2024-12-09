@@ -12,8 +12,8 @@ using NSIDictionaryService.Data;
 namespace NSIDictionaryService.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241126135258_initial")]
-    partial class initial
+    [Migration("20241209132048_NewTry")]
+    partial class NewTry
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,49 @@ namespace NSIDictionaryService.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.DictProperty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("DeletedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DictionaryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EditDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("EditUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PropertyCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PropertyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Properties");
+                });
 
             modelBuilder.Entity("NSIDictionaryService.Data.Models.DictVersion", b =>
                 {
@@ -36,7 +79,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime?>("DeleteDate")
+                    b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("date");
 
                     b.Property<int>("DeletedUserId")
@@ -58,14 +101,10 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<DateTime>("PublicationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("VersionCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<decimal>("VersionCode")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("VersionCode")
-                        .IsUnique();
 
                     b.ToTable("Versions");
                 });
@@ -78,7 +117,7 @@ namespace NSIDictionaryService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BeginDate")
+                    b.Property<DateTime?>("BeginDate")
                         .HasColumnType("date");
 
                     b.Property<int>("Code")
@@ -92,10 +131,13 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime?>("DeleteDate")
+                    b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("date");
 
                     b.Property<int>("DeletedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DictVersionId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EditDate")
@@ -104,7 +146,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<int>("EditUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
@@ -117,6 +159,8 @@ namespace NSIDictionaryService.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DictVersionId");
+
                     b.ToTable("V006");
                 });
 
@@ -128,7 +172,7 @@ namespace NSIDictionaryService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BeginDate")
+                    b.Property<DateTime?>("BeginDate")
                         .HasColumnType("date");
 
                     b.Property<int>("Code")
@@ -142,10 +186,13 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime?>("DeleteDate")
+                    b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("date");
 
                     b.Property<int>("DeletedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DictVersionId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EditDate")
@@ -154,7 +201,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<int>("EditUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
@@ -170,6 +217,8 @@ namespace NSIDictionaryService.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DictVersionId");
+
                     b.ToTable("V012");
                 });
 
@@ -181,7 +230,7 @@ namespace NSIDictionaryService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BeginDate")
+                    b.Property<DateTime?>("BeginDate")
                         .HasColumnType("date");
 
                     b.Property<int>("Code")
@@ -195,10 +244,13 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime?>("DeleteDate")
+                    b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("date");
 
                     b.Property<int>("DeletedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DictVersionId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EditDate")
@@ -207,7 +259,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<int>("EditUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
@@ -227,6 +279,8 @@ namespace NSIDictionaryService.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DictVersionId");
+
                     b.ToTable("V021");
                 });
 
@@ -238,7 +292,7 @@ namespace NSIDictionaryService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BeginDate")
+                    b.Property<DateTime?>("BeginDate")
                         .HasColumnType("date");
 
                     b.Property<int>("Code")
@@ -252,10 +306,13 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime?>("DeleteDate")
+                    b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("date");
 
                     b.Property<int>("DeletedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DictVersionId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EditDate")
@@ -264,7 +321,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<int>("EditUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
@@ -276,6 +333,8 @@ namespace NSIDictionaryService.Data.Migrations
                         .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DictVersionId");
 
                     b.ToTable("V025");
                 });
@@ -291,7 +350,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime?>("DeleteDate")
+                    b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("date");
 
                     b.Property<int>("DeletedUserId")
@@ -311,7 +370,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("NSIDictionaryService.Data.Models.Upload", b =>
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.UploadDict", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -322,7 +381,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime?>("DeleteDate")
+                    b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("date");
 
                     b.Property<int>("DeletedUserId")
@@ -340,6 +399,10 @@ namespace NSIDictionaryService.Data.Migrations
 
                     b.Property<int>("EditUserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ErrorDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -375,9 +438,6 @@ namespace NSIDictionaryService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -394,9 +454,6 @@ namespace NSIDictionaryService.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -418,7 +475,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime?>("DeleteDate")
+                    b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("date");
 
                     b.Property<int>("DeletedUserId")
@@ -438,7 +495,51 @@ namespace NSIDictionaryService.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("NSIDictionaryService.Data.Models.Upload", b =>
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.Dictionaries.V006Dictionary", b =>
+                {
+                    b.HasOne("NSIDictionaryService.Data.Models.DictVersion", "DictVersion")
+                        .WithMany()
+                        .HasForeignKey("DictVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DictVersion");
+                });
+
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.Dictionaries.V012Dictionary", b =>
+                {
+                    b.HasOne("NSIDictionaryService.Data.Models.DictVersion", "DictVersion")
+                        .WithMany()
+                        .HasForeignKey("DictVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DictVersion");
+                });
+
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.Dictionaries.V021Dictionary", b =>
+                {
+                    b.HasOne("NSIDictionaryService.Data.Models.DictVersion", "DictVersion")
+                        .WithMany()
+                        .HasForeignKey("DictVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DictVersion");
+                });
+
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.Dictionaries.V025Dictionary", b =>
+                {
+                    b.HasOne("NSIDictionaryService.Data.Models.DictVersion", "DictVersion")
+                        .WithMany()
+                        .HasForeignKey("DictVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DictVersion");
+                });
+
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.UploadDict", b =>
                 {
                     b.HasOne("NSIDictionaryService.Data.Models.DictVersion", "DictVersion")
                         .WithMany()

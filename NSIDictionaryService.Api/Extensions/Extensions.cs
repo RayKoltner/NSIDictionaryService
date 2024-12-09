@@ -10,6 +10,7 @@ namespace NSIDictionaryService.Api.Extensions
         {
             builder.Services.AddTransient<IDictPropertyRepository, DictPropertyRepository>();
             builder.Services.AddTransient<IDictVersionRepository, DictVersionRepository>();
+            builder.Services.AddTransient<IUploadDictRepository, UploadDictRepository>();
 
             return builder;
         }

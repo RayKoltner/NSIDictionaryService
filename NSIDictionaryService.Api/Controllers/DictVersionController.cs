@@ -31,13 +31,13 @@ namespace NSIDictionaryService.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("addProperty")]
+        [HttpPost("addVersion")]
         public async Task<IActionResult> PostAsync([FromBody] DictVersionDTO value)
         {
             try
             {
                 DictVersion posted = DictVersionDTOtoEntityMapper.Convert(value);
-                var existing = await _repository.FirstAsync(x => x.DictionaryCode == posted.DictionaryCode);
+                var existing = await _repository.FirstAsync(x => x.DictionaryCode == posted.DictionaryCode & !x.IsDeleted);
                 if (existing != null)
                 {
                     if (existing.VersionCode >= posted.VersionCode)
@@ -54,7 +54,7 @@ namespace NSIDictionaryService.Api.Controllers
             }
         }
 
-        [HttpPut("changeProperty")]
+        [HttpPut("changeVersion")]
         public async Task<IActionResult> Put([FromBody] DictVersionPutDTO value)
         {
             try
@@ -77,7 +77,7 @@ namespace NSIDictionaryService.Api.Controllers
             }
         }
 
-        [HttpDelete("deleteProperty")]
+        [HttpDelete("deleteVersion")]
         public async Task<IActionResult> Delete(int id)
         {
             var existing = await _repository.GetByKeyAsync(id);
