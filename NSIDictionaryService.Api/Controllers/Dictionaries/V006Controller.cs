@@ -8,7 +8,7 @@ namespace NSIDictionaryService.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class V006Controller: Controller
+    public class V006Controller : Controller
     {
         //private readonly IRepository<V006Dictionary> _dictRepository;
         private readonly V006Uploader _uploader;
@@ -25,10 +25,10 @@ namespace NSIDictionaryService.Api.Controllers
             _apiService = apiService;
         }
 
-        [HttpGet]
-        public IActionResult getLatestDictionary()
-        {
+        //[HttpGet]
+        //public IActionResult getLatestDictionary()
+        //{
 
-        }
+        //}
     }
 }

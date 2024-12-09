@@ -10,8 +10,8 @@ namespace NSIDictionaryService.Api.Controllers
     [Route("api/v1/[controller]")]
     public class DictPropertyController: Controller
     {
-        private readonly IRepository<DictProperty> _repository;
-        public DictPropertyController(IRepository<DictProperty> repository)
+        private readonly IDictPropertyRepository _repository;
+        public DictPropertyController(IDictPropertyRepository repository)
         {
             _repository = repository;
         }
@@ -23,11 +23,19 @@ namespace NSIDictionaryService.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getDictProperties")]
-        public IActionResult Get(string identifier)
+        [HttpGet("getProperty")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var result = _repository.FindBy(x => x.DictionaryName == identifier);
-            if (result is  null)
+            var result = await _repository.GetByKeyAsync(id);
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+
+        [HttpGet("getAllDictProperties")]
+        public IActionResult GetByDict(string dictIdentifier)
+        {
+            var result = _repository.FindBy(x => x.DictionaryName == dictIdentifier);
+            if (!result.Any())
             {
                 return NotFound();
             }
@@ -44,9 +52,9 @@ namespace NSIDictionaryService.Api.Controllers
         }
 
         [HttpPut("changeProperty")]
-        public IActionResult Put([FromBody] DictPropertyPutDTO value)
+        public async Task<IActionResult> Put([FromBody] DictPropertyPutDTO value)
         {
-            var existing = _repository.GetByKey(value.Id);
+            var existing = await _repository.GetByKeyAsync(value.Id);
             if (existing is null) return NotFound();
 
             existing.DictionaryName = value.DictionaryName;
@@ -54,16 +62,16 @@ namespace NSIDictionaryService.Api.Controllers
             existing.PropertyName = value.PropertyName;
 
             _repository.Edit(existing);
-            _repository.Save();
+            await _repository.SaveChangesAsync();
             return Ok();
         }
 
         [HttpDelete("deleteProperty")]
-        public IActionResult Delete(int  id)
+        public async Task<IActionResult> Delete(int  id)
         {
-            var existing = _repository.GetByKey(id);
+            var existing = await _repository.GetByKeyAsync(id);
             if (existing is null) return NotFound();
-            _repository.VirtualDelete(existing, 0); // TODO : Change this when you'll add users
+            await _repository.VirtualDelete(existing, 0); // TODO : Change this when you'll add users
             return Ok();
         }
     }

@@ -8,7 +8,7 @@ namespace NSIDictionaryService.Data.Models
         public string DictionaryCode { get; set; } = string.Empty;
 
         [Display(Name = "Номер версии")]
-        public string VersionCode { get; set; } = string.Empty;
+        public decimal VersionCode { get; set; }
 
         [Display(Name = "Дата публикации версии")]
         public DateTime PublicationDate { get; set; }

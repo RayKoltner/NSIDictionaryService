@@ -10,11 +10,11 @@ namespace NSIDictionaryService.Data.Models.Dictionaries
 
         [Column(TypeName = "date")]
         [Display(Name = "Начало")]
-        public DateTime BeginDate { get; set; }
+        public DateTime? BeginDate { get; set; }
 
         [Display(Name = "Окончание")]
         [Column(TypeName = "date")]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         [MaxLength(350)]
         [Display(Name = "Наименование")]
         public string Name { get; set; } = string.Empty;

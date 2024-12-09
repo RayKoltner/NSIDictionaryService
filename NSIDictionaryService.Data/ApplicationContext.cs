@@ -51,10 +51,6 @@ namespace NSIDictionaryService.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<DictVersion>()
-                .HasIndex(e => e.VersionCode)
-                .IsUnique();
         }
     }
 }

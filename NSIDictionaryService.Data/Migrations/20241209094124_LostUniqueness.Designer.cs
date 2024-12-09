@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NSIDictionaryService.Data;
 
@@ -11,9 +12,11 @@ using NSIDictionaryService.Data;
 namespace NSIDictionaryService.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20241209094124_LostUniqueness")]
+    partial class LostUniqueness
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,8 +101,9 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<DateTime>("PublicationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("VersionCode")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("VersionCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -114,7 +118,7 @@ namespace NSIDictionaryService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("BeginDate")
+                    b.Property<DateTime>("BeginDate")
                         .HasColumnType("date");
 
                     b.Property<int>("Code")
@@ -140,7 +144,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<int>("EditUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
@@ -164,7 +168,7 @@ namespace NSIDictionaryService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("BeginDate")
+                    b.Property<DateTime>("BeginDate")
                         .HasColumnType("date");
 
                     b.Property<int>("Code")
@@ -190,7 +194,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<int>("EditUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
@@ -217,7 +221,7 @@ namespace NSIDictionaryService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("BeginDate")
+                    b.Property<DateTime>("BeginDate")
                         .HasColumnType("date");
 
                     b.Property<int>("Code")
@@ -243,7 +247,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<int>("EditUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
@@ -274,7 +278,7 @@ namespace NSIDictionaryService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("BeginDate")
+                    b.Property<DateTime>("BeginDate")
                         .HasColumnType("date");
 
                     b.Property<int>("Code")
@@ -300,7 +304,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<int>("EditUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")

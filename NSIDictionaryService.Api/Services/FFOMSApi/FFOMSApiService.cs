@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
-using NSIDictionaryService.Share.DTOs;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
 using NSIDictionaryService.Api.Settings;
 using System;
+using NSIDictionaryService.Share.DTOs;
 
 namespace NSIDictionaryService.Api.Services
 {

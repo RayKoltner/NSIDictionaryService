@@ -1,8 +1,8 @@
 
-using NSIDictionaryService.Api.Repositories;
-using NSIDictionaryService.Api.Services;
-using NSIDictionaryService.Api.Services.UploadDictionary;
+using Microsoft.EntityFrameworkCore;
+using NSIDictionaryService.Api.Extensions;
 using NSIDictionaryService.Api.Settings;
+using NSIDictionaryService.Data;
 
 namespace NSIDictionaryService.Api
 {
@@ -15,13 +15,18 @@ namespace NSIDictionaryService.Api
             builder.Services.Configure<FFOMSApiSettings>(
                 builder.Configuration.GetSection(FFOMSApiSettings.position));
 
-            // Add services to the container.
-            builder.Services.AddSingleton<IFFOMSApiService, FFOMSApiService>();
-            // Move these to extensions
-            builder.Services.AddScoped<IDictPropertyRepository, DictPropertyRepository>();
-            builder.Services.AddScoped<V006Uploader>();
+            // Database
+            string TFOMSContextConnection = builder.Configuration.GetConnectionString("DbConnection") ??
+                throw new InvalidOperationException("");
+            builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(TFOMSContextConnection));
 
+            // Add services to the container.
             builder.Services.AddControllers();
+            //builder.AddUploadServices();
+            //builder.AddOtherServices(); //Currently in development
+
+            builder.AddRepositories();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
