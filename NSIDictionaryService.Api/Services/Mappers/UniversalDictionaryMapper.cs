@@ -15,8 +15,12 @@ namespace NSIDictionaryService.Api.Services
             {
                 string rawData = data.Where(x => x.Column == property.PropertyCode).FirstOrDefault().Value;
 
-                Type propertyType = dictionary.GetType().GetProperty(property.PropertyName).GetType();
-                object result = null;
+                Type propertyType = dictionary.GetType().GetProperty(property.PropertyName).PropertyType;
+                propertyType = Nullable.GetUnderlyingType(propertyType) ?? propertyType;
+
+                Console.WriteLine($"Property {property.PropertyName} has type {propertyType.Name}");
+
+                object result;
                 if (propertyType == typeof(string))
                 {
                     result = rawData;
@@ -24,7 +28,18 @@ namespace NSIDictionaryService.Api.Services
                 else
                 {
                     var parseMethod = propertyType.GetMethod("Parse", new Type[] { typeof(string) }); // Json only contains strings
-                    result = parseMethod.Invoke(null, new object[] { rawData });
+                    try
+                    {
+                        result = parseMethod.Invoke(null, new object[] { rawData });
+                    }
+                    catch (Exception ex)
+                    {
+                        if (Nullable.GetUnderlyingType(propertyType) != null)
+                        {
+                            result = null;
+                        }
+                        result = Activator.CreateInstance(propertyType);
+                    }
                 }
                 Convert.ChangeType(result, propertyType);
                 dictionary.GetType().GetProperty(property.PropertyName).SetValue(dictionary, result);

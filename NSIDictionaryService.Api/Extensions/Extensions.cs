@@ -1,4 +1,5 @@
 ﻿using NSIDictionaryService.Api.Repositories;
+using NSIDictionaryService.Api.Repositories.Dictionaries;
 using NSIDictionaryService.Api.Services;
 using NSIDictionaryService.Api.Services.UploadDictionary;
 
@@ -11,6 +12,7 @@ namespace NSIDictionaryService.Api.Extensions
             builder.Services.AddTransient<IDictPropertyRepository, DictPropertyRepository>();
             builder.Services.AddTransient<IDictVersionRepository, DictVersionRepository>();
             builder.Services.AddTransient<IUploadDictRepository, UploadDictRepository>();
+            builder.Services.AddTransient<IV006Repository, V006Repository>();
 
             return builder;
         }

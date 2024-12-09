@@ -15,8 +15,4 @@
     <ProjectReference Include="..\NSIDictionaryService.Share\NSIDictionaryService.Share.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\Dictionaries\" />
-  </ItemGroup>
-
 </Project>

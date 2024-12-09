@@ -23,7 +23,7 @@ namespace NSIDictionaryService.Api
             // Add services to the container.
             builder.Services.AddControllers();
             //builder.AddUploadServices();
-            //builder.AddOtherServices(); //Currently in development
+            builder.AddOtherServices(); //Currently in development
 
             builder.AddRepositories();
 

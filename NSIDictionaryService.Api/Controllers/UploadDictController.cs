@@ -2,6 +2,7 @@
 using NSIDictionaryService.Api.Repositories;
 using NSIDictionaryService.Data.Models;
 using NSIDictionaryService.Share.DTOs;
+using NSIDictionaryService.Share.DTOs.UploadDictDTOs;
 
 namespace NSIDictionaryService.Api.Controllers
 {
@@ -21,7 +22,9 @@ namespace NSIDictionaryService.Api.Controllers
         public IActionResult GetAll()
         {
             var result = _repository.GetAll();
-            return Ok(result);
+            List<UploadDictResponseDTO> responseDTOs = new List<UploadDictResponseDTO>();
+            foreach (var item in result) responseDTOs.Add(new UploadDictResponseDTO(item));
+            return Ok(responseDTOs);
         }
 
         [HttpGet("getUpload")]
@@ -29,7 +32,8 @@ namespace NSIDictionaryService.Api.Controllers
         {
             var result = await _repository.GetByKeyAsync(id);
             if (result == null) return NotFound();
-            return Ok(result);
+            var dtoResult = new UploadDictResponseDTO(result);
+            return Ok(dtoResult);
         }
 
         [HttpGet("getAllDictUploads")]
@@ -40,7 +44,9 @@ namespace NSIDictionaryService.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(result);
+            List<UploadDictResponseDTO> responseDTOs = new List<UploadDictResponseDTO>();
+            foreach (var item in result) responseDTOs.Add(new UploadDictResponseDTO(item));
+            return Ok(responseDTOs);
         }
 
         [HttpPost("addUpload")]

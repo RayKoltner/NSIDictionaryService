@@ -20,6 +20,8 @@
 
         public string ErrorDescription { get; set; } = String.Empty;
 
+        public UploadDict() { }
+
         public UploadDict(int uploadingUserId, DateTime uploadDate, string dictCode, int dictVersionId, int uploadMethodId, int uploadResultId)
         {
             UploadingUserId = uploadingUserId;

@@ -26,6 +26,6 @@ namespace NSIDictionaryService.Api.Services
 
             return result;
         }
-        public abstract List<T> ConvertToModel(DictionaryDataDTO dictionaryData, DictVersion version);
+        public abstract List<T> ConvertJsonToModel(DictionaryDataDTO dictionaryData, DictVersion version);
     }
 }
