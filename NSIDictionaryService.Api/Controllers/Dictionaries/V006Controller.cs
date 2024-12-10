@@ -152,6 +152,7 @@ namespace NSIDictionaryService.Api.Controllers
             }
             else version = new DictVersion()
             {
+                DictionaryCode = "V006",
                 VersionCode = decimal.Parse(versionDto.Version, CultureInfo.InvariantCulture),
                 PublicationDate = versionDto.UpdateDate.ToDateTime(TimeOnly.MinValue)
             };
