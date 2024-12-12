@@ -1,5 +1,6 @@
 ﻿using NSIDictionaryService.Api.Repositories;
 using NSIDictionaryService.Api.Repositories.Dictionaries;
+using NSIDictionaryService.Api.Repositories.Upload;
 using NSIDictionaryService.Data.Models;
 using NSIDictionaryService.Data.Models.Dictionaries;
 using NSIDictionaryService.Share.DTOs;
@@ -9,14 +10,20 @@ namespace NSIDictionaryService.Api.Services.UploadDictionary
     public class V006Uploader : GenericDictionaryUploader<V006Dictionary>
     {
         private readonly IV006Repository _repository;
+        private readonly ILogger<V006Uploader> _logger;
+        private readonly IChangeRepository _changeRepository;
         public V006Uploader(
             IDictPropertyRepository dictPropertyRepository,
-            IV006Repository repository) : base(dictPropertyRepository)
+            IV006Repository repository,
+            ILogger<V006Uploader> logger,
+            IChangeRepository changeRepository) : base(dictPropertyRepository)
         {
             _repository = repository;
+            _logger = logger;
+            _changeRepository = changeRepository;
         }
 
-        public async Task<bool> UploadFromJson(DictionaryDataDTO dictionaryData, DictVersion version)
+        public async Task<bool> UploadFromJson(DictionaryDataDTO dictionaryData, DictVersion version, int uploadFileId)
         {
             List<V006Dictionary> newData = ConvertJsonToModel(dictionaryData, version);
             List<V006Dictionary> uploadedData = new List<V006Dictionary>();
@@ -28,6 +35,9 @@ namespace NSIDictionaryService.Api.Services.UploadDictionary
                 if (!existing.Any())
                 {
                     uploadedData.Add(entry);
+                    string logEntry = $"В словаре V006 добавлена строка {entry.ToString()}";
+                    _logger.LogInformation(logEntry);
+                    _changeRepository.Add(new Change(uploadFileId, logEntry));
                     continue;
                 }
                 if (existing.Count() > 1) throw new Exception("Найдено несколько записей с одинаковыми ключом и датой начала");
@@ -39,6 +49,10 @@ namespace NSIDictionaryService.Api.Services.UploadDictionary
                     uploadedData.Add(entry);
                     await _repository.VirtualDelete(existingEntry.Id, 0); //TODO : Add users
                     await _repository.SaveChangesAsync();
+
+                    string logEntry = $"В словаре V006 заменена строка {existingEntry.ToString()} на {entry.ToString()}";
+                    _logger.LogInformation(logEntry);
+                    _changeRepository.Add(new Change(uploadFileId, logEntry));
                 }
                 
             }

@@ -12,6 +12,9 @@ using NSIDictionaryService.Api.Services.Handlers;
 using NSIDictionaryService.Api.Exceptions;
 using System.Xml.Linq;
 using System.Text;
+using NSIDictionaryService.Share.Helpers;
+using NSIDictionaryService.Share.Exceptions;
+using NSIDictionaryService.Api.Repositories.Upload;
 
 namespace NSIDictionaryService.Api.Controllers
 {
@@ -27,6 +30,7 @@ namespace NSIDictionaryService.Api.Controllers
         private readonly VersionHandler _versionHandler;
         private readonly IUploadInfoRepository _uploadRepository;
         private readonly IDictVersionRepository _versionRepository;
+        private readonly ILogger<V006Controller> _logger;
 
         public V006Controller(
             IV006Repository dictRepository, 
@@ -34,9 +38,12 @@ namespace NSIDictionaryService.Api.Controllers
             IFFOMSApiService apiService,
             IDictVersionRepository versionRepository,
             IUploadInfoRepository uploadRepository,
-            IWebHostEnvironment environment)
+            IWebHostEnvironment environment,
+            IChangeRepository changeRepository,
+            ILogger<V006Controller> logger,
+            ILogger<V006Uploader> uploadLogger)
         {
-            _uploader = new V006Uploader(propertyRepository, dictRepository);
+            _uploader = new V006Uploader(propertyRepository, dictRepository, uploadLogger, changeRepository);
             _apiService = apiService;
             _dictRepository = dictRepository;
             _versionRepository = versionRepository;
@@ -48,6 +55,8 @@ namespace NSIDictionaryService.Api.Controllers
             {
                 Directory.CreateDirectory(_storagePath);
             }
+
+            _logger = logger;
         }
 
         [HttpGet("getAllEntries")]
@@ -84,8 +93,8 @@ namespace NSIDictionaryService.Api.Controllers
             if (version == null || !version.DictionaryCode.Equals(_dictionaryIdentifier) || version.IsDeleted)
                 return BadRequest("Неверная версия словаря");
 
-            if (value.EndDate < DateTime.UtcNow || value.EndDate < value.BeginDate) 
-                return BadRequest("Запись больше не действительна");
+            //if (value.EndDate < DateTime.UtcNow || value.EndDate < value.BeginDate) 
+            //    return BadRequest("Запись больше не действительна");
 
             V006Dictionary posted = V006DTOtoEntityMapper.Convert(value);
             _dictRepository.Add(posted);
@@ -121,6 +130,7 @@ namespace NSIDictionaryService.Api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Ошибка при попытке изменения словаря: {ex.Message}");
                 return BadRequest($"Неверный формат: {ex.Message}");
             }
         }
@@ -154,29 +164,36 @@ namespace NSIDictionaryService.Api.Controllers
                 DictVersion version = await _versionHandler.HandleVersion(versionDto, _dictionaryIdentifier);
                 uploadFile.DictVersionId = version.Id;
 
-                var data = _apiService.GetDictionaryData(_dictionaryIdentifier);
-                if (data is null) throw new FailedAccessToExternalServiceException("Ошибка доступа к сервису NSI FFOMS");
-
-                bool result = await _uploader.UploadFromJson(data, version);
-                if (!result)
-                {
-                    await SetErrorStatusAsync(uploadFile, "Ошибка при заполнении словаря");
-                    return BadRequest("Ошибка при заполнении словаря");
-                }
-
                 _uploadRepository.Add(uploadFile);
                 await _uploadRepository.SaveChangesAsync();
 
+                var data = _apiService.GetDictionaryData(_dictionaryIdentifier);
+                if (data is null) throw new FailedAccessToExternalServiceException("Ошибка доступа к сервису NSI FFOMS");
+
+                bool result = await _uploader.UploadFromJson(data, version, uploadFile.Id);
+                if (!result)
+                {
+                    await SetErrorStatusAsync(uploadFile, "Ошибка при заполнении словаря");
+                    _logger.LogError("Ошибка при заполнении словаря V006 из API");
+                    return BadRequest("Ошибка при заполнении словаря");
+                }
+
+                _uploadRepository.Edit(uploadFile);
+                await _uploadRepository.SaveChangesAsync();
+
+                _logger.LogInformation("Успешно загружен словарь V006 из API");
                 return Ok();
             }
             catch(InvalidVersionException ex)
             {
                 uploadFile.DictVersionId = ex.Version.Id;
                 await SetErrorStatusAsync(uploadFile, ex.Message);
+                _logger.LogError($"Ошибка при загрузке словаря V006 из API: {ex.Message}");
                 return BadRequest(ex.Message);
             }
             catch (FailedAccessToExternalServiceException ex)
             {
+                _logger.LogCritical(ex.Message);
                 return BadRequest(ex.Message); // This should be internal server error
             }
         }
@@ -193,12 +210,6 @@ namespace NSIDictionaryService.Api.Controllers
                 UploadResultId = 1
             };
 
-            if (formFile == null || formFile.Length == 0)
-            {
-                return BadRequest("Запрос не содержит файла.");
-            }
-
-            // Check for XML extension if needed
             if (!formFile.FileName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
             {
                 return BadRequest("Отправленный файл не является XML файлом.");
@@ -206,7 +217,8 @@ namespace NSIDictionaryService.Api.Controllers
 
             try
             {
-                string fileName = formFile.FileName.Replace(
+                // Give unique names to files
+                string fileName = formFile.FileName.Replace( 
                     Path.GetFileNameWithoutExtension(formFile.FileName),
                     string.Concat(Path.GetFileNameWithoutExtension(formFile.FileName), 
                         DateTime.Now.ToString("yyyyMMddHHmmssffff")));
@@ -217,7 +229,7 @@ namespace NSIDictionaryService.Api.Controllers
                 {
                     formFile.CopyTo(stream);
                 }
-                uploadFile.DictCode = filePath;
+                uploadFile.DictCode = filePath; // For API uploads, this just has dictionary name
 
                 XDocument XMLData;
 
@@ -228,30 +240,42 @@ namespace NSIDictionaryService.Api.Controllers
                 }
 
                 // Validation of XML here
+                SimpleXMLValidator.Validate(XMLData); //This is too simple, prob should rework it
 
-                var versionDto = XMLPackageToDictDataMapper.GetVersion(XMLData, _dictionaryIdentifier);
+                // Because why change what works?
+                var versionDto = XMLPackageToDictDataMapper.GetVersion(XMLData, _dictionaryIdentifier); 
 
                 DictVersion version = await _versionHandler.HandleVersion(versionDto, _dictionaryIdentifier);
                 uploadFile.DictVersionId = version.Id;
 
+                _uploadRepository.Add(uploadFile);
+                await _uploadRepository.SaveChangesAsync();
+
                 var data = XMLPackageToDictDataMapper.GetData(XMLData);
 
-                bool result = await _uploader.UploadFromJson(data, version);
+                bool result = await _uploader.UploadFromJson(data, version, uploadFile.Id);
                 if (!result)
                 {
                     await SetErrorStatusAsync(uploadFile, "Ошибка при заполнении словаря");
                     return BadRequest("Ошибка при заполнении словаря");
                 }
 
-                _uploadRepository.Add(uploadFile);
+                _uploadRepository.Edit(uploadFile);
                 await _uploadRepository.SaveChangesAsync();
 
+                _logger.LogInformation("Успешно загружен словарь V006 из XML-файла");
                 return Ok();
             }
             catch (InvalidVersionException ex)
             {
                 uploadFile.DictVersionId = ex.Version.Id;
                 await SetErrorStatusAsync(uploadFile, ex.Message);
+                _logger.LogError($"Ошибка при загрузке словаря V006 из XML: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+            catch (XMLValidationException ex)
+            {
+                _logger.LogError($"Ошибка при загрузке словаря V006 из XML: {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -259,7 +283,8 @@ namespace NSIDictionaryService.Api.Controllers
         {
             uploadFile.UploadResultId = 2;
             uploadFile.ErrorDescription = message;
-            _uploadRepository.Add(uploadFile);
+            if (uploadFile.Id != 0) _uploadRepository.Edit(uploadFile);
+            else _uploadRepository.Add(uploadFile);
             await _uploadRepository.SaveChangesAsync();
         }
     }

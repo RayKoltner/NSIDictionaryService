@@ -37,7 +37,7 @@ namespace NSIDictionaryService.Data
 
         public DbSet<DictProperty> Properties => Set<DictProperty>();   
 
-        //public DbSet<Change> Changes => Set<Change>(); //TODO : Finish this entity
+        public DbSet<Change> Changes => Set<Change>();
 
         public DbSet<V006Dictionary> V006 => Set<V006Dictionary>();
 
