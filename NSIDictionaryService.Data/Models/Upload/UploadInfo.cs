@@ -1,6 +1,6 @@
 ﻿namespace NSIDictionaryService.Data.Models
 {
-    public class UploadDict: BaseEntity
+    public class UploadInfo: BaseEntity
     {
         //Загрузки
         public int UploadingUserId { get; set; }
@@ -20,9 +20,9 @@
 
         public string ErrorDescription { get; set; } = String.Empty;
 
-        public UploadDict() { }
+        public UploadInfo() { }
 
-        public UploadDict(int uploadingUserId, DateTime uploadDate, string dictCode, int dictVersionId, int uploadMethodId, int uploadResultId)
+        public UploadInfo(int uploadingUserId, DateTime uploadDate, string dictCode, int dictVersionId, int uploadMethodId, int uploadResultId)
         {
             UploadingUserId = uploadingUserId;
             UploadDate = uploadDate;

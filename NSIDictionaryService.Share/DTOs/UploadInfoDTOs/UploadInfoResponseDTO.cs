@@ -1,9 +1,9 @@
 ﻿using NSIDictionaryService.Data.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NSIDictionaryService.Share.DTOs.UploadDictDTOs
+namespace NSIDictionaryService.Share.DTOs
 {
-    public class UploadDictResponseDTO
+    public class UploadInfoResponseDTO
     {
         public int UploadingUserId { get; set; }
 
@@ -26,7 +26,7 @@ namespace NSIDictionaryService.Share.DTOs.UploadDictDTOs
         public DateTime? DeletedDate { get; set; }
         public bool IsDeleted { get; set; }
 
-        public UploadDictResponseDTO(UploadDict uploadDict)
+        public UploadInfoResponseDTO(UploadInfo uploadDict)
         {
             this.UploadingUserId = uploadDict.UploadingUserId;
             this.UploadDate = uploadDict.UploadDate;

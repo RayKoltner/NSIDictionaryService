@@ -2,17 +2,16 @@
 using NSIDictionaryService.Api.Repositories;
 using NSIDictionaryService.Data.Models;
 using NSIDictionaryService.Share.DTOs;
-using NSIDictionaryService.Share.DTOs.UploadDictDTOs;
 
 namespace NSIDictionaryService.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class UploadDictController : Controller
+    public class UploadInfoController : Controller
     {
-        private readonly IUploadDictRepository _repository;
+        private readonly IUploadInfoRepository _repository;
         private readonly IDictVersionRepository _versionRepository;
-        public UploadDictController(IUploadDictRepository repository, IDictVersionRepository versionRepository)
+        public UploadInfoController(IUploadInfoRepository repository, IDictVersionRepository versionRepository)
         {
             _repository = repository;
             _versionRepository = versionRepository;
@@ -22,8 +21,8 @@ namespace NSIDictionaryService.Api.Controllers
         public IActionResult GetAll()
         {
             var result = _repository.GetAll();
-            List<UploadDictResponseDTO> responseDTOs = new List<UploadDictResponseDTO>();
-            foreach (var item in result) responseDTOs.Add(new UploadDictResponseDTO(item));
+            List<UploadInfoResponseDTO> responseDTOs = new List<UploadInfoResponseDTO>();
+            foreach (var item in result) responseDTOs.Add(new UploadInfoResponseDTO(item));
             return Ok(responseDTOs);
         }
 
@@ -32,7 +31,7 @@ namespace NSIDictionaryService.Api.Controllers
         {
             var result = await _repository.GetByKeyAsync(id);
             if (result == null) return NotFound();
-            var dtoResult = new UploadDictResponseDTO(result);
+            var dtoResult = new UploadInfoResponseDTO(result);
             return Ok(dtoResult);
         }
 
@@ -44,18 +43,18 @@ namespace NSIDictionaryService.Api.Controllers
             {
                 return NotFound();
             }
-            List<UploadDictResponseDTO> responseDTOs = new List<UploadDictResponseDTO>();
-            foreach (var item in result) responseDTOs.Add(new UploadDictResponseDTO(item));
+            List<UploadInfoResponseDTO> responseDTOs = new List<UploadInfoResponseDTO>();
+            foreach (var item in result) responseDTOs.Add(new UploadInfoResponseDTO(item));
             return Ok(responseDTOs);
         }
 
         [HttpPost("addUpload")]
-        public IActionResult Post([FromBody] UploadDictDTO value)
+        public IActionResult Post([FromBody] UploadInfoDTO value)
         {
             var version = _versionRepository.GetByKey(value.DictVersionId);
             if (version == null || version.IsDeleted) return BadRequest("Такой версии не существует");
 
-            UploadDict posted = new UploadDict(
+            UploadInfo posted = new UploadInfo(
                 0, //TODO : Add actual codes for user, method and result
                 DateTime.Now,
                 value.DictCode,
@@ -70,7 +69,7 @@ namespace NSIDictionaryService.Api.Controllers
         }
 
         [HttpPut("changeUpload")]
-        public async Task<IActionResult> Put([FromBody] UploadDictPutDTO value)
+        public async Task<IActionResult> Put([FromBody] UploadInfoPutDTO value)
         {
             var existing = await _repository.GetByKeyAsync(value.Id);
             if (existing is null) return NotFound();

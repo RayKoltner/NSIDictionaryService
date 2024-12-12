@@ -8,8 +8,10 @@ using NSIDictionaryService.Data.Models;
 using NSIDictionaryService.Data.Models.Dictionaries;
 using NSIDictionaryService.Share.DTOs;
 using NSIDictionaryService.Share.DTOs.V006DTOs;
-using System;
-using System.Globalization;
+using NSIDictionaryService.Api.Services.Handlers;
+using NSIDictionaryService.Api.Exceptions;
+using System.Xml.Linq;
+using System.Text;
 
 namespace NSIDictionaryService.Api.Controllers
 {
@@ -17,24 +19,35 @@ namespace NSIDictionaryService.Api.Controllers
     [Route("api/v1/[controller]")]
     public class V006Controller : Controller
     {
+        private readonly string _dictionaryIdentifier = "V006";
+        private readonly string _storagePath;
         private readonly IV006Repository _dictRepository;
         private readonly V006Uploader _uploader;
         private readonly IFFOMSApiService _apiService;
+        private readonly VersionHandler _versionHandler;
+        private readonly IUploadInfoRepository _uploadRepository;
         private readonly IDictVersionRepository _versionRepository;
-        private readonly IUploadDictRepository _uploadRepository;
 
         public V006Controller(
             IV006Repository dictRepository, 
             IDictPropertyRepository propertyRepository,
             IFFOMSApiService apiService,
             IDictVersionRepository versionRepository,
-            IUploadDictRepository uploadRepository)
+            IUploadInfoRepository uploadRepository,
+            IWebHostEnvironment environment)
         {
             _uploader = new V006Uploader(propertyRepository, dictRepository);
             _apiService = apiService;
             _dictRepository = dictRepository;
             _versionRepository = versionRepository;
+            _versionHandler = new VersionHandler(versionRepository);
             _uploadRepository = uploadRepository;
+            _storagePath = Path.Combine(environment.ContentRootPath, "Uploads");
+
+            if (!Directory.Exists(_storagePath))
+            {
+                Directory.CreateDirectory(_storagePath);
+            }
         }
 
         [HttpGet("getAllEntries")]
@@ -68,7 +81,7 @@ namespace NSIDictionaryService.Api.Controllers
         public async Task<IActionResult> PostAsync([FromBody] V006DTO value)
         {
             var version = await _versionRepository.GetByKeyAsync(value.DictVersionId);
-            if (version == null || !version.DictionaryCode.Equals("V006") || version.IsDeleted)
+            if (version == null || !version.DictionaryCode.Equals(_dictionaryIdentifier) || version.IsDeleted)
                 return BadRequest("Неверная версия словаря");
 
             if (value.EndDate < DateTime.UtcNow || value.EndDate < value.BeginDate) 
@@ -91,7 +104,7 @@ namespace NSIDictionaryService.Api.Controllers
                 if (existing.DictVersionId != value.DictVersionId)
                 {
                     var version = _versionRepository.GetByKey(value.DictVersionId);
-                    if (version == null || !version.DictionaryCode.Equals("V006") || version.IsDeleted)
+                    if (version == null || !version.DictionaryCode.Equals(_dictionaryIdentifier) || version.IsDeleted)
                         return BadRequest("Неверная версия словаря");
                 }
                 
@@ -124,88 +137,125 @@ namespace NSIDictionaryService.Api.Controllers
         [HttpPost("AddFromApi")]
         public async Task<IActionResult> UploadFromApi()
         {
-            UploadDict uploadFile = new UploadDict()
+            UploadInfo uploadFile = new UploadInfo()
             {
                 UploadingUserId = 0, // TODO : Change this when you'll add users
                 UploadDate = DateTime.Now,
-                DictCode = "V006",
+                DictCode = _dictionaryIdentifier,
                 UploadMethodId = 2, // TODO : Change this when you'll add proper codes
-                UploadResultId = 1 
+                UploadResultId = 1
             };
 
-            var versionDto = _apiService.GetVersionData("V006").VersionData.FirstOrDefault();
-            if (versionDto is null)
-            {
-                SetErrorStatusAsync(uploadFile, "Ошибка доступа к сервису NSI FFOMS");
-                return BadRequest("Ошибка доступа к сервису NSI FFOMS");
-            }
+            var versionDto = _apiService.GetVersionData(_dictionaryIdentifier).VersionData.FirstOrDefault();
+            if (versionDto is null) throw new FailedAccessToExternalServiceException("Ошибка доступа к сервису NSI FFOMS");
 
-            DictVersion version;
-            var existingVersion = await _versionRepository.FirstAsync(
-                x => x.DictionaryCode == "V006" && !x.IsDeleted);
+            try
+            {
+                DictVersion version = await _versionHandler.HandleVersion(versionDto, _dictionaryIdentifier);
+                uploadFile.DictVersionId = version.Id;
 
-            if (existingVersion != null && decimal.Parse(versionDto.Version, CultureInfo.InvariantCulture) <= existingVersion.VersionCode)
-            {
-                uploadFile.DictVersionId = existingVersion.Id; // TODO : Change this when you'll add proper codes
-                SetErrorStatusAsync(uploadFile, "Справочник такой или более новой версии уже загружен");
-                return BadRequest("Справочник такой или более новой версии уже загружен");
+                var data = _apiService.GetDictionaryData(_dictionaryIdentifier);
+                if (data is null) throw new FailedAccessToExternalServiceException("Ошибка доступа к сервису NSI FFOMS");
+
+                bool result = await _uploader.UploadFromJson(data, version);
+                if (!result)
+                {
+                    await SetErrorStatusAsync(uploadFile, "Ошибка при заполнении словаря");
+                    return BadRequest("Ошибка при заполнении словаря");
+                }
+
+                _uploadRepository.Add(uploadFile);
+                await _uploadRepository.SaveChangesAsync();
+
+                return Ok();
             }
-            else version = new DictVersion()
+            catch(InvalidVersionException ex)
             {
-                DictionaryCode = "V006",
-                VersionCode = decimal.Parse(versionDto.Version, CultureInfo.InvariantCulture),
-                PublicationDate = versionDto.UpdateDate.ToDateTime(TimeOnly.MinValue)
+                uploadFile.DictVersionId = ex.Version.Id;
+                await SetErrorStatusAsync(uploadFile, ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (FailedAccessToExternalServiceException ex)
+            {
+                return BadRequest(ex.Message); // This should be internal server error
+            }
+        }
+
+        [HttpPost("AddFromXML")]
+        public async Task<IActionResult> UploadFromXML(IFormFile formFile)
+        {
+            UploadInfo uploadFile = new UploadInfo()
+            {
+                UploadingUserId = 0, // TODO : Change this when you'll add users
+                UploadDate = DateTime.Now,
+                DictCode = _dictionaryIdentifier,
+                UploadMethodId = 3, // TODO : Change this when you'll add proper codes
+                UploadResultId = 1
             };
-            if (existingVersion != null) await _versionRepository.VirtualDelete(existingVersion, 0); // TODO : Change this when you'll add users
-            _versionRepository.Add(version);
-            await _versionRepository.SaveChangesAsync();
-            version = await _versionRepository.FirstAsync(x => x.DictionaryCode == "V006" && !x.IsDeleted);
 
-            var data = _apiService.GetDictionaryData("V006");
-            if (data == null)
+            if (formFile == null || formFile.Length == 0)
             {
-                SetErrorStatusAsync(uploadFile, "Ошибка доступа к сервису NSI FFOMS");
-                return BadRequest("Ошибка доступа к сервису NSI FFOMS");
+                return BadRequest("Запрос не содержит файла.");
+            }
+
+            // Check for XML extension if needed
+            if (!formFile.FileName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest("Отправленный файл не является XML файлом.");
             }
 
             try
             {
-                bool result = _uploader.UploadFromJson(data, version);
+                string fileName = formFile.FileName.Replace(
+                    Path.GetFileNameWithoutExtension(formFile.FileName),
+                    string.Concat(Path.GetFileNameWithoutExtension(formFile.FileName), 
+                        DateTime.Now.ToString("yyyyMMddHHmmssffff")));
+
+                var filePath = Path.Combine(_storagePath, Path.GetFileName(fileName));
+                
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    formFile.CopyTo(stream);
+                }
+                uploadFile.DictCode = filePath;
+
+                XDocument XMLData;
+
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                using (var reader = new StreamReader(filePath, Encoding.GetEncoding("windows-1251")))
+                {
+                    XMLData = XDocument.Load(reader);
+                }
+
+                // Validation of XML here
+
+                var versionDto = XMLPackageToDictDataMapper.GetVersion(XMLData, _dictionaryIdentifier);
+
+                DictVersion version = await _versionHandler.HandleVersion(versionDto, _dictionaryIdentifier);
+                uploadFile.DictVersionId = version.Id;
+
+                var data = XMLPackageToDictDataMapper.GetData(XMLData);
+
+                bool result = await _uploader.UploadFromJson(data, version);
                 if (!result)
                 {
-                    SetErrorStatusAsync(uploadFile, "Ошибка при заполнении словаря");
+                    await SetErrorStatusAsync(uploadFile, "Ошибка при заполнении словаря");
                     return BadRequest("Ошибка при заполнении словаря");
                 }
+
                 _uploadRepository.Add(uploadFile);
                 await _uploadRepository.SaveChangesAsync();
+
                 return Ok();
             }
-            catch (Exception ex)
+            catch (InvalidVersionException ex)
             {
-                SetErrorStatusAsync(uploadFile, ex.Message);
-                return BadRequest(ex);
+                uploadFile.DictVersionId = ex.Version.Id;
+                await SetErrorStatusAsync(uploadFile, ex.Message);
+                return BadRequest(ex.Message);
             }
         }
-        [HttpGet("TestHowDataIsFilled")]
-        public async Task<IActionResult> MapFromApiTest()
-        {
-            var data = _apiService.GetDictionaryData("V006");
-            if (data == null)
-            {
-                return BadRequest("Ошибка доступа к сервису NSI FFOMS");
-            }
-
-            DictVersion version = new DictVersion()
-            {
-                DictionaryCode = "V006"
-            };
-
-            var result = _uploader.ConvertJsonToModel(data, version);
-
-            return Ok(result);
-        }
-
-        private async Task SetErrorStatusAsync(UploadDict uploadFile, string message)
+        private async Task SetErrorStatusAsync(UploadInfo uploadFile, string message)
         {
             uploadFile.UploadResultId = 2;
             uploadFile.ErrorDescription = message;

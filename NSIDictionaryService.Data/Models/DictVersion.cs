@@ -12,5 +12,13 @@ namespace NSIDictionaryService.Data.Models
 
         [Display(Name = "Дата публикации версии")]
         public DateTime PublicationDate { get; set; }
+
+        public DictVersion() { }
+        public DictVersion(string dictionaryCode, decimal versionCode, DateTime publicationDate)
+        {
+            DictionaryCode = dictionaryCode;
+            VersionCode = versionCode;
+            PublicationDate = publicationDate;
+        }
     }
 }

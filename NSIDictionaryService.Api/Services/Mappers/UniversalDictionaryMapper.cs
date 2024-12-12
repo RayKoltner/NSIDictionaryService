@@ -18,8 +18,6 @@ namespace NSIDictionaryService.Api.Services
                 Type propertyType = dictionary.GetType().GetProperty(property.PropertyName).PropertyType;
                 propertyType = Nullable.GetUnderlyingType(propertyType) ?? propertyType;
 
-                Console.WriteLine($"Property {property.PropertyName} has type {propertyType.Name}");
-
                 object result;
                 if (propertyType == typeof(string))
                 {
