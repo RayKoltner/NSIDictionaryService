@@ -41,6 +41,8 @@ namespace NSIDictionaryService.Data
 
         public DbSet<Change> Changes => Set<Change>();
 
+        public DbSet<DictDependancy> Dependencies => Set<DictDependancy>();
+
         public DbSet<V006Dictionary> V006 => Set<V006Dictionary>();
 
         public DbSet<V012Dictionary> V012 => Set<V012Dictionary>();
@@ -53,6 +55,18 @@ namespace NSIDictionaryService.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<DictDependancy>()
+                .HasOne(d => d.DictCode)
+                .WithMany()
+                .HasForeignKey(d => d.DictId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<DictDependancy>()
+                .HasOne(d => d.DependancyCode)
+                .WithMany()
+                .HasForeignKey(d => d.DependancyId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<DictCode>().HasIndex(x => x.Name).IsUnique();
 

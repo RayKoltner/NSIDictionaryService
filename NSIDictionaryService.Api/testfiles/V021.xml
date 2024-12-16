@@ -1,0 +1,1936 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<packet>
+  <zglv>
+    <type>MedSpec</type>
+    <version>4.7</version>
+    <date>26.03.2024</date>
+  </zglv>
+  <zap>
+    <IDSPEC>1</IDSPEC>
+    <SPECNAME>Авиационная и космическая медицина</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>1</IDSPEC>
+    <SPECNAME>Авиационная и космическая медицина</SPECNAME>
+    <POSTNAME>врач по авиационной и космической медицине </POSTNAME>
+    <IDPOST_MZ>62</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>2</IDSPEC>
+    <SPECNAME>Акушерство и гинекология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>2</IDSPEC>
+    <SPECNAME>Акушерство и гинекология</SPECNAME>
+    <POSTNAME>врач-акушер-гинеколог</POSTNAME>
+    <IDPOST_MZ>13</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>3</IDSPEC>
+    <SPECNAME>Аллергология и иммунология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>3</IDSPEC>
+    <SPECNAME>Аллергология и иммунология</SPECNAME>
+    <POSTNAME>врач-аллерголог-иммунолог </POSTNAME>
+    <IDPOST_MZ>15</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>4</IDSPEC>
+    <SPECNAME>Анестезиология-реаниматология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>4</IDSPEC>
+    <SPECNAME>Анестезиология-реаниматология</SPECNAME>
+    <POSTNAME>врач-анестезиолог-реаниматолог </POSTNAME>
+    <IDPOST_MZ>16</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>5</IDSPEC>
+    <SPECNAME>Бактериология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>5</IDSPEC>
+    <SPECNAME>Бактериология</SPECNAME>
+    <POSTNAME>врач-бактериолог </POSTNAME>
+    <IDPOST_MZ>17</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>6</IDSPEC>
+    <SPECNAME>Вирусология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>6</IDSPEC>
+    <SPECNAME>Вирусология</SPECNAME>
+    <POSTNAME>врач-вирусолог </POSTNAME>
+    <IDPOST_MZ>18</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>7</IDSPEC>
+    <SPECNAME>Водолазная медицина</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>7</IDSPEC>
+    <SPECNAME>Водолазная медицина</SPECNAME>
+    <POSTNAME>врач по водолазной медицине </POSTNAME>
+    <IDPOST_MZ>63</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>8</IDSPEC>
+    <SPECNAME>Гастроэнтерология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>8</IDSPEC>
+    <SPECNAME>Гастроэнтерология</SPECNAME>
+    <POSTNAME>врач-гастроэнтеролог </POSTNAME>
+    <IDPOST_MZ>19</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>9</IDSPEC>
+    <SPECNAME>Гематология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>9</IDSPEC>
+    <SPECNAME>Гематология</SPECNAME>
+    <POSTNAME>врач-гематолог</POSTNAME>
+    <IDPOST_MZ>20</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>10</IDSPEC>
+    <SPECNAME>Генетика</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>10</IDSPEC>
+    <SPECNAME>Генетика</SPECNAME>
+    <POSTNAME>врач-генетик </POSTNAME>
+    <IDPOST_MZ>21</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>11</IDSPEC>
+    <SPECNAME>Гериатрия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>11</IDSPEC>
+    <SPECNAME>Гериатрия</SPECNAME>
+    <POSTNAME>врач-гериатр </POSTNAME>
+    <IDPOST_MZ>22</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>12</IDSPEC>
+    <SPECNAME>Гигиена детей и подростков</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>12</IDSPEC>
+    <SPECNAME>Гигиена детей и подростков</SPECNAME>
+    <POSTNAME>врач по гигиене детей и подростков </POSTNAME>
+    <IDPOST_MZ>64</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>13</IDSPEC>
+    <SPECNAME>Гигиена питания</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>13</IDSPEC>
+    <SPECNAME>Гигиена питания</SPECNAME>
+    <POSTNAME>врач по гигиене питания</POSTNAME>
+    <IDPOST_MZ>65</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>14</IDSPEC>
+    <SPECNAME>Гигиена труда</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>14</IDSPEC>
+    <SPECNAME>Гигиена труда</SPECNAME>
+    <POSTNAME>врач по гигиене труда </POSTNAME>
+    <IDPOST_MZ>66</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>15</IDSPEC>
+    <SPECNAME>Гигиеническое воспитание</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>15</IDSPEC>
+    <SPECNAME>Гигиеническое воспитание</SPECNAME>
+    <POSTNAME>врач по гигиеническому воспитанию</POSTNAME>
+    <IDPOST_MZ>67</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>16</IDSPEC>
+    <SPECNAME>Дезинфектология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>16</IDSPEC>
+    <SPECNAME>Дезинфектология</SPECNAME>
+    <POSTNAME>врач-дезинфектолог </POSTNAME>
+    <IDPOST_MZ>23</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>17</IDSPEC>
+    <SPECNAME>Дерматовенерология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>17</IDSPEC>
+    <SPECNAME>Дерматовенерология</SPECNAME>
+    <POSTNAME>врач-дерматовенеролог</POSTNAME>
+    <IDPOST_MZ>24</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>18</IDSPEC>
+    <SPECNAME>Детская кардиология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>18</IDSPEC>
+    <SPECNAME>Детская кардиология</SPECNAME>
+    <POSTNAME>врач-детский кардиолог </POSTNAME>
+    <IDPOST_MZ>25</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>19</IDSPEC>
+    <SPECNAME>Детская онкология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>19</IDSPEC>
+    <SPECNAME>Детская онкология</SPECNAME>
+    <POSTNAME>врач-детский онколог </POSTNAME>
+    <IDPOST_MZ>26</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>20</IDSPEC>
+    <SPECNAME>Детская урология-андрология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>20</IDSPEC>
+    <SPECNAME>Детская урология-андрология</SPECNAME>
+    <POSTNAME>врач-детский уролог-андролог </POSTNAME>
+    <IDPOST_MZ>27</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>21</IDSPEC>
+    <SPECNAME>Детская хирургия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>21</IDSPEC>
+    <SPECNAME>Детская хирургия</SPECNAME>
+    <POSTNAME>врач-детский хирург </POSTNAME>
+    <IDPOST_MZ>28</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>22</IDSPEC>
+    <SPECNAME>Детская эндокринология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>22</IDSPEC>
+    <SPECNAME>Детская эндокринология</SPECNAME>
+    <POSTNAME>врач-детский эндокринолог </POSTNAME>
+    <IDPOST_MZ>29</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>23</IDSPEC>
+    <SPECNAME>Диетология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>23</IDSPEC>
+    <SPECNAME>Диетология</SPECNAME>
+    <POSTNAME>врач-диетолог </POSTNAME>
+    <IDPOST_MZ>31</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>24</IDSPEC>
+    <SPECNAME>Инфекционные болезни</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>24</IDSPEC>
+    <SPECNAME>Инфекционные болезни</SPECNAME>
+    <POSTNAME>врач-инфекционист</POSTNAME>
+    <IDPOST_MZ>33</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>25</IDSPEC>
+    <SPECNAME>Кардиология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>25</IDSPEC>
+    <SPECNAME>Кардиология</SPECNAME>
+    <POSTNAME>врач-кардиолог </POSTNAME>
+    <IDPOST_MZ>34</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>26</IDSPEC>
+    <SPECNAME>Клиническая лабораторная диагностика</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>26</IDSPEC>
+    <SPECNAME>Клиническая лабораторная диагностика</SPECNAME>
+    <POSTNAME>врач клинической лабораторной диагностики </POSTNAME>
+    <IDPOST_MZ>35</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>27</IDSPEC>
+    <SPECNAME>Клиническая фармакология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>27</IDSPEC>
+    <SPECNAME>Клиническая фармакология</SPECNAME>
+    <POSTNAME>врач-клинический фармаколог </POSTNAME>
+    <IDPOST_MZ>37</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>28</IDSPEC>
+    <SPECNAME>Колопроктология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>28</IDSPEC>
+    <SPECNAME>Колопроктология</SPECNAME>
+    <POSTNAME>врач-колопроктолог </POSTNAME>
+    <IDPOST_MZ>38</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>29</IDSPEC>
+    <SPECNAME>Коммунальная гигиена</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>29</IDSPEC>
+    <SPECNAME>Коммунальная гигиена</SPECNAME>
+    <POSTNAME>врач по коммунальной гигиене </POSTNAME>
+    <IDPOST_MZ>68</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>30</IDSPEC>
+    <SPECNAME>Косметология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>30</IDSPEC>
+    <SPECNAME>Косметология</SPECNAME>
+    <POSTNAME>врач-косметолог</POSTNAME>
+    <IDPOST_MZ>39</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>31</IDSPEC>
+    <SPECNAME>Лабораторная генетика</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>31</IDSPEC>
+    <SPECNAME>Лабораторная генетика</SPECNAME>
+    <POSTNAME>врач-лабораторный генетик </POSTNAME>
+    <IDPOST_MZ>41</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>32</IDSPEC>
+    <SPECNAME>Лечебная физкультура и спортивная медицина</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>32</IDSPEC>
+    <SPECNAME>Лечебная физкультура и спортивная медицина</SPECNAME>
+    <POSTNAME>врач по лечебной физкультуре</POSTNAME>
+    <IDPOST_MZ>69</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>33</IDSPEC>
+    <SPECNAME>Мануальная терапия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>33</IDSPEC>
+    <SPECNAME>Мануальная терапия</SPECNAME>
+    <POSTNAME>врач мануальной терапии </POSTNAME>
+    <IDPOST_MZ>43</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>34</IDSPEC>
+    <SPECNAME>Медико-социальная экспертиза</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>34</IDSPEC>
+    <SPECNAME>Медико-социальная экспертиза</SPECNAME>
+    <POSTNAME>врач по медико-социальной экспертизе </POSTNAME>
+    <IDPOST_MZ>70</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>35</IDSPEC>
+    <SPECNAME>Неврология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>35</IDSPEC>
+    <SPECNAME>Неврология</SPECNAME>
+    <POSTNAME>врач-невролог</POSTNAME>
+    <IDPOST_MZ>45</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>36</IDSPEC>
+    <SPECNAME>Нейрохирургия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>36</IDSPEC>
+    <SPECNAME>Нейрохирургия</SPECNAME>
+    <POSTNAME>врач-нейрохирург</POSTNAME>
+    <IDPOST_MZ>46</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>37</IDSPEC>
+    <SPECNAME>Неонатология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>37</IDSPEC>
+    <SPECNAME>Неонатология</SPECNAME>
+    <POSTNAME>врач-неонатолог </POSTNAME>
+    <IDPOST_MZ>47</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>38</IDSPEC>
+    <SPECNAME>Нефрология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>38</IDSPEC>
+    <SPECNAME>Нефрология</SPECNAME>
+    <POSTNAME>врач-нефролог </POSTNAME>
+    <IDPOST_MZ>48</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>39</IDSPEC>
+    <SPECNAME>Общая врачебная практика (семейная медицина)</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>39</IDSPEC>
+    <SPECNAME>Общая врачебная практика (семейная медицина)</SPECNAME>
+    <POSTNAME>врач общей практики (семейный врач) </POSTNAME>
+    <IDPOST_MZ>49</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>40</IDSPEC>
+    <SPECNAME>Общая гигиена</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>40</IDSPEC>
+    <SPECNAME>Общая гигиена</SPECNAME>
+    <POSTNAME>врач по общей гигиене </POSTNAME>
+    <IDPOST_MZ>73</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>41</IDSPEC>
+    <SPECNAME>Онкология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>41</IDSPEC>
+    <SPECNAME>Онкология</SPECNAME>
+    <POSTNAME>врач-онколог</POSTNAME>
+    <IDPOST_MZ>50</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>42</IDSPEC>
+    <SPECNAME>Организация здравоохранения и общественное здоровье</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>43</IDSPEC>
+    <SPECNAME>Ортодонтия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>43</IDSPEC>
+    <SPECNAME>Ортодонтия</SPECNAME>
+    <POSTNAME>врач-ортодонт </POSTNAME>
+    <IDPOST_MZ>51</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>44</IDSPEC>
+    <SPECNAME>Остеопатия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>44</IDSPEC>
+    <SPECNAME>Остеопатия</SPECNAME>
+    <POSTNAME>врач-остеопат </POSTNAME>
+    <IDPOST_MZ>52</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>45</IDSPEC>
+    <SPECNAME>Оториноларингология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>45</IDSPEC>
+    <SPECNAME>Оториноларингология</SPECNAME>
+    <POSTNAME>врач-оториноларинголог</POSTNAME>
+    <IDPOST_MZ>53</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>46</IDSPEC>
+    <SPECNAME>Офтальмология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>46</IDSPEC>
+    <SPECNAME>Офтальмология</SPECNAME>
+    <POSTNAME>врач-офтальмолог </POSTNAME>
+    <IDPOST_MZ>54</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>47</IDSPEC>
+    <SPECNAME>Паразитология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>47</IDSPEC>
+    <SPECNAME>Паразитология</SPECNAME>
+    <POSTNAME>врач-паразитолог</POSTNAME>
+    <IDPOST_MZ>56</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>48</IDSPEC>
+    <SPECNAME>Патологическая анатомия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>48</IDSPEC>
+    <SPECNAME>Патологическая анатомия</SPECNAME>
+    <POSTNAME>врач-патологоанатом </POSTNAME>
+    <IDPOST_MZ>57</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>49</IDSPEC>
+    <SPECNAME>Педиатрия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>49</IDSPEC>
+    <SPECNAME>Педиатрия</SPECNAME>
+    <POSTNAME>врач-педиатр </POSTNAME>
+    <IDPOST_MZ>58</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>50</IDSPEC>
+    <SPECNAME>Пластическая хирургия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>50</IDSPEC>
+    <SPECNAME>Пластическая хирургия</SPECNAME>
+    <POSTNAME>врач-пластический хирург </POSTNAME>
+    <IDPOST_MZ>61</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>51</IDSPEC>
+    <SPECNAME>Профпатология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>51</IDSPEC>
+    <SPECNAME>Профпатология</SPECNAME>
+    <POSTNAME>врач-профпатолог </POSTNAME>
+    <IDPOST_MZ>80</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>52</IDSPEC>
+    <SPECNAME>Психиатрия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>52</IDSPEC>
+    <SPECNAME>Психиатрия</SPECNAME>
+    <POSTNAME>врач-психиатр </POSTNAME>
+    <IDPOST_MZ>81</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>53</IDSPEC>
+    <SPECNAME>Психиатрия-наркология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>53</IDSPEC>
+    <SPECNAME>Психиатрия-наркология</SPECNAME>
+    <POSTNAME>врач-психиатр-нарколог</POSTNAME>
+    <IDPOST_MZ>87</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>54</IDSPEC>
+    <SPECNAME>Психотерапия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>54</IDSPEC>
+    <SPECNAME>Психотерапия</SPECNAME>
+    <POSTNAME>врач-психотерапевт </POSTNAME>
+    <IDPOST_MZ>89</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>55</IDSPEC>
+    <SPECNAME>Пульмонология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>55</IDSPEC>
+    <SPECNAME>Пульмонология</SPECNAME>
+    <POSTNAME>врач-пульмонолог </POSTNAME>
+    <IDPOST_MZ>90</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>56</IDSPEC>
+    <SPECNAME>Радиационная гигиена</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>56</IDSPEC>
+    <SPECNAME>Радиационная гигиена</SPECNAME>
+    <POSTNAME>врач по радиационной гигиене </POSTNAME>
+    <IDPOST_MZ>75</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>57</IDSPEC>
+    <SPECNAME>Радиология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>57</IDSPEC>
+    <SPECNAME>Радиология</SPECNAME>
+    <POSTNAME>врач-радиолог </POSTNAME>
+    <IDPOST_MZ>91</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>58</IDSPEC>
+    <SPECNAME>Радиотерапия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>58</IDSPEC>
+    <SPECNAME>Радиотерапия</SPECNAME>
+    <POSTNAME>врач-радиотерапевт </POSTNAME>
+    <IDPOST_MZ>92</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>59</IDSPEC>
+    <SPECNAME>Ревматология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>59</IDSPEC>
+    <SPECNAME>Ревматология</SPECNAME>
+    <POSTNAME>врач-ревматолог </POSTNAME>
+    <IDPOST_MZ>93</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>60</IDSPEC>
+    <SPECNAME>Рентгенология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>60</IDSPEC>
+    <SPECNAME>Рентгенология</SPECNAME>
+    <POSTNAME>врач-рентгенолог</POSTNAME>
+    <IDPOST_MZ>94</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>61</IDSPEC>
+    <SPECNAME>Рентгенэндоваскулярные диагностика и лечение</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>61</IDSPEC>
+    <SPECNAME>Рентгенэндоваскулярные диагностика и лечение</SPECNAME>
+    <POSTNAME>врач по рентгенэндоваскулярным диагностике и лечению </POSTNAME>
+    <IDPOST_MZ>76</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>62</IDSPEC>
+    <SPECNAME>Рефлексотерапия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>62</IDSPEC>
+    <SPECNAME>Рефлексотерапия</SPECNAME>
+    <POSTNAME>врач-рефлексотерапевт</POSTNAME>
+    <IDPOST_MZ>95</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>63</IDSPEC>
+    <SPECNAME>Санитарно-гигиенические лабораторные исследования</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>63</IDSPEC>
+    <SPECNAME>Санитарно-гигиенические лабораторные исследования</SPECNAME>
+    <POSTNAME>врач по санитарно-гигиеническим лабораторным исследованиям </POSTNAME>
+    <IDPOST_MZ>77</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>64</IDSPEC>
+    <SPECNAME>Сексология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>64</IDSPEC>
+    <SPECNAME>Сексология</SPECNAME>
+    <POSTNAME>врач-сексолог </POSTNAME>
+    <IDPOST_MZ>96</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>65</IDSPEC>
+    <SPECNAME>Сердечно-сосудистая хирургия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>65</IDSPEC>
+    <SPECNAME>Сердечно-сосудистая хирургия</SPECNAME>
+    <POSTNAME>врач-сердечно-сосудистый хирург </POSTNAME>
+    <IDPOST_MZ>97</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>66</IDSPEC>
+    <SPECNAME>Скорая медицинская помощь</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>66</IDSPEC>
+    <SPECNAME>Скорая медицинская помощь</SPECNAME>
+    <POSTNAME>врач скорой медицинской помощи </POSTNAME>
+    <IDPOST_MZ>98</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>67</IDSPEC>
+    <SPECNAME>Социальная гигиена и организация госсанэпидслужбы</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>68</IDSPEC>
+    <SPECNAME>Стоматология детская</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>68</IDSPEC>
+    <SPECNAME>Стоматология детская</SPECNAME>
+    <POSTNAME>врач-стоматолог детский</POSTNAME>
+    <IDPOST_MZ>101</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>69</IDSPEC>
+    <SPECNAME>Стоматология общей практики</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>69</IDSPEC>
+    <SPECNAME>Стоматология общей практики</SPECNAME>
+    <POSTNAME>врач-стоматолог </POSTNAME>
+    <IDPOST_MZ>100</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>70</IDSPEC>
+    <SPECNAME>Стоматология ортопедическая</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>70</IDSPEC>
+    <SPECNAME>Стоматология ортопедическая</SPECNAME>
+    <POSTNAME>врач-стоматолог-ортопед </POSTNAME>
+    <IDPOST_MZ>102</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>71</IDSPEC>
+    <SPECNAME>Стоматология терапевтическая</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>71</IDSPEC>
+    <SPECNAME>Стоматология терапевтическая</SPECNAME>
+    <POSTNAME>врач-стоматолог-терапевт </POSTNAME>
+    <IDPOST_MZ>103</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>72</IDSPEC>
+    <SPECNAME>Стоматология хирургическая</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>72</IDSPEC>
+    <SPECNAME>Стоматология хирургическая</SPECNAME>
+    <POSTNAME>врач-стоматолог-хирург </POSTNAME>
+    <IDPOST_MZ>104</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>73</IDSPEC>
+    <SPECNAME>Судебно-медицинская экспертиза</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>73</IDSPEC>
+    <SPECNAME>Судебно-медицинская экспертиза</SPECNAME>
+    <POSTNAME>врач-судебно-медицинский эксперт </POSTNAME>
+    <IDPOST_MZ>105</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>74</IDSPEC>
+    <SPECNAME>Судебно-психиатрическая экспертиза</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>74</IDSPEC>
+    <SPECNAME>Судебно-психиатрическая экспертиза</SPECNAME>
+    <POSTNAME>врач-судебно-психиатрический эксперт </POSTNAME>
+    <IDPOST_MZ>106</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>75</IDSPEC>
+    <SPECNAME>Сурдология-оториноларингология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>75</IDSPEC>
+    <SPECNAME>Сурдология-оториноларингология</SPECNAME>
+    <POSTNAME>врач-сурдолог-оториноларинголог </POSTNAME>
+    <IDPOST_MZ>107</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>76</IDSPEC>
+    <SPECNAME>Терапия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>76</IDSPEC>
+    <SPECNAME>Терапия</SPECNAME>
+    <POSTNAME>врач-терапевт</POSTNAME>
+    <IDPOST_MZ>109</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>77</IDSPEC>
+    <SPECNAME>Токсикология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>77</IDSPEC>
+    <SPECNAME>Токсикология</SPECNAME>
+    <POSTNAME>врач-токсиколог </POSTNAME>
+    <IDPOST_MZ>113</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>78</IDSPEC>
+    <SPECNAME>Торакальная хирургия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>78</IDSPEC>
+    <SPECNAME>Торакальная хирургия</SPECNAME>
+    <POSTNAME>врач-торакальный хирург </POSTNAME>
+    <IDPOST_MZ>123</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>79</IDSPEC>
+    <SPECNAME>Травматология и ортопедия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>79</IDSPEC>
+    <SPECNAME>Травматология и ортопедия</SPECNAME>
+    <POSTNAME>врач-травматолог-ортопед </POSTNAME>
+    <IDPOST_MZ>114</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>80</IDSPEC>
+    <SPECNAME>Трансфузиология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>80</IDSPEC>
+    <SPECNAME>Трансфузиология</SPECNAME>
+    <POSTNAME>врач-трансфузиолог </POSTNAME>
+    <IDPOST_MZ>115</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>81</IDSPEC>
+    <SPECNAME>Ультразвуковая диагностика</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>81</IDSPEC>
+    <SPECNAME>Ультразвуковая диагностика</SPECNAME>
+    <POSTNAME>врач ультразвуковой диагностики </POSTNAME>
+    <IDPOST_MZ>116</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>82</IDSPEC>
+    <SPECNAME>Управление и экономика фармации</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>83</IDSPEC>
+    <SPECNAME>Управление сестринской деятельностью</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>84</IDSPEC>
+    <SPECNAME>Урология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>84</IDSPEC>
+    <SPECNAME>Урология</SPECNAME>
+    <POSTNAME>врач-уролог </POSTNAME>
+    <IDPOST_MZ>117</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>85</IDSPEC>
+    <SPECNAME>Фармацевтическая технология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>86</IDSPEC>
+    <SPECNAME>Фармацевтическая химия и фармакогнозия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>87</IDSPEC>
+    <SPECNAME>Физиотерапия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>87</IDSPEC>
+    <SPECNAME>Физиотерапия</SPECNAME>
+    <POSTNAME>врач-физиотерапевт </POSTNAME>
+    <IDPOST_MZ>118</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>88</IDSPEC>
+    <SPECNAME>Фтизиатрия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>88</IDSPEC>
+    <SPECNAME>Фтизиатрия</SPECNAME>
+    <POSTNAME>врач-фтизиатр</POSTNAME>
+    <IDPOST_MZ>119</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>89</IDSPEC>
+    <SPECNAME>Функциональная диагностика</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>89</IDSPEC>
+    <SPECNAME>Функциональная диагностика</SPECNAME>
+    <POSTNAME>врач функциональной диагностики </POSTNAME>
+    <IDPOST_MZ>121</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>90</IDSPEC>
+    <SPECNAME>Хирургия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>90</IDSPEC>
+    <SPECNAME>Хирургия</SPECNAME>
+    <POSTNAME>врач-хирург </POSTNAME>
+    <IDPOST_MZ>122</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>91</IDSPEC>
+    <SPECNAME>Челюстно-лицевая хирургия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>91</IDSPEC>
+    <SPECNAME>Челюстно-лицевая хирургия</SPECNAME>
+    <POSTNAME>врач-челюстно-лицевой хирург </POSTNAME>
+    <IDPOST_MZ>124</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>92</IDSPEC>
+    <SPECNAME>Эндокринология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>92</IDSPEC>
+    <SPECNAME>Эндокринология</SPECNAME>
+    <POSTNAME>врач-эндокринолог </POSTNAME>
+    <IDPOST_MZ>125</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>93</IDSPEC>
+    <SPECNAME>Эндоскопия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>93</IDSPEC>
+    <SPECNAME>Эндоскопия</SPECNAME>
+    <POSTNAME>врач-эндоскопист </POSTNAME>
+    <IDPOST_MZ>126</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>94</IDSPEC>
+    <SPECNAME>Эпидемиология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>94</IDSPEC>
+    <SPECNAME>Эпидемиология</SPECNAME>
+    <POSTNAME>врач-эпидемиолог </POSTNAME>
+    <IDPOST_MZ>127</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>95</IDSPEC>
+    <SPECNAME>Лечебное дело</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>07.01.2017</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>95</IDSPEC>
+    <SPECNAME>Лечебное дело</SPECNAME>
+    <POSTNAME>врач-терапевт участковый</POSTNAME>
+    <IDPOST_MZ>110</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>96</IDSPEC>
+    <SPECNAME>Медико-профилактическое дело</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>07.01.2017</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>96</IDSPEC>
+    <SPECNAME>Медико-профилактическое дело</SPECNAME>
+    <POSTNAME>врач по медицинской профилактике </POSTNAME>
+    <IDPOST_MZ>71</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>97</IDSPEC>
+    <SPECNAME>Медицинская биохимия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>07.01.2017</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>98</IDSPEC>
+    <SPECNAME>Медицинская биофизика</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>07.01.2017</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>98</IDSPEC>
+    <SPECNAME>Медицинская биофизика</SPECNAME>
+    <POSTNAME>Врач-функциональной диагностики</POSTNAME>
+    <IDPOST_MZ>121</IDPOST_MZ>
+    <DATEBEG>01.06.2023</DATEBEG>
+    <DATEEND>01.09.2025</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>99</IDSPEC>
+    <SPECNAME>Медицинская кибернетика</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>07.01.2017</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>100</IDSPEC>
+    <SPECNAME>Сестринское дело</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>07.01.2017</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>101</IDSPEC>
+    <SPECNAME>Фармация</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>07.01.2017</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>101</IDSPEC>
+    <SPECNAME>Фармация</SPECNAME>
+    <POSTNAME>провизор </POSTNAME>
+    <IDPOST_MZ>225</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>102</IDSPEC>
+    <SPECNAME>Детская онкология-гематология</SPECNAME>
+    <POSTNAME>врач - детский онколог</POSTNAME>
+    <IDPOST_MZ>26</IDPOST_MZ>
+    <DATEBEG>01.03.2020</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>104</IDSPEC>
+    <SPECNAME>Физическая и реабилитационная медицина</SPECNAME>
+    <POSTNAME>врач по медицинской реабилитации </POSTNAME>
+    <IDPOST_MZ>72</IDPOST_MZ>
+    <DATEBEG>01.03.2020</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>206</IDSPEC>
+    <SPECNAME>Лечебное дело (средний медперсонал)</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>206</IDSPEC>
+    <SPECNAME>Лечебное дело (средний медперсонал)</SPECNAME>
+    <POSTNAME>фельдшер </POSTNAME>
+    <IDPOST_MZ>195</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>207</IDSPEC>
+    <SPECNAME>Акушерское дело (средний медперсонал)</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>207</IDSPEC>
+    <SPECNAME>Акушерское дело (средний медперсонал)</SPECNAME>
+    <POSTNAME>акушер </POSTNAME>
+    <IDPOST_MZ>150</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>208</IDSPEC>
+    <SPECNAME>Стоматология (средний медперсонал)</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>208</IDSPEC>
+    <SPECNAME>Стоматология (средний медперсонал)</SPECNAME>
+    <POSTNAME>зубной врач </POSTNAME>
+    <IDPOST_MZ>152</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>209</IDSPEC>
+    <SPECNAME>Стоматология ортопедическая</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>209</IDSPEC>
+    <SPECNAME>Стоматология ортопедическая</SPECNAME>
+    <POSTNAME>зубной техник </POSTNAME>
+    <IDPOST_MZ>153</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>210</IDSPEC>
+    <SPECNAME>Эпидемиология (паразитология)</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.04.2018</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>210</IDSPEC>
+    <SPECNAME>Эпидемиология (паразитология)</SPECNAME>
+    <POSTNAME>помощник врача</POSTNAME>
+    <IDPOST_MZ>183</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>213</IDSPEC>
+    <SPECNAME>Гигиеническое воспитание</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.04.2018</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>213</IDSPEC>
+    <SPECNAME>Гигиеническое воспитание</SPECNAME>
+    <POSTNAME>инструктор по гигиеническому воспитанию</POSTNAME>
+    <IDPOST_MZ>155</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>215</IDSPEC>
+    <SPECNAME>Лабораторная диагностика</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>215</IDSPEC>
+    <SPECNAME>Лабораторная диагностика</SPECNAME>
+    <POSTNAME>фельдшер-лаборант </POSTNAME>
+    <IDPOST_MZ>365</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>217</IDSPEC>
+    <SPECNAME>Лабораторное дело</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>217</IDSPEC>
+    <SPECNAME>Лабораторное дело</SPECNAME>
+    <POSTNAME>лаборант</POSTNAME>
+    <IDPOST_MZ>158</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>219</IDSPEC>
+    <SPECNAME>Сестринское дело</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>219</IDSPEC>
+    <SPECNAME>Сестринское дело</SPECNAME>
+    <POSTNAME>медицинская сестра </POSTNAME>
+    <IDPOST_MZ>159</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>221</IDSPEC>
+    <SPECNAME>Сестринское дело в педиатрии</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>221</IDSPEC>
+    <SPECNAME>Сестринское дело в педиатрии</SPECNAME>
+    <POSTNAME>медицинская сестра </POSTNAME>
+    <IDPOST_MZ>159</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>222</IDSPEC>
+    <SPECNAME>Операционное дело</SPECNAME>
+    <POSTNAME>операционная медицинская сестра </POSTNAME>
+    <IDPOST_MZ>182</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>223</IDSPEC>
+    <SPECNAME>Анестезиология и реаниматология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.04.2018</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>223</IDSPEC>
+    <SPECNAME>Анестезиология и реаниматология</SPECNAME>
+    <POSTNAME>медицинская сестра - анестезист  </POSTNAME>
+    <IDPOST_MZ>160</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>224</IDSPEC>
+    <SPECNAME>Общая практика</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>224</IDSPEC>
+    <SPECNAME>Общая практика</SPECNAME>
+    <POSTNAME>медицинская сестра врача общей практики (семейного врача) </POSTNAME>
+    <IDPOST_MZ>161</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>226</IDSPEC>
+    <SPECNAME>Функциональная диагностика</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>226</IDSPEC>
+    <SPECNAME>Функциональная диагностика</SPECNAME>
+    <POSTNAME>медицинская сестра</POSTNAME>
+    <IDPOST_MZ>159</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>227</IDSPEC>
+    <SPECNAME>Физиотерапия</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>227</IDSPEC>
+    <SPECNAME>Физиотерапия</SPECNAME>
+    <POSTNAME>медицинская сестра по физиотерапии </POSTNAME>
+    <IDPOST_MZ>175</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>228</IDSPEC>
+    <SPECNAME>Медицинский массаж</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>228</IDSPEC>
+    <SPECNAME>Медицинский массаж</SPECNAME>
+    <POSTNAME>медицинская сестра по массажу  </POSTNAME>
+    <IDPOST_MZ>168</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>230</IDSPEC>
+    <SPECNAME>Лечебная физкультура</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>230</IDSPEC>
+    <SPECNAME>Лечебная физкультура</SPECNAME>
+    <POSTNAME>инструктор по лечебной физкультуре </POSTNAME>
+    <IDPOST_MZ>156</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>231</IDSPEC>
+    <SPECNAME>Диетология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.04.2018</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>231</IDSPEC>
+    <SPECNAME>Диетология</SPECNAME>
+    <POSTNAME>медицинская сестра диетическая </POSTNAME>
+    <IDPOST_MZ>162</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>233</IDSPEC>
+    <SPECNAME>Стоматология профилактическая</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>233</IDSPEC>
+    <SPECNAME>Стоматология профилактическая</SPECNAME>
+    <POSTNAME>гигиенист стоматологический </POSTNAME>
+    <IDPOST_MZ>151</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>234</IDSPEC>
+    <SPECNAME>Судебно-медицинская экспертиза</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>280</IDSPEC>
+    <SPECNAME>Наркология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>280</IDSPEC>
+    <SPECNAME>Наркология</SPECNAME>
+    <POSTNAME>фельдшер-нарколог</POSTNAME>
+    <IDPOST_MZ>197</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>281</IDSPEC>
+    <SPECNAME>Реабилитационное сестринское дело</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>281</IDSPEC>
+    <SPECNAME>Реабилитационное сестринское дело</SPECNAME>
+    <POSTNAME>медицинская сестра по реабилитации</POSTNAME>
+    <IDPOST_MZ>172</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>283</IDSPEC>
+    <SPECNAME>Скорая и неотложная помощь</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>283</IDSPEC>
+    <SPECNAME>Скорая и неотложная помощь</SPECNAME>
+    <POSTNAME>фельдшер скорой медицинской помощи </POSTNAME>
+    <IDPOST_MZ>196</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDSPEC>284</IDSPEC>
+    <SPECNAME>Бактериология</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>285</IDSPEC>
+    <SPECNAME>Клиническая психология</SPECNAME>
+    <POSTNAME>медицинский психолог</POSTNAME>
+    <IDPOST_MZ>139</IDPOST_MZ>
+    <DATEBEG>01.07.2023</DATEBEG>
+    <DATEEND/>
+  </zap>
+</packet>

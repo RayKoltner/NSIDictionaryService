@@ -82,6 +82,29 @@ namespace NSIDictionaryService.Data.Migrations
                     b.ToTable("DictCodes");
                 });
 
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.DictDependancy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DependancyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DictId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DependancyId");
+
+                    b.HasIndex("DictId");
+
+                    b.ToTable("Dependencies");
+                });
+
             modelBuilder.Entity("NSIDictionaryService.Data.Models.DictProperty", b =>
                 {
                     b.Property<int>("Id")
@@ -426,6 +449,14 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Privileges")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
@@ -551,7 +582,20 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -565,6 +609,25 @@ namespace NSIDictionaryService.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("UploadInfo");
+                });
+
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.DictDependancy", b =>
+                {
+                    b.HasOne("NSIDictionaryService.Data.Models.DictCode", "DependancyCode")
+                        .WithMany()
+                        .HasForeignKey("DependancyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("NSIDictionaryService.Data.Models.DictCode", "DictCode")
+                        .WithMany()
+                        .HasForeignKey("DictId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("DependancyCode");
+
+                    b.Navigation("DictCode");
                 });
 
             modelBuilder.Entity("NSIDictionaryService.Data.Models.DictProperty", b =>
@@ -658,6 +721,17 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Navigation("UploadMethod");
 
                     b.Navigation("UploadResult");
+                });
+
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.User", b =>
+                {
+                    b.HasOne("NSIDictionaryService.Data.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 #pragma warning restore 612, 618
         }

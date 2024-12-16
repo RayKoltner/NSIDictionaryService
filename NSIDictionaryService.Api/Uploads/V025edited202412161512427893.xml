@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<packet>
+  <zglv>
+    <type>KPC</type>
+    <version>1.9</version>
+    <date>19.07.2024</date>
+  </zglv>
+  <zap>
+    <IDPC>1.0</IDPC>
+    <N_PC>Посещение по заболеванию</N_PC>
+    <DATEBEG>01.01.2018</DATEBEG>
+    <DATEEND/>
+  </zap>
+  <zap>
+    <IDPC>1.1</IDPC>
+    <N_PC>Посещениe в неотложной форме</N_PC>
+    <DATEBEG>01.01.2018</DATEBEG>
+    <DATEEND>01.01.2025<DATEEND>
+  </zap>
+</packet>

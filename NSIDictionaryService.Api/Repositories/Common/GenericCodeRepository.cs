@@ -34,6 +34,12 @@ namespace NSIDictionaryService.Api.Repositories.Common
             return _сontextFactory.Set<T>().FirstOrDefault(predicate);
         }
 
+        public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
+        {
+            IQueryable<T> query = _сontextFactory.Set<T>().AsNoTracking().Where(predicate);
+            return query;
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NSIDictionaryService.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AnotherTry : Migration
+    public partial class AddedDependancies : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,8 @@ namespace NSIDictionaryService.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Privileges = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "date", nullable: false),
                     EditUserId = table.Column<int>(type: "int", nullable: false),
                     EditDate = table.Column<DateTime>(type: "date", nullable: false),
@@ -69,21 +71,27 @@ namespace NSIDictionaryService.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Dependencies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreateDate = table.Column<DateTime>(type: "date", nullable: false),
-                    EditUserId = table.Column<int>(type: "int", nullable: false),
-                    EditDate = table.Column<DateTime>(type: "date", nullable: false),
-                    DeletedUserId = table.Column<int>(type: "int", nullable: false),
-                    DeletedDate = table.Column<DateTime>(type: "date", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    DictId = table.Column<int>(type: "int", nullable: false),
+                    DependancyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Dependencies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Dependencies_DictCodes_DependancyId",
+                        column: x => x.DependancyId,
+                        principalTable: "DictCodes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Dependencies_DictCodes_DictId",
+                        column: x => x.DictId,
+                        principalTable: "DictCodes",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -137,6 +145,33 @@ namespace NSIDictionaryService.Data.Migrations
                         column: x => x.DictCodeId,
                         principalTable: "DictCodes",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "date", nullable: false),
+                    EditUserId = table.Column<int>(type: "int", nullable: false),
+                    EditDate = table.Column<DateTime>(type: "date", nullable: false),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "date", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -337,6 +372,16 @@ namespace NSIDictionaryService.Data.Migrations
                 column: "UploadInfoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Dependencies_DependancyId",
+                table: "Dependencies",
+                column: "DependancyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Dependencies_DictId",
+                table: "Dependencies",
+                column: "DictId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DictCodes_Name",
                 table: "DictCodes",
                 column: "Name",
@@ -361,6 +406,11 @@ namespace NSIDictionaryService.Data.Migrations
                 name: "IX_Uploads_UploadResultId",
                 table: "Uploads",
                 column: "UploadResultId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RoleId",
+                table: "Users",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_V006_DictVersionId",
@@ -395,10 +445,10 @@ namespace NSIDictionaryService.Data.Migrations
                 name: "Changes");
 
             migrationBuilder.DropTable(
-                name: "Properties");
+                name: "Dependencies");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "Properties");
 
             migrationBuilder.DropTable(
                 name: "Users");
@@ -417,6 +467,9 @@ namespace NSIDictionaryService.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Uploads");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "UploadMethods");

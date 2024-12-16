@@ -10,7 +10,7 @@ namespace NSIDictionaryService.Api.Services
             List<JsonPair> data, 
             BaseDictionaryType<T> dictionary, 
             List<DictProperty> properties) // TODO : Make this method foolproof
-        {            
+        {
             foreach (var property in properties)
             {
                 string rawData = data.Where(x => x.Column == property.PropertyCode).FirstOrDefault().Value;
@@ -32,6 +32,8 @@ namespace NSIDictionaryService.Api.Services
                     }
                     catch (Exception ex)
                     {
+                        //Console.WriteLine(ex.Message);
+                        //Console.WriteLine(rawData);
                         if (Nullable.GetUnderlyingType(propertyType) != null)
                         {
                             result = null;
