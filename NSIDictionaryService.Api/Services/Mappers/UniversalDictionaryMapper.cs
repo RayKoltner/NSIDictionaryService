@@ -6,9 +6,9 @@ namespace NSIDictionaryService.Api.Services
 {
     public static class UniversalDictionaryMapper
     {
-        public static BaseDictionaryType FillWithData(
+        public static BaseDictionaryType<T> FillWithData<T>(
             List<JsonPair> data, 
-            BaseDictionaryType dictionary, 
+            BaseDictionaryType<T> dictionary, 
             List<DictProperty> properties) // TODO : Make this method foolproof
         {            
             foreach (var property in properties)

@@ -9,7 +9,7 @@ namespace NSIDictionaryService.Api.Services.Mappers
         {
             DictProperty dictProperty = new DictProperty()
             {
-                DictionaryName = dto.DictionaryName,
+                DictCodeId = dto.DictionaryCodeId,
                 PropertyCode = dto.PropertyCode,
                 PropertyName = dto.PropertyName
             };

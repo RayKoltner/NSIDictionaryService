@@ -2,7 +2,7 @@
 {
     public class DictVersionDTO
     {
-        public string DictionaryCode { get; set; } = string.Empty;
+        public int DictionaryCodeId { get; set; }
 
         public decimal VersionCode { get; set; }
 

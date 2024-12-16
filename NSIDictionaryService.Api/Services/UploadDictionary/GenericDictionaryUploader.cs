@@ -2,11 +2,10 @@
 using NSIDictionaryService.Data.Models;
 using NSIDictionaryService.Data.Models.Dictionaries;
 using NSIDictionaryService.Share.DTOs;
-using System.Xml.Linq;
 
 namespace NSIDictionaryService.Api.Services
 {
-    public abstract class GenericDictionaryUploader<T> where T : BaseDictionaryType
+    public abstract class GenericDictionaryUploader<T, P> where T : BaseDictionaryType<P>
     {
         private readonly IRepository<DictProperty> _propertyRepository;
         public GenericDictionaryUploader(IRepository<DictProperty> dictPropertyRepository)
@@ -16,10 +15,10 @@ namespace NSIDictionaryService.Api.Services
         public List<T> FillWithData(DictionaryDataDTO dictionaryData, List<T> emptyDicts, DictVersion version)
         {
             List<T> result = new List<T>();
-            List<DictProperty> dictProperties = [.. _propertyRepository.FindBy(x => x.DictionaryName == version.DictionaryCode)];
+            List<DictProperty> dictProperties = [.. _propertyRepository.FindBy(x => x.DictCodeId == version.DictCodeId)];
             for (int i = 0; i < emptyDicts.Count; i++)
             {
-                result.Add((T)UniversalDictionaryMapper.FillWithData(
+                result.Add((T)UniversalDictionaryMapper.FillWithData<P>(
                     dictionaryData.ResponseData[i],
                     emptyDicts[i],
                     dictProperties));

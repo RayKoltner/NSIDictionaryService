@@ -62,6 +62,26 @@ namespace NSIDictionaryService.Data.Migrations
                     b.ToTable("Changes");
                 });
 
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.DictCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("DictCodes");
+                });
+
             modelBuilder.Entity("NSIDictionaryService.Data.Models.DictProperty", b =>
                 {
                     b.Property<int>("Id")
@@ -79,9 +99,8 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<int>("DeletedUserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DictionaryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DictCodeId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("EditDate")
                         .HasColumnType("date");
@@ -101,6 +120,8 @@ namespace NSIDictionaryService.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DictCodeId");
 
                     b.ToTable("Properties");
                 });
@@ -122,9 +143,8 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<int>("DeletedUserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DictionaryCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DictCodeId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("EditDate")
                         .HasColumnType("date");
@@ -139,9 +159,12 @@ namespace NSIDictionaryService.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("VersionCode")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DictCodeId");
 
                     b.ToTable("Versions");
                 });
@@ -332,8 +355,9 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<DateTime?>("BeginDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Code")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<string>("Comments")
                         .IsRequired()
@@ -541,6 +565,28 @@ namespace NSIDictionaryService.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("UploadInfo");
+                });
+
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.DictProperty", b =>
+                {
+                    b.HasOne("NSIDictionaryService.Data.Models.DictCode", "DictCode")
+                        .WithMany()
+                        .HasForeignKey("DictCodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DictCode");
+                });
+
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.DictVersion", b =>
+                {
+                    b.HasOne("NSIDictionaryService.Data.Models.DictCode", "DictCode")
+                        .WithMany()
+                        .HasForeignKey("DictCodeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("DictCode");
                 });
 
             modelBuilder.Entity("NSIDictionaryService.Data.Models.Dictionaries.V006Dictionary", b =>

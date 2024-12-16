@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NSIDictionaryService.Api.Repositories;
+using NSIDictionaryService.Api.Repositories.Upload;
 using NSIDictionaryService.Api.Services.Mappers;
 using NSIDictionaryService.Data.Models;
 using NSIDictionaryService.Share.DTOs;
@@ -11,9 +12,13 @@ namespace NSIDictionaryService.Api.Controllers
     public class DictVersionController : Controller
     {
         private readonly IDictVersionRepository _repository;
-        public DictVersionController(IDictVersionRepository repository)
+        private readonly IDictCodeRepository _codeRepository;
+        public DictVersionController(
+            IDictVersionRepository repository,
+            IDictCodeRepository codeRepository)
         {
             _repository = repository;
+            _codeRepository = codeRepository;
         }
 
         [HttpGet("getAllVersions")]
@@ -37,7 +42,11 @@ namespace NSIDictionaryService.Api.Controllers
             try
             {
                 DictVersion posted = DictVersionDTOtoEntityMapper.Convert(value);
-                var existing = await _repository.FirstAsync(x => x.DictionaryCode == posted.DictionaryCode & !x.IsDeleted);
+
+                var storedName = _codeRepository.GetByKey(posted.DictCodeId);
+                if (storedName is null) return BadRequest($"Нет справочника с таким id названия: {posted.DictCodeId}");
+
+                var existing = await _repository.FirstAsync(x => x.DictCodeId == posted.DictCodeId & !x.IsDeleted);
                 if (existing != null)
                 {
                     if (existing.VersionCode >= posted.VersionCode)

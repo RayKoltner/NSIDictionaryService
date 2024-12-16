@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NSIDictionaryService.Api.Repositories;
+using NSIDictionaryService.Api.Repositories.Upload;
 using NSIDictionaryService.Data.Models;
 using NSIDictionaryService.Share.DTOs;
 
@@ -11,10 +12,15 @@ namespace NSIDictionaryService.Api.Controllers
     {
         private readonly IUploadInfoRepository _repository;
         private readonly IDictVersionRepository _versionRepository;
-        public UploadInfoController(IUploadInfoRepository repository, IDictVersionRepository versionRepository)
+        private readonly IDictCodeRepository _codeRepository;
+        public UploadInfoController(
+            IUploadInfoRepository repository, 
+            IDictVersionRepository versionRepository, 
+            IDictCodeRepository codeRepository)
         {
             _repository = repository;
             _versionRepository = versionRepository;
+            _codeRepository = codeRepository;
         }
 
         [HttpGet("getAllUploads")]

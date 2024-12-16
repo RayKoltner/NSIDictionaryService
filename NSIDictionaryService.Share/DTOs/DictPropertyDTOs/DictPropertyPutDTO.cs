@@ -3,7 +3,7 @@
     public class DictPropertyPutDTO
     {
         public int Id { get; set; }
-        public string DictionaryName { get; set; } = String.Empty; //Name of the dictionary itself
+        public int DictionaryCodeId { get; set; } //Name of the dictionary itself
 
         public string PropertyName { get; set; } = String.Empty; //Name of the property in dict class
 

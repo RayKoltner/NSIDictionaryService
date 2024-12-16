@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NSIDictionaryService.Data.Models.Dictionaries
 {
-    public class BaseDictionaryType: BaseEntity
+    public class BaseDictionaryType<T>: BaseEntity
     {
         [Display(Name = "Код")]
-        public int Code { get; set; }
+        public T Code { get; set; }
 
         [Column(TypeName = "date")]
         [Display(Name = "Начало")]

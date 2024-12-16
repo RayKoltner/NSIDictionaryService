@@ -15,6 +15,7 @@ using System.Text;
 using NSIDictionaryService.Share.Helpers;
 using NSIDictionaryService.Share.Exceptions;
 using NSIDictionaryService.Api.Repositories.Upload;
+using System.Xml;
 
 namespace NSIDictionaryService.Api.Controllers
 {
@@ -22,8 +23,10 @@ namespace NSIDictionaryService.Api.Controllers
     [Route("api/v1/[controller]")]
     public class V006Controller : Controller
     {
-        private readonly string _dictionaryIdentifier = "V006";
+        private readonly int _dictionaryIdentifier;
+        private readonly string _dictionaryIdentifierName = "V006";
         private readonly string _storagePath;
+        private readonly string _outputPath;
         private readonly IV006Repository _dictRepository;
         private readonly V006Uploader _uploader;
         private readonly IFFOMSApiService _apiService;
@@ -31,6 +34,7 @@ namespace NSIDictionaryService.Api.Controllers
         private readonly IUploadInfoRepository _uploadRepository;
         private readonly IDictVersionRepository _versionRepository;
         private readonly ILogger<V006Controller> _logger;
+        private readonly UniversalXMLDocCreator _xmlCreator;
 
         public V006Controller(
             IV006Repository dictRepository, 
@@ -40,6 +44,7 @@ namespace NSIDictionaryService.Api.Controllers
             IUploadInfoRepository uploadRepository,
             IWebHostEnvironment environment,
             IChangeRepository changeRepository,
+            IDictCodeRepository codeRepository,
             ILogger<V006Controller> logger,
             ILogger<V006Uploader> uploadLogger)
         {
@@ -50,10 +55,21 @@ namespace NSIDictionaryService.Api.Controllers
             _versionHandler = new VersionHandler(versionRepository);
             _uploadRepository = uploadRepository;
             _storagePath = Path.Combine(environment.ContentRootPath, "Uploads");
+            _outputPath = Path.Combine(environment.ContentRootPath, "Reports");
+
+            _xmlCreator = new UniversalXMLDocCreator(propertyRepository);
+
+            var name = codeRepository.First(x => x.Name == _dictionaryIdentifierName);
+            if (name == null) throw new Exception("Нет записи о справочнике V006 в таблице названий справочников");
+            _dictionaryIdentifier = name.Id;
 
             if (!Directory.Exists(_storagePath))
             {
                 Directory.CreateDirectory(_storagePath);
+            }
+            if (!Directory.Exists(_outputPath))
+            {
+                Directory.CreateDirectory(_outputPath);
             }
 
             _logger = logger;
@@ -90,7 +106,7 @@ namespace NSIDictionaryService.Api.Controllers
         public async Task<IActionResult> PostAsync([FromBody] V006DTO value)
         {
             var version = await _versionRepository.GetByKeyAsync(value.DictVersionId);
-            if (version == null || !version.DictionaryCode.Equals(_dictionaryIdentifier) || version.IsDeleted)
+            if (version == null || version.DictCodeId != _dictionaryIdentifier || version.IsDeleted)
                 return BadRequest("Неверная версия словаря");
 
             //if (value.EndDate < DateTime.UtcNow || value.EndDate < value.BeginDate) 
@@ -113,7 +129,7 @@ namespace NSIDictionaryService.Api.Controllers
                 if (existing.DictVersionId != value.DictVersionId)
                 {
                     var version = _versionRepository.GetByKey(value.DictVersionId);
-                    if (version == null || !version.DictionaryCode.Equals(_dictionaryIdentifier) || version.IsDeleted)
+                    if (version == null || version.DictCodeId != _dictionaryIdentifier || version.IsDeleted)
                         return BadRequest("Неверная версия словаря");
                 }
                 
@@ -151,12 +167,12 @@ namespace NSIDictionaryService.Api.Controllers
             {
                 UploadingUserId = 0, // TODO : Change this when you'll add users
                 UploadDate = DateTime.Now,
-                DictCode = _dictionaryIdentifier,
+                DictCode = _dictionaryIdentifierName,
                 UploadMethodId = 2, // TODO : Change this when you'll add proper codes
                 UploadResultId = 1
             };
 
-            var versionDto = _apiService.GetVersionData(_dictionaryIdentifier).VersionData.FirstOrDefault();
+            var versionDto = _apiService.GetVersionData(_dictionaryIdentifierName).VersionData.FirstOrDefault();
             if (versionDto is null) throw new FailedAccessToExternalServiceException("Ошибка доступа к сервису NSI FFOMS");
 
             try
@@ -167,7 +183,7 @@ namespace NSIDictionaryService.Api.Controllers
                 _uploadRepository.Add(uploadFile);
                 await _uploadRepository.SaveChangesAsync();
 
-                var data = _apiService.GetDictionaryData(_dictionaryIdentifier);
+                var data = _apiService.GetDictionaryData(_dictionaryIdentifierName);
                 if (data is null) throw new FailedAccessToExternalServiceException("Ошибка доступа к сервису NSI FFOMS");
 
                 bool result = await _uploader.UploadFromJson(data, version, uploadFile.Id);
@@ -205,7 +221,7 @@ namespace NSIDictionaryService.Api.Controllers
             {
                 UploadingUserId = 0, // TODO : Change this when you'll add users
                 UploadDate = DateTime.Now,
-                DictCode = _dictionaryIdentifier,
+                DictCode = _dictionaryIdentifierName,
                 UploadMethodId = 3, // TODO : Change this when you'll add proper codes
                 UploadResultId = 1
             };
@@ -243,7 +259,7 @@ namespace NSIDictionaryService.Api.Controllers
                 SimpleXMLValidator.Validate(XMLData); //This is too simple, prob should rework it
 
                 // Because why change what works?
-                var versionDto = XMLPackageToDictDataMapper.GetVersion(XMLData, _dictionaryIdentifier); 
+                var versionDto = XMLPackageToDictDataMapper.GetVersion(XMLData); 
 
                 DictVersion version = await _versionHandler.HandleVersion(versionDto, _dictionaryIdentifier);
                 uploadFile.DictVersionId = version.Id;
@@ -279,6 +295,32 @@ namespace NSIDictionaryService.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("downloadXML")]
+        public async Task<IActionResult> getXML()
+        {
+            DictVersion version = await _versionRepository.FirstAsync(x => x.DictCodeId == _dictionaryIdentifier && !x.IsDeleted);
+            if (version == null) return BadRequest($"Записи словаря {_dictionaryIdentifierName} отсутствуют");
+
+            var data = _dictRepository.GetAll().Cast<BaseDictionaryType<int>>().ToList();
+
+            var xdoc = _xmlCreator.CreateDocument<int>(data, version, _dictionaryIdentifierName);
+
+            string fileName = Path.Combine(_outputPath,
+                $"{_dictionaryIdentifierName}_" +
+                $"{DateTime.Now.ToString("yyyyMMddHHmmssffff")}.xml");
+
+            xdoc.Save(fileName);
+
+            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            //StreamReader file = new StreamReader(fileName, Encoding.GetEncoding("windows-1251"));
+
+            //Response.Headers.Append("Content-Disposition", $"attachment; filename={_dictionaryIdentifierName}");
+            Response.Headers.Append("Content-Encoding", "windows-1251");
+
+            return PhysicalFile(fileName, "text/xml");
+        }
+
         private async Task SetErrorStatusAsync(UploadInfo uploadFile, string message)
         {
             uploadFile.UploadResultId = 2;

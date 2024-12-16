@@ -2,10 +2,11 @@
 
 namespace NSIDictionaryService.Data.Models
 {
-    public class DictVersion: BaseEntity
+    public class DictVersion : BaseEntity
     {
         [Display(Name = "Код словаря")]
-        public string DictionaryCode { get; set; } = string.Empty;
+        public int DictCodeId { get; set; }
+        public virtual DictCode? DictCode { get; private set;}
 
         [Display(Name = "Номер версии")]
         public decimal VersionCode { get; set; }
@@ -14,9 +15,9 @@ namespace NSIDictionaryService.Data.Models
         public DateTime PublicationDate { get; set; }
 
         public DictVersion() { }
-        public DictVersion(string dictionaryCode, decimal versionCode, DateTime publicationDate)
+        public DictVersion(int dictionaryCodeId, decimal versionCode, DateTime publicationDate)
         {
-            DictionaryCode = dictionaryCode;
+            DictCodeId = dictionaryCodeId;
             VersionCode = versionCode;
             PublicationDate = publicationDate;
         }

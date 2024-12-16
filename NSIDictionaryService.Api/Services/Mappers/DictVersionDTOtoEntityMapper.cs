@@ -8,7 +8,7 @@ namespace NSIDictionaryService.Api.Services.Mappers
         public static DictVersion Convert(DictVersionDTO dto)
         {
             var converted = new DictVersion();
-            converted.DictionaryCode = dto.DictionaryCode;
+            converted.DictCodeId = dto.DictionaryCodeId;
             converted.VersionCode = dto.VersionCode;
             converted.PublicationDate = DateTime.ParseExact(dto.PublicationDate, "dd.MM.yyyy", null);
 

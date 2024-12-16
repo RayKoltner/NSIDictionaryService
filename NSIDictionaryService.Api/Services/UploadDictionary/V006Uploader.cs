@@ -7,7 +7,7 @@ using NSIDictionaryService.Share.DTOs;
 
 namespace NSIDictionaryService.Api.Services.UploadDictionary
 {
-    public class V006Uploader : GenericDictionaryUploader<V006Dictionary>
+    public class V006Uploader : GenericDictionaryUploader<V006Dictionary, int>
     {
         private readonly IV006Repository _repository;
         private readonly ILogger<V006Uploader> _logger;

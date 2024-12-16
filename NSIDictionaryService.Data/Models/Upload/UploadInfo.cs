@@ -7,22 +7,28 @@
 
         public DateTime UploadDate { get; set; }
 
-        public string DictCode { get; set; } = string.Empty;
+        public string DictCode { get; set; }
 
         public int DictVersionId { get; set; }
-        public DictVersion? DictVersion { get; private set; }
+        public virtual DictVersion? DictVersion { get; private set; }
 
         public int UploadMethodId { get; set; }
-        public UploadMethod? UploadMethod { get; set; }
+        public virtual UploadMethod? UploadMethod { get; set; }
 
         public int UploadResultId { get; set; }
-        public UploadResult? UploadResult { get; set; }
+        public virtual UploadResult? UploadResult { get; set; }
 
         public string ErrorDescription { get; set; } = String.Empty;
 
         public UploadInfo() { }
 
-        public UploadInfo(int uploadingUserId, DateTime uploadDate, string dictCode, int dictVersionId, int uploadMethodId, int uploadResultId)
+        public UploadInfo(
+            int uploadingUserId, 
+            DateTime uploadDate, 
+            string dictCode,
+            int dictVersionId, 
+            int uploadMethodId, 
+            int uploadResultId)
         {
             UploadingUserId = uploadingUserId;
             UploadDate = uploadDate;

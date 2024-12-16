@@ -16,6 +16,7 @@ namespace NSIDictionaryService.Api.Extensions
             builder.Services.AddTransient<IUploadInfoRepository, UploadInfoRepository>();
             builder.Services.AddTransient<IChangeRepository, ChangeRepository>();
             builder.Services.AddTransient<IV006Repository, V006Repository>();
+            builder.Services.AddTransient<IDictCodeRepository, DictCodeRepository>();
 
             return builder;
         }

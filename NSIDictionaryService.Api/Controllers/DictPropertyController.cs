@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NSIDictionaryService.Api.Repositories;
+using NSIDictionaryService.Api.Repositories.Upload;
 using NSIDictionaryService.Api.Services.Mappers;
 using NSIDictionaryService.Data.Models;
 using NSIDictionaryService.Share.DTOs;
@@ -11,9 +12,11 @@ namespace NSIDictionaryService.Api.Controllers
     public class DictPropertyController: Controller
     {
         private readonly IDictPropertyRepository _repository;
-        public DictPropertyController(IDictPropertyRepository repository)
+        private readonly IDictCodeRepository _codeRepository;
+        public DictPropertyController(IDictPropertyRepository repository, IDictCodeRepository codeRepository)
         {
             _repository = repository;
+            _codeRepository = codeRepository;
         }
 
         [HttpGet("getAllProperties")]
@@ -32,9 +35,9 @@ namespace NSIDictionaryService.Api.Controllers
         }
 
         [HttpGet("getAllDictProperties")]
-        public IActionResult GetByDict(string dictIdentifier)
+        public IActionResult GetByDict(int dictNameId)
         {
-            var result = _repository.FindBy(x => x.DictionaryName == dictIdentifier);
+            var result = _repository.FindBy(x => x.DictCodeId == dictNameId);
             if (!result.Any())
             {
                 return NotFound();
@@ -45,6 +48,8 @@ namespace NSIDictionaryService.Api.Controllers
         [HttpPost("addProperty")]
         public IActionResult Post([FromBody] DictPropertyDTO value)
         {
+            var dictCodeId = _codeRepository.GetByKey(value.DictionaryCodeId);
+            if (dictCodeId is null) return BadRequest("Словарь с таким Id названия не существует");
             DictProperty posted = DictPropertyDTOtoEntityMapper.Convert(value);
             _repository.Add(posted);
             _repository.Save();
@@ -57,7 +62,10 @@ namespace NSIDictionaryService.Api.Controllers
             var existing = await _repository.GetByKeyAsync(value.Id);
             if (existing is null) return NotFound();
 
-            existing.DictionaryName = value.DictionaryName;
+            var dictCodeId = _codeRepository.GetByKey(value.DictionaryCodeId);
+            if (dictCodeId is null) return BadRequest("Словарь с таким Id названия не существует");
+
+            existing.DictCodeId = value.DictionaryCodeId;
             existing.PropertyCode = value.PropertyCode;
             existing.PropertyName = value.PropertyName;
 

@@ -33,6 +33,8 @@ namespace NSIDictionaryService.Data
         #endregion
 
         #region Dicts
+        public DbSet<DictCode> DictCodes => Set<DictCode>();
+
         public DbSet<DictVersion> Versions => Set<DictVersion>();
 
         public DbSet<DictProperty> Properties => Set<DictProperty>();   
@@ -51,6 +53,23 @@ namespace NSIDictionaryService.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<DictCode>().HasIndex(x => x.Name).IsUnique();
+
+            modelBuilder.Entity<DictVersion>()
+                .Property(x => x.VersionCode)
+                .HasPrecision(5, 2);
+
+            modelBuilder.Entity<V025Dictionary>()
+                .Property(x => x.Code)
+                .HasPrecision(5, 2);
+
+            modelBuilder.Entity<DictVersion>()
+                .HasOne(x => x.DictCode)
+                .WithMany()
+                .HasForeignKey(x => x.DictCodeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

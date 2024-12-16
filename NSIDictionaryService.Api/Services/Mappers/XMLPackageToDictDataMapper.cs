@@ -5,7 +5,7 @@ namespace NSIDictionaryService.Api.Services
 {
     public static class XMLPackageToDictDataMapper
     {
-        public static DictionaryVersionDataDTO GetVersion(XDocument rawPackage, string dictIdentifier)
+        public static DictionaryVersionDataDTO GetVersion(XDocument rawPackage)
         {
             DictionaryVersionDataDTO version = new DictionaryVersionDataDTO();
 

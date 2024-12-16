@@ -15,13 +15,13 @@ namespace NSIDictionaryService.Api.Services.Handlers
             _repository = repository;
         }
 
-        public async Task<DictVersion> HandleVersion(DictionaryVersionDataDTO versionDataDTO, string dictIdentifier)
+        public async Task<DictVersion> HandleVersion(DictionaryVersionDataDTO versionDataDTO, int dictIdentifierId)
         {
             DictVersion version;
             decimal versionCode = decimal.Parse(versionDataDTO.Version, CultureInfo.InvariantCulture);
 
             var existingVersion = await _repository.FirstAsync(
-                x => x.DictionaryCode == dictIdentifier && !x.IsDeleted);
+                x => x.DictCodeId == dictIdentifierId && !x.IsDeleted);
 
             if (existingVersion != null && 
                 versionCode <= existingVersion.VersionCode)
@@ -31,7 +31,7 @@ namespace NSIDictionaryService.Api.Services.Handlers
             }
             if (existingVersion != null) await _repository.VirtualDelete(existingVersion, 0); // TODO : Add users
 
-            version = new DictVersion(dictIdentifier,
+            version = new DictVersion(dictIdentifierId,
                 versionCode,
                 versionDataDTO.CreateDate.ToDateTime(TimeOnly.MinValue));
 

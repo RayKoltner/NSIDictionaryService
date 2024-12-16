@@ -1,6 +1,6 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NSIDictionaryService.Data;
+using System.Linq.Expressions;
 
 namespace NSIDictionaryService.Api.Repositories.Common
 {
@@ -29,9 +29,28 @@ namespace NSIDictionaryService.Api.Repositories.Common
             return await _сontextFactory.Set<T>().FindAsync(id);
         }
 
+        public virtual T? First(Expression<Func<T, bool>> predicate)
+        {
+            return _сontextFactory.Set<T>().FirstOrDefault(predicate);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    _сontextFactory.Dispose();
+                }
+
+                _disposedValue = true;
+            }
+        }
+
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
