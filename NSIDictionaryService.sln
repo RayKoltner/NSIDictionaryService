@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSIDictionaryService.Data",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSIDictionaryService.Share", "NSIDictionaryService.Share\NSIDictionaryService.Share.csproj", "{42399D27-E085-48C3-92AD-F3A97E6B4AEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSIDictionaryService.Api", "NSIDictionaryService.Api\NSIDictionaryService.Api.csproj", "{EE0CDA6B-5109-4613-98E1-851456CDA337}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSIDictionaryService.Api", "NSIDictionaryService.Api\NSIDictionaryService.Api.csproj", "{EE0CDA6B-5109-4613-98E1-851456CDA337}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

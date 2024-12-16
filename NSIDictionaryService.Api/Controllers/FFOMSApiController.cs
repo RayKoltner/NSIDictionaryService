@@ -45,15 +45,15 @@ namespace NSIDictionaryService.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getFedPack")]
-        public IActionResult GetFedPack()
-        {
-            var result = _apiService.GetFedPackDictVersions();
-            if (result == null)
-            {
-                return BadRequest();
-            }
-            return Ok(result);
-        }
+        //[HttpGet("getFedPack")]
+        //public IActionResult GetFedPack()
+        //{
+        //    var result = _apiService.GetFedPackDictVersions();
+        //    if (result == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    return Ok(result);
+        //}
     }
 }

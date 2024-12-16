@@ -20,7 +20,7 @@ namespace NSIDictionaryService.Data.Models
         public int DeletedUserId { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? DeleteDate { get; set; }
+        public DateTime? DeletedDate { get; set; }
 
         public bool IsDeleted { get; set; }
 
@@ -28,7 +28,7 @@ namespace NSIDictionaryService.Data.Models
         {
             CreateDate = DateTime.Today;
             EditDate = DateTime.Today;
-            DeleteDate = DateTime.MaxValue;
+            DeletedDate = DateTime.MaxValue;
             DeletedUserId = 0;
             IsDeleted = false;
         }

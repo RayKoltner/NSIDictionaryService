@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using NSIDictionaryService.Share.Converters;
 
 namespace NSIDictionaryService.Share.DTOs
 {
@@ -7,10 +8,12 @@ namespace NSIDictionaryService.Share.DTOs
         [JsonPropertyName("version")]
         public string Version { get; set; } = string.Empty;
 
+        [JsonConverter(typeof(CustomDateConverter))]
         [JsonPropertyName("createDate")]
-        public DateTime CreateDate { get; set; }
+        public DateOnly CreateDate { get; set; }
 
+        [JsonConverter(typeof(CustomDateConverter))]
         [JsonPropertyName("publishDate")]
-        public DateTime UpdateDate { get; set; }
+        public DateOnly UpdateDate { get; set; }
     }
 }

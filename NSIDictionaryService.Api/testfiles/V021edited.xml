@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<packet>
+  <zglv>
+    <type>MedSpec</type>
+    <version>4.8</version>
+    <date>26.03.2024</date>
+  </zglv>
+  <zap>
+    <IDSPEC>1</IDSPEC>
+    <SPECNAME>Авиационная и космическая медицина</SPECNAME>
+    <POSTNAME/>
+    <IDPOST_MZ/>
+    <DATEBEG>28.11.2015</DATEBEG>
+    <DATEEND>31.10.2019</DATEEND>
+  </zap>
+  <zap>
+    <IDSPEC>1</IDSPEC>
+    <SPECNAME>Авиационная и космическая медицина</SPECNAME>
+    <POSTNAME>врач по авиационной и космической медицине </POSTNAME>
+    <IDPOST_MZ>62</IDPOST_MZ>
+    <DATEBEG>01.11.2019</DATEBEG>
+    <DATEEND>16.12.2024</DATEEND>
+  </zap>
+</packet>

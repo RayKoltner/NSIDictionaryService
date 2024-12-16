@@ -4,3 +4,5 @@ GET {{NSIDictionaryService.Api_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{NSIDictionaryService.Api_HostAddress}}/api/v1/V006Controller/downloadXML

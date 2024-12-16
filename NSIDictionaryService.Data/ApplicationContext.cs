@@ -29,13 +29,19 @@ namespace NSIDictionaryService.Data
 
         public DbSet<UploadMethod> UploadMethods => Set<UploadMethod>();
 
-        public DbSet<Upload> Uploads => Set<Upload>();
+        public DbSet<UploadInfo> Uploads => Set<UploadInfo>();
         #endregion
 
         #region Dicts
+        public DbSet<DictCode> DictCodes => Set<DictCode>();
+
         public DbSet<DictVersion> Versions => Set<DictVersion>();
 
-        //public DbSet<Change> Changes => Set<Change>(); //TODO : Finish this entity
+        public DbSet<DictProperty> Properties => Set<DictProperty>();   
+
+        public DbSet<Change> Changes => Set<Change>();
+
+        public DbSet<DictDependancy> Dependencies => Set<DictDependancy>();
 
         public DbSet<V006Dictionary> V006 => Set<V006Dictionary>();
 
@@ -50,9 +56,34 @@ namespace NSIDictionaryService.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<DictDependancy>()
+                .HasOne(d => d.DictCode)
+                .WithMany()
+                .HasForeignKey(d => d.DictId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<DictDependancy>()
+                .HasOne(d => d.DependancyCode)
+                .WithMany()
+                .HasForeignKey(d => d.DependancyId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<DictCode>().HasIndex(x => x.Name).IsUnique();
+
             modelBuilder.Entity<DictVersion>()
-                .HasIndex(e => e.VersionCode)
-                .IsUnique();
+                .Property(x => x.VersionCode)
+                .HasPrecision(5, 2);
+
+            modelBuilder.Entity<V025Dictionary>()
+                .Property(x => x.Code)
+                .HasPrecision(5, 2);
+
+            modelBuilder.Entity<DictVersion>()
+                .HasOne(x => x.DictCode)
+                .WithMany()
+                .HasForeignKey(x => x.DictCodeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

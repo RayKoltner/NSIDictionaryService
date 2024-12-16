@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
-using NSIDictionaryService.Share.DTOs;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
 using NSIDictionaryService.Api.Settings;
 using System;
+using NSIDictionaryService.Share.DTOs;
 
 namespace NSIDictionaryService.Api.Services
 {
@@ -51,11 +51,10 @@ namespace NSIDictionaryService.Api.Services
 
         public DictionaryVersionDTO GetVersionData(string identifier)
         {
-            //var response = _httpClient.GetAsync($"{_httpClient.BaseAddress}/api/versions?identifier={identifier}").Result;
-            //string data = response.Content.ReadAsStringAsync().Result;
-            //var DTO = JsonSerializer.Deserialize<DictionaryVersionDTO>(data);
-            //return DTO;
-            throw new NotImplementedException();
+            var response = _httpClient.GetAsync($"{_httpClient.BaseAddress}/api/versions?identifier={identifier}").Result;
+            string data = response.Content.ReadAsStringAsync().Result;
+            var DTO = JsonSerializer.Deserialize<DictionaryVersionDTO>(data);
+            return DTO;
         }
     }
 }
