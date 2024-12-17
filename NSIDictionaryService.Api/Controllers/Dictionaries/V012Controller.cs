@@ -37,7 +37,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         private readonly ILogger<V012Controller> _logger;
         private readonly UniversalXMLDocCreator _xmlCreator;
         private readonly VersionChecker _versionChecker;
-        private readonly IDictDependancyRepository _dependancyRepository;
+        private readonly IDictDependencyRepository _DependencyRepository;
 
         public V012Controller(
             IV012Repository dictRepository,
@@ -48,7 +48,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             IWebHostEnvironment environment,
             IChangeRepository changeRepository,
             IDictCodeRepository codeRepository,
-            IDictDependancyRepository dependancyRepository,
+            IDictDependencyRepository DependencyRepository,
             ILogger<V012Controller> logger,
             ILogger<V012Uploader> uploadLogger)
         {
@@ -60,7 +60,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             _uploadRepository = uploadRepository;
             _storagePath = Path.Combine(environment.ContentRootPath, "Uploads");
             _outputPath = Path.Combine(environment.ContentRootPath, "Reports");
-            _dependancyRepository = dependancyRepository;
+            _DependencyRepository = DependencyRepository;
 
             _xmlCreator = new UniversalXMLDocCreator(propertyRepository);
 
@@ -173,9 +173,9 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         {
             try
             {
-                _versionChecker.Check(_dependancyRepository.FindBy(x => x.DictId == _dictionaryIdentifier).ToList());
+                _versionChecker.Check(_DependencyRepository.FindBy(x => x.DictId == _dictionaryIdentifier).ToList());
             }
-            catch(OutdatedDependancyException ex)
+            catch(OutdatedDependencyException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -236,9 +236,9 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         {
             try
             {
-                _versionChecker.Check(_dependancyRepository.FindBy(x => x.DictId == _dictionaryIdentifier).ToList());
+                _versionChecker.Check(_DependencyRepository.FindBy(x => x.DictId == _dictionaryIdentifier).ToList());
             }
-            catch (OutdatedDependancyException ex)
+            catch (OutdatedDependencyException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -275,7 +275,6 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
 
                 XDocument XMLData;
 
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 using (var reader = new StreamReader(filePath, Encoding.GetEncoding("windows-1251")))
                 {
                     XMLData = XDocument.Load(reader);
@@ -338,13 +337,12 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
 
             xdoc.Save(fileName);
 
-            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             //StreamReader file = new StreamReader(fileName, Encoding.GetEncoding("windows-1251"));
 
             //Response.Headers.Append("Content-Disposition", $"attachment; filename={_dictionaryIdentifierName}");
             Response.Headers.Append("Content-Encoding", "windows-1251");
 
-            return PhysicalFile(fileName, "text/xml");
+            return PhysicalFile(fileName, "text/xml; charset=windows-1251");
         }
 
         private async Task SetErrorStatusAsync(UploadInfo uploadFile, string message)

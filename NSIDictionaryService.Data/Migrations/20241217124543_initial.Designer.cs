@@ -12,8 +12,8 @@ using NSIDictionaryService.Data;
 namespace NSIDictionaryService.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241216155303_AddedDependancies")]
-    partial class AddedDependancies
+    [Migration("20241217124543_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,139 @@ namespace NSIDictionaryService.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
 
             modelBuilder.Entity("NSIDictionaryService.Data.Models.Change", b =>
                 {
@@ -83,9 +216,31 @@ namespace NSIDictionaryService.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("DictCodes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "V006"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "V012"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "V021"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "V025"
+                        });
                 });
 
-            modelBuilder.Entity("NSIDictionaryService.Data.Models.DictDependancy", b =>
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.DictDependency", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,7 +248,7 @@ namespace NSIDictionaryService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DependancyId")
+                    b.Property<int>("DependencyId")
                         .HasColumnType("int");
 
                     b.Property<int>("DictId")
@@ -101,11 +256,19 @@ namespace NSIDictionaryService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DependancyId");
+                    b.HasIndex("DependencyId");
 
                     b.HasIndex("DictId");
 
                     b.ToTable("Dependencies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DependencyId = 1,
+                            DictId = 2
+                        });
                 });
 
             modelBuilder.Entity("NSIDictionaryService.Data.Models.DictProperty", b =>
@@ -150,6 +313,60 @@ namespace NSIDictionaryService.Data.Migrations
                     b.HasIndex("DictCodeId");
 
                     b.ToTable("Properties");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            DeletedDate = new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999),
+                            DeletedUserId = 0,
+                            DictCodeId = 1,
+                            EditDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            EditUserId = 0,
+                            IsDeleted = false,
+                            PropertyCode = "IDUMP",
+                            PropertyName = "Code"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            DeletedDate = new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999),
+                            DeletedUserId = 0,
+                            DictCodeId = 1,
+                            EditDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            EditUserId = 0,
+                            IsDeleted = false,
+                            PropertyCode = "UMPNAME",
+                            PropertyName = "Name"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreateDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            DeletedDate = new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999),
+                            DeletedUserId = 0,
+                            DictCodeId = 1,
+                            EditDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            EditUserId = 0,
+                            IsDeleted = false,
+                            PropertyCode = "DATEBEG",
+                            PropertyName = "BeginDate"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreateDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            DeletedDate = new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999),
+                            DeletedUserId = 0,
+                            DictCodeId = 1,
+                            EditDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            EditUserId = 0,
+                            IsDeleted = false,
+                            PropertyCode = "DATEEND",
+                            PropertyName = "EndDate"
+                        });
                 });
 
             modelBuilder.Entity("NSIDictionaryService.Data.Models.DictVersion", b =>
@@ -426,45 +643,6 @@ namespace NSIDictionaryService.Data.Migrations
                     b.ToTable("V025");
                 });
 
-            modelBuilder.Entity("NSIDictionaryService.Data.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("DeletedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EditDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("EditUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Privileges")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("NSIDictionaryService.Data.Models.UploadInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -540,6 +718,23 @@ namespace NSIDictionaryService.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UploadMethods");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Ручная загрузка"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Загрузка из API"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Загрузка из XML файла"
+                        });
                 });
 
             modelBuilder.Entity("NSIDictionaryService.Data.Models.UploadResult", b =>
@@ -557,50 +752,139 @@ namespace NSIDictionaryService.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UploadResults");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Успешно"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Ошибка"
+                        });
                 });
 
-            modelBuilder.Entity("NSIDictionaryService.Data.Models.User", b =>
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.Users.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("date");
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("DeletedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EditDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("EditUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Password")
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("NSIDictionaryService.Data.Models.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("NSIDictionaryService.Data.Models.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NSIDictionaryService.Data.Models.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("NSIDictionaryService.Data.Models.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("NSIDictionaryService.Data.Models.Change", b =>
@@ -614,11 +898,11 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Navigation("UploadInfo");
                 });
 
-            modelBuilder.Entity("NSIDictionaryService.Data.Models.DictDependancy", b =>
+            modelBuilder.Entity("NSIDictionaryService.Data.Models.DictDependency", b =>
                 {
-                    b.HasOne("NSIDictionaryService.Data.Models.DictCode", "DependancyCode")
+                    b.HasOne("NSIDictionaryService.Data.Models.DictCode", "DependencyCode")
                         .WithMany()
-                        .HasForeignKey("DependancyId")
+                        .HasForeignKey("DependencyId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -628,7 +912,7 @@ namespace NSIDictionaryService.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("DependancyCode");
+                    b.Navigation("DependencyCode");
 
                     b.Navigation("DictCode");
                 });
@@ -724,17 +1008,6 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Navigation("UploadMethod");
 
                     b.Navigation("UploadResult");
-                });
-
-            modelBuilder.Entity("NSIDictionaryService.Data.Models.User", b =>
-                {
-                    b.HasOne("NSIDictionaryService.Data.Models.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
                 });
 #pragma warning restore 612, 618
         }

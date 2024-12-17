@@ -1,6 +1,6 @@
 ﻿namespace NSIDictionaryService.Data.Models
 {
-    public class DictDependancy
+    public class DictDependency
     {
         public int Id { get; set; }
 
@@ -8,8 +8,8 @@
 
         public virtual DictCode? DictCode { get; set; }
 
-        public int DependancyId { get; set; }
+        public int DependencyId { get; set; }
 
-        public virtual DictCode? DependancyCode { get; set; }
+        public virtual DictCode? DependencyCode { get; set; }
     }
 }

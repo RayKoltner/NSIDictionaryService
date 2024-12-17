@@ -249,7 +249,7 @@ namespace NSIDictionaryService.Api.Controllers
 
                 XDocument XMLData;
 
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                
                 using (var reader = new StreamReader(filePath, Encoding.GetEncoding("windows-1251")))
                 {
                     XMLData = XDocument.Load(reader);
@@ -312,13 +312,11 @@ namespace NSIDictionaryService.Api.Controllers
 
             xdoc.Save(fileName);
 
-            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             //StreamReader file = new StreamReader(fileName, Encoding.GetEncoding("windows-1251"));
 
             //Response.Headers.Append("Content-Disposition", $"attachment; filename={_dictionaryIdentifierName}");
-            Response.Headers.Append("Content-Encoding", "windows-1251");
 
-            return PhysicalFile(fileName, "text/xml");
+            return PhysicalFile(fileName, "text/xml; charset=windows-1251");
         }
 
         private async Task SetErrorStatusAsync(UploadInfo uploadFile, string message)

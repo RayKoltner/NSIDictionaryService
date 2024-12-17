@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSIDictionaryService.Share"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSIDictionaryService.Api", "NSIDictionaryService.Api\NSIDictionaryService.Api.csproj", "{EE0CDA6B-5109-4613-98E1-851456CDA337}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSIDictionaryService.UI", "NSIDictionaryService.UI\NSIDictionaryService.UI.csproj", "{470099B5-DB7A-43FD-98F3-A8C1875D98C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{EE0CDA6B-5109-4613-98E1-851456CDA337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE0CDA6B-5109-4613-98E1-851456CDA337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE0CDA6B-5109-4613-98E1-851456CDA337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{470099B5-DB7A-43FD-98F3-A8C1875D98C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{470099B5-DB7A-43FD-98F3-A8C1875D98C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{470099B5-DB7A-43FD-98F3-A8C1875D98C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{470099B5-DB7A-43FD-98F3-A8C1875D98C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

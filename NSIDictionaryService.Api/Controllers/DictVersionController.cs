@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NSIDictionaryService.Api.Repositories;
 using NSIDictionaryService.Api.Repositories.Upload;
 using NSIDictionaryService.Api.Services.Mappers;
@@ -9,6 +10,7 @@ namespace NSIDictionaryService.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class DictVersionController : Controller
     {
         private readonly IDictVersionRepository _repository;

@@ -2,6 +2,7 @@
 using NSIDictionaryService.Api.Repositories.Dictionaries;
 using NSIDictionaryService.Api.Repositories.Upload;
 using NSIDictionaryService.Api.Services;
+using NSIDictionaryService.Api.Services.Authentication;
 using NSIDictionaryService.Api.Services.Handlers;
 using NSIDictionaryService.Api.Services.UploadDictionary;
 
@@ -20,7 +21,7 @@ namespace NSIDictionaryService.Api.Extensions
             builder.Services.AddTransient<IV021Repository, V021Repository>();
             builder.Services.AddTransient<IV012Repository, V012Repository>();
             builder.Services.AddTransient<IDictCodeRepository, DictCodeRepository>();
-            builder.Services.AddTransient<IDictDependancyRepository, DictDependancyRepository>();
+            builder.Services.AddTransient<IDictDependencyRepository, DictDependencyRepository>();
 
             return builder;
         }
@@ -37,6 +38,7 @@ namespace NSIDictionaryService.Api.Extensions
         public static IHostApplicationBuilder AddOtherServices(this IHostApplicationBuilder builder)
         {
             builder.Services.AddSingleton<IFFOMSApiService, FFOMSApiService>();
+            builder.Services.AddTransient<IAuthService, AuthService>();
 
             return builder;
         }
