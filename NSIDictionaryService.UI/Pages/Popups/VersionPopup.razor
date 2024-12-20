@@ -1,0 +1,123 @@
+﻿@inject HttpClient _httpClient
+@using NSIDictionaryService.Share.DTOs
+
+@{
+    var showClass = IsVisible ? "d-block" : "d-none";
+}
+
+<div class="toast-container p-3 @showClass" data-bs-autohide="true" data-bs-delay="5000">
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">@HeaderText</strong>
+            <button type="button" class="btn-close" aria-label="Close" @onclick="Close"></button>
+        </div>
+       
+        <div class="toast-body">
+            <div class="@(isError ? "error" : "success") @(HideError ? "d-none" : "d-show")">
+                @ErrorText
+            </div>
+            <div>
+                @(Post ? "Код справочника" : "Код")<br />
+                <input type="text" @bind-value=Id/>
+            </div>
+            <div>
+                Код<br />
+                <input type="text" @bind-value=Code />
+            </div>
+            <div>
+                Дата<br />
+                <input type="date" @bind-value=temp />
+            </div>
+            <button class="btn btn-primary" @onclick="Send">@HeaderText</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsVisibleChanged { get; set; }
+
+    [Parameter]
+    public string? HeaderText { get; set; }
+
+    int Id = 0;
+    decimal Code = 0;
+    private bool HideError = true;
+    private string ErrorText = "";
+    DateTime temp = DateTime.Now;
+
+    bool Post = true;
+
+    bool isError = true;
+
+    public void Show(string headerText)
+    {
+        HeaderText = headerText;
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    public void Show(string header, decimal code, DateTime date, int id = 0)
+    {
+        Id = id;
+        Code = code;
+        temp = date;
+        ErrorText = "";
+        HideError = true;
+        HeaderText = header;
+        Post = HeaderText == "Добавить" ? true : false;
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+
+    private void Close()
+    {
+        HeaderText = string.Empty;
+        Id = 0;
+        Code = 0;
+        HideError = true;
+        ErrorText = "";
+        temp = DateTime.Now;
+        IsVisible = false;
+        StateHasChanged();
+    }
+
+    private async Task Send()
+    {
+        HttpResponseMessage result;
+        if (Post)
+        {
+            DictVersionDTO dto = new DictVersionDTO()
+                {
+                    DictionaryCodeId = Id,
+                    VersionCode = Code,
+                    PublicationDate = temp.ToShortDateString()
+                };
+            result = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/v1/DictVersion/addVersion", dto);
+        }
+        else
+        {
+            DictVersionPutDTO dto = new DictVersionPutDTO()
+                {
+                    Id = Id,
+                    VersionCode = Code,
+                    PublicationDate = temp.ToShortDateString()
+                };
+            result = await _httpClient.PutAsJsonAsync("https://localhost:7175/api/v1/DictVersion/changeVersion", dto);
+        }
+        if (!result.IsSuccessStatusCode)
+        {
+            HideError = false;
+            isError = true;
+            ErrorText = await result.Content.ReadAsStringAsync();
+            return;
+        }
+        HideError = false;
+        isError = false;
+        ErrorText = "Успешно! Обновите данные";
+    }
+}

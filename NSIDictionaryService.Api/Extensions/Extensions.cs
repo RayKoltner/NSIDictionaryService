@@ -5,6 +5,7 @@ using NSIDictionaryService.Api.Services;
 using NSIDictionaryService.Api.Services.Authentication;
 using NSIDictionaryService.Api.Services.Handlers;
 using NSIDictionaryService.Api.Services.UploadDictionary;
+using NSIDictionaryService.Api.Services.VersionChecker;
 
 namespace NSIDictionaryService.Api.Extensions
 {
@@ -38,6 +39,7 @@ namespace NSIDictionaryService.Api.Extensions
         public static IHostApplicationBuilder AddOtherServices(this IHostApplicationBuilder builder)
         {
             builder.Services.AddSingleton<IFFOMSApiService, FFOMSApiService>();
+            builder.Services.AddTransient<VersionChecker>();
             builder.Services.AddTransient<IAuthService, AuthService>();
 
             return builder;

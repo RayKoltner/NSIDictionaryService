@@ -24,10 +24,17 @@ namespace NSIDictionaryService.Api.Controllers
         }
 
         [HttpGet("getAllVersions")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var result = _repository.GetAll();
-            return Ok(result);
+            var codes = _codeRepository.GetAll().ToList();
+            List<DictVersionResponseDTO> response = new List<DictVersionResponseDTO>();
+            foreach (var item in result)
+            {
+                var code = codes.FirstOrDefault(x => x.Id == item.DictCodeId);
+                response.Add(UniversalResponseMapper.ConvertToResponse(item, code));
+            }
+            return Ok(response);
         }
 
         [HttpGet("getVersion")]
@@ -39,6 +46,7 @@ namespace NSIDictionaryService.Api.Controllers
         }
 
         [HttpPost("addVersion")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PostAsync([FromBody] DictVersionDTO value)
         {
             try
@@ -66,6 +74,7 @@ namespace NSIDictionaryService.Api.Controllers
         }
 
         [HttpPut("changeVersion")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put([FromBody] DictVersionPutDTO value)
         {
             try
@@ -88,7 +97,8 @@ namespace NSIDictionaryService.Api.Controllers
             }
         }
 
-        [HttpDelete("deleteVersion")]
+        [HttpDelete("deleteVersion/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var existing = await _repository.GetByKeyAsync(id);

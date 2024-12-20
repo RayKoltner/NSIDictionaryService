@@ -1,4 +1,4 @@
-﻿using NSIDictionaryService.Data.Models.Users;
+﻿using NSIDictionaryService.Share.DTOs.Auth;
 
 namespace NSIDictionaryService.Api.Services.Authentication
 {

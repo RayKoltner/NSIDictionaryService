@@ -2,6 +2,20 @@
 
 <PageTitle>Домашняя</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Welcome! Welcome to City-17!</h1>
 
-Welcome to your new app.
+Authorized user accepted, enjoy your ride and there's a pimento t... Oh, nevermind
+
+<a class="btn btn-secondary" @onclick="RedirectPage">Popup</a>
+
+<Popup @ref="popupRef"></Popup>
+
+@code {
+    private Popup popupRef;
+
+    private void RedirectPage()
+    {
+        // Shows the popup at the center of the screen
+        popupRef.Show("Explosion!");
+    }
+}

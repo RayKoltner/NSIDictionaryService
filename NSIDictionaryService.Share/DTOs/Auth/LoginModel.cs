@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NSIDictionaryService.Data.Models.Users
+namespace NSIDictionaryService.Share.DTOs.Auth
 {
     public class LoginModel
     {

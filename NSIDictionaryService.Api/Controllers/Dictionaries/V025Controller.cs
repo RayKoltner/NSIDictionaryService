@@ -15,11 +15,13 @@ using NSIDictionaryService.Share.Exceptions;
 using NSIDictionaryService.Share.Helpers;
 using System.Text;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NSIDictionaryService.Api.Controllers.Dictionaries
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class V025Controller : Controller
     {
         private readonly int _dictionaryIdentifier;
@@ -79,7 +81,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         {
             var result = _dictRepository.GetAll();
             List<V025ResponseDTO> dtos = new List<V025ResponseDTO>();
-            foreach (var item in result) dtos.Add(new V025ResponseDTO(item));
+            foreach (var item in result) dtos.Add(UniversalResponseMapper.ConvertToResponse(item));
             return Ok(dtos);
         }
 
@@ -88,7 +90,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         {
             var result = await _dictRepository.GetByKeyAsync(id);
             if (result == null) return NotFound();
-            return Ok(new V025ResponseDTO(result));
+            return Ok(UniversalResponseMapper.ConvertToResponse(result));
         }
 
         [HttpGet("getEntryByCode")]
@@ -97,11 +99,12 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             var result = _dictRepository.FindBy(x => x.Code == code && !x.IsDeleted);
             if (result == null) return NotFound();
             List<V025ResponseDTO> dtos = new List<V025ResponseDTO>();
-            foreach (var item in result) dtos.Add(new V025ResponseDTO(item));
+            foreach (var item in result) dtos.Add(UniversalResponseMapper.ConvertToResponse(item));
             return Ok(dtos);
         }
 
         [HttpPost("addEntry")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PostAsync([FromBody] V025DTO value)
         {
             var version = await _versionRepository.GetByKeyAsync(value.DictVersionId);
@@ -118,6 +121,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         }
 
         [HttpPut("changeEntry")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put([FromBody] V025PutDTO value)
         {
             try
@@ -151,6 +155,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         }
 
         [HttpDelete("deleteEntry")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var existing = await _dictRepository.GetByKeyAsync(id);
@@ -295,6 +300,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         }
 
         [HttpGet("downloadXML")]
+        [AllowAnonymous]
         public async Task<IActionResult> getXML()
         {
             DictVersion version = await _versionRepository.FirstAsync(x => x.DictCodeId == _dictionaryIdentifier && !x.IsDeleted);

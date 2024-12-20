@@ -1,16 +1,44 @@
 ﻿@inherits LayoutComponentBase
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService _localStorage
+@inject HttpClient Http
+
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Blazored.LocalStorage
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">!Auth here!</a>
-        </div>
+        <AuthorizeView>
+            <NotAuthorized>
+                <div class="top-row px-4">
+                    <a href=/accounts/login>Войти</a>
+                </div>
+            </NotAuthorized>
+            <Authorized>
+                <div class="top-row px-4">
+                    Вы вошли как @context.User.Claims.FirstOrDefault().Value.ToString() &emsp;
+                    <button class="btn btn-secondary" @onclick="Logout">Выйти</button>
+                </div>
+            </Authorized>
+        </AuthorizeView>
 
         <article class="content px-4">
             @Body
         </article>
     </main>
 </div>
+
+@code{
+
+    private async Task Logout()
+    {
+        Console.WriteLine("Logging out!");
+        await _localStorage.RemoveItemAsync("token");
+
+        await AuthStateProvider.GetAuthenticationStateAsync();
+    }
+}

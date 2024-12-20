@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using NSIDictionaryService.Share.DTOs.Auth;
 using NSIDictionaryService.Data.Models.Users;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

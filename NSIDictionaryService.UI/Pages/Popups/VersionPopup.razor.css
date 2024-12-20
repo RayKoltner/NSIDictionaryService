@@ -1,0 +1,15 @@
+﻿.toast-body .error {
+    background-color: rgb(255, 152, 152) !important;
+    padding: 1em;
+    color: black;
+    border: 2px solid red;
+    font-weight: bold;
+}
+
+.toast-body .success {
+    background-color: rgb(186, 255, 153) !important;
+    padding: 1em;
+    color: black;
+    border: 2px solid rgb(47, 156, 0);
+    font-weight: bold;
+}

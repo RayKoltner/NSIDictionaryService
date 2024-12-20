@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NSIDictionaryService.Api.Repositories;
 using NSIDictionaryService.Api.Repositories.Upload;
+using NSIDictionaryService.Api.Services.Mappers;
 using NSIDictionaryService.Data.Models;
 using NSIDictionaryService.Share.DTOs;
 
@@ -8,6 +10,7 @@ namespace NSIDictionaryService.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class UploadInfoController : Controller
     {
         private readonly IUploadInfoRepository _repository;
@@ -28,7 +31,7 @@ namespace NSIDictionaryService.Api.Controllers
         {
             var result = _repository.GetAll();
             List<UploadInfoResponseDTO> responseDTOs = new List<UploadInfoResponseDTO>();
-            foreach (var item in result) responseDTOs.Add(new UploadInfoResponseDTO(item));
+            foreach (var item in result) responseDTOs.Add(UniversalResponseMapper.ConvertToResponse(item));
             return Ok(responseDTOs);
         }
 
@@ -37,7 +40,7 @@ namespace NSIDictionaryService.Api.Controllers
         {
             var result = await _repository.GetByKeyAsync(id);
             if (result == null) return NotFound();
-            var dtoResult = new UploadInfoResponseDTO(result);
+            var dtoResult = UniversalResponseMapper.ConvertToResponse(result);
             return Ok(dtoResult);
         }
 
@@ -50,11 +53,12 @@ namespace NSIDictionaryService.Api.Controllers
                 return NotFound();
             }
             List<UploadInfoResponseDTO> responseDTOs = new List<UploadInfoResponseDTO>();
-            foreach (var item in result) responseDTOs.Add(new UploadInfoResponseDTO(item));
+            foreach (var item in result) responseDTOs.Add(UniversalResponseMapper.ConvertToResponse(item));
             return Ok(responseDTOs);
         }
 
         [HttpPost("addUpload")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Post([FromBody] UploadInfoDTO value)
         {
             var version = _versionRepository.GetByKey(value.DictVersionId);
@@ -75,6 +79,7 @@ namespace NSIDictionaryService.Api.Controllers
         }
 
         [HttpPut("changeUpload")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put([FromBody] UploadInfoPutDTO value)
         {
             var existing = await _repository.GetByKeyAsync(value.Id);
@@ -92,6 +97,7 @@ namespace NSIDictionaryService.Api.Controllers
         }
 
         [HttpDelete("deleteUpload")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var existing = await _repository.GetByKeyAsync(id);

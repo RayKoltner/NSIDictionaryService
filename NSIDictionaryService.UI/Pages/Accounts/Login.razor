@@ -1,0 +1,57 @@
+﻿@page "/accounts/login"
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
+@inject IConfiguration Configuration
+@inject NavigationManager NavigationManager
+
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components.Authorization
+@using NSIDictionaryService.Share.DTOs.Auth;
+    
+<div class="container mt-5 border padded">
+    <h3>Вход</h3>
+<div class="row justify-content-center align-items-center">
+    <div class="row error @(HideError ? "d-none" : "d-show")">
+        Ошибка авторизации: Неверно указан логин и/или пароль.
+    </div>
+    <EditForm Model="user" OnSubmit="HandleLogin">
+        <div class="col-md-6 col-lg-5 wide">
+        <div class="mb-3">
+            <label for="username" class="form-label">Логин</label>
+            <InputText id="username" @bind-Value="user.Username" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <InputText id="password" @bind-Value="user.Password" type="password" class="form-control" />
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary px-5">Войти</button>
+        </div>
+        </div>
+    </EditForm>
+</div>
+</div>
+
+@code {
+    LoginModel user = new LoginModel();
+    bool HideError = true;
+    async Task HandleLogin()
+    {
+        var result = await Http.PostAsJsonAsync("https://localhost:7175/api/v1/Authentication/login", user);
+        if (result.IsSuccessStatusCode)
+        {
+            var token = await result.Content.ReadAsStringAsync();
+
+            //await LocalStorage.SetItemAsync("username", user.Username);
+            await LocalStorage.SetItemAsync("token", token);
+            await AuthStateProvider.GetAuthenticationStateAsync();
+
+            NavigationManager.NavigateTo("");
+        }
+        else
+        {
+            HideError = false;
+        }
+    }
+}

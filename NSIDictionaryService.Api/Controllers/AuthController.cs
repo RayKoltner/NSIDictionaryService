@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NSIDictionaryService.Api.Services.Authentication;
 using NSIDictionaryService.Data.Models.Users;
+using NSIDictionaryService.Share.DTOs.Auth;
 
 namespace NSIDictionaryService.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
