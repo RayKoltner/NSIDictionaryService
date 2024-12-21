@@ -4,10 +4,10 @@ namespace NSIDictionaryService.Share.DTOs.Auth
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "User Name is required")]
+        [Required(ErrorMessage = "Логин обязателен")]
         public string? Username { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
+        [Required(ErrorMessage = "Пароль обязателен")]
         public string? Password { get; set; }
     }
 }

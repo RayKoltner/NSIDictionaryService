@@ -28,7 +28,13 @@
                 Дата<br />
                 <input type="date" @bind-value=temp />
             </div>
-            <button class="btn btn-primary" @onclick="Send">@HeaderText</button>
+            <button class="btn btn-primary" @onclick="Send">
+                @if (loading)
+                {
+                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                }
+                @HeaderText
+            </button>
         </div>
     </div>
 </div>
@@ -52,6 +58,8 @@
     bool Post = true;
 
     bool isError = true;
+
+    bool loading = false;
 
     public void Show(string headerText)
     {
@@ -88,6 +96,7 @@
 
     private async Task Send()
     {
+        loading = true;
         HttpResponseMessage result;
         if (Post)
         {
@@ -109,14 +118,14 @@
                 };
             result = await _httpClient.PutAsJsonAsync("https://localhost:7175/api/v1/DictVersion/changeVersion", dto);
         }
+        HideError = false;
+        loading = false;
         if (!result.IsSuccessStatusCode)
         {
-            HideError = false;
             isError = true;
             ErrorText = await result.Content.ReadAsStringAsync();
             return;
         }
-        HideError = false;
         isError = false;
         ErrorText = "Успешно! Обновите данные";
     }

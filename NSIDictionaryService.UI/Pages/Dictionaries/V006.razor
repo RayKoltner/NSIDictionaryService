@@ -1,0 +1,188 @@
+﻿@page "/dictionaries/v006"
+@attribute [StreamRendering]
+@attribute [Authorize]
+@inject HttpClient _httpClient
+@inject AuthenticationStateProvider _authStateProvider
+@inject IJSRuntime JS
+
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using NSIDictionaryService.Share.DTOs
+@using NSIDictionaryService.Share.DTOs.V006DTOs
+@using NSIDictionaryService.UI.Pages.Popups
+
+<PageTitle>Справочник V006</PageTitle>
+
+<h1>Классификатор условий оказания медицинской помощи</h1>
+
+@if(version is null)
+{
+    <p><em>Загрузка версии...</em></p>
+}
+else
+{
+    <h2>Текущая версия:</h2>
+    <p>Версия @version.VersionCode от @version.PublicationDate</p>
+}
+
+@if (!entries.Any())
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Код записи</th>
+                <th>Название</th>
+                <th>Дата начала действия</th>
+                <th>Дата окончания действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in entries)
+            {
+                <tr>
+                    <td>@entry.Code</td>
+                    <td>@entry.Name</td>
+                    <td>@(entry.BeginDate is null ? "-" : entry.BeginDate.GetValueOrDefault().ToShortDateString())</td>
+                    <td>@(entry.EndDate is null ? "-" : entry.EndDate.GetValueOrDefault().ToShortDateString())</td>
+                    <AuthorizeView Roles="Admin">
+                    </AuthorizeView>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<div class="p-lg-1">
+    <button class="btn btn-info" @onclick="GetData">Обновить</button>
+    <button class="btn btn-secondary" @onclick="GetXml">Выгрузить данные</button>
+</div>
+
+<div class="container mt-4 border align-items-start">
+    <div class="p-md-1 text-start mb-3">
+        <div class="d-flex flex-column align-items-start p-1">
+            <div class="w-100">
+                <button class="btn btn-success mb-2" @onclick="AddFromApi">Добавить новую версию с API</button>
+            </div>
+            <div class="w-100">
+                <InputFile OnChange="UpdatePath" class="mb-2" />
+            </div>
+            <div class="w-100">
+                <button class="btn btn-warning">Добавить из XML</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert @(isError ? "alert-danger" : "alert-success") @(HideError ? "d-none" : "d-block")" role="alert">
+        @ErrorText
+    </div>
+</div>
+
+<script src="/download.js"></script>
+
+@code {
+    DictVersionResponseDTO version = null!;
+    List<V006ResponseDTO> entries = [];
+
+    private string ErrorText = "";
+    private bool HideError = true;
+    private bool isError = false;
+
+    private IBrowserFile? file;
+
+    private V006Popup popup;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+    }
+
+    async Task GetData()
+    {
+        version = await _httpClient.GetFromJsonAsync<DictVersionResponseDTO>
+        ("https://localhost:7175/api/v1/DictVersion/getCurrentVersion/v006") ?? version;
+
+        entries = await _httpClient.GetFromJsonAsync<List<V006ResponseDTO>>
+        ("https://localhost:7175/api/v1/V006/getAllEntries") ?? entries;
+    }
+
+    async Task AddFromApi()
+    {
+        var result = await _httpClient.PostAsync("https://localhost:7175/api/v1/V006/AddFromApi", null);
+        if (!result.IsSuccessStatusCode)
+        {
+            ErrorText = await result.Content.ReadAsStringAsync();
+            HideError = false;
+            isError = true;
+            return;
+        }
+        HideError = true;
+        isError = false;
+        ErrorText = "Успешно добавлено";
+        GetData();
+    }
+
+    private void UpdatePath(InputFileChangeEventArgs e)
+    {
+        file = e.File;
+    }
+
+    async Task UploadFile()
+    {
+        if (file is not null)
+        {
+            var content = new MultipartFormDataContent();
+            var fileContent = new StreamContent(file.OpenReadStream());
+            content.Add(fileContent, "file", file.Name);
+            var result = await _httpClient.PostAsync("https://localhost:7175/api/v1/V006/AddFromXML", content);
+
+            Console.WriteLine(await result.Content.ReadAsStringAsync()); //Debug
+
+            file = null;
+            await GetData();
+        }
+    }
+
+    async Task GetXml()
+    {
+        var response = await _httpClient.GetAsync("https://localhost:7175/api/v1/V006/downloadXML");
+
+        if (response.IsSuccessStatusCode)
+        {
+            // Read the content as a byte array
+            var content = await response.Content.ReadAsByteArrayAsync();
+            var fileName = "V006.xml"; // Specify the desired filename
+
+            // Create a Blob and a download link
+            var base64 = Convert.ToBase64String(content);
+            var dataUri = $"data:application/octet-stream;base64,{base64}";
+
+            await Task.Delay(500);
+            // Use JavaScript interop to trigger download
+            await JS.InvokeVoidAsync("downloadFile", dataUri, fileName);
+        }
+        else
+        {
+            // Handle error
+            Console.WriteLine("Error fetching file.");
+        }
+    }
+
+    // private void Edit(int id, decimal code, string date)
+    // {
+    //     popup.Show("Изменить", code, DateTime.Parse(date), id);
+    // }
+
+    // private void Add()
+    // {
+    //     popup.Show("Добавить");
+    // }
+
+    // private async Task Delete(int id)
+    // {
+    //    await _httpClient.DeleteAsync($"https://localhost:7175/api/v1/DictVersion/deleteVersion/{id}");
+    // await GetData();
+    // }
+}

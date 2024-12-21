@@ -1,0 +1,8 @@
+﻿.narrow {
+    padding: 1em !important;
+    width: 7em !important;
+}
+
+.w-100 .narrow{
+    width: 10em !important;
+}

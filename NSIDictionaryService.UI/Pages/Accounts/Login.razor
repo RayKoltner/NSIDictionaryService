@@ -11,22 +11,32 @@
     
 <div class="container mt-5 border padded">
     <h3>Вход</h3>
+    Нет учетной записи? <NavLink href="/accounts/register">Регистрация</NavLink>
 <div class="row justify-content-center align-items-center">
-    <div class="row error @(HideError ? "d-none" : "d-show")">
+    <div class="alert alert-danger @(HideError ? "d-none" : "d-show")" role="alert">
         Ошибка авторизации: Неверно указан логин и/или пароль.
     </div>
-    <EditForm Model="user" OnSubmit="HandleLogin">
+    <EditForm Model="user" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator/>
         <div class="col-md-6 col-lg-5 wide">
         <div class="mb-3">
             <label for="username" class="form-label">Логин</label>
             <InputText id="username" @bind-Value="user.Username" class="form-control" />
+            <ValidationMessage For="@(() => user.Username)"></ValidationMessage>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Пароль</label>
             <InputText id="password" @bind-Value="user.Password" type="password" class="form-control" />
+            <ValidationMessage For="@(() => user.Password)"></ValidationMessage>
         </div>
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary px-5">Войти</button>
+            <button type="submit" class="btn btn-primary px-5">
+                @if (loading)
+                {
+                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                }
+                @ButtonText
+            </button>
         </div>
         </div>
     </EditForm>
@@ -36,8 +46,22 @@
 @code {
     LoginModel user = new LoginModel();
     bool HideError = true;
+    string ButtonText = "Войти";
+    bool loading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthStateProvider.GetAuthenticationStateAsync();
+        if (user.User.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("");
+        }
+    }
+
     async Task HandleLogin()
     {
+        ButtonText = "";
+        loading = true;
         var result = await Http.PostAsJsonAsync("https://localhost:7175/api/v1/Authentication/login", user);
         if (result.IsSuccessStatusCode)
         {
@@ -53,5 +77,7 @@
         {
             HideError = false;
         }
+        ButtonText = "Войти";
+        loading = false;
     }
 }

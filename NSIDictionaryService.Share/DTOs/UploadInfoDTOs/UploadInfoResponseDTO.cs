@@ -2,6 +2,7 @@
 {
     public class UploadInfoResponseDTO
     {
+        public int Id { get; set; }
         public int UploadingUserId { get; set; }
 
         public DateTime UploadDate { get; set; }

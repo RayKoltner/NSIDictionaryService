@@ -1,0 +1,84 @@
+﻿@page "/accounts/register"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthStateProvider
+
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components.Authorization
+@using NSIDictionaryService.Share.DTOs.Auth;
+
+<div class="container border rounded p-4 mt-5">
+    <h3 class="text-center mb-4">Регистрация</h3>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="alert alert-danger @(HideError ? "d-none" : "d-block")" role="alert">
+                @ErrorText
+            </div>
+
+            <EditForm Model="registration" OnValidSubmit="HandleLogin">
+                <DataAnnotationsValidator/>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Имя пользователя</label>
+                    <InputText id="name" @bind-Value="registration.Name" class="form-control" />
+                    <ValidationMessage For="@(() => registration.Name)"></ValidationMessage>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Электронная почта</label>
+                    <InputText id="email" @bind-Value="registration.Email" type="email" class="form-control" />
+                    <ValidationMessage For="@(() => registration.Email)"></ValidationMessage>
+                </div>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Логин</label>
+                    <InputText id="username" @bind-Value="registration.Username" class="form-control" />
+                    <ValidationMessage For="@(() => registration.Username)"></ValidationMessage>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Пароль</label>
+                    <InputText id="password" @bind-Value="registration.Password" type="password" class="form-control" />
+                    <ValidationMessage For="@(() => registration.Password)"></ValidationMessage>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary px-4">
+                        @if (loading)
+                        {
+                            <span class="spinner-border spinner-border-sm mr-1"></span>
+                        }
+                        @ButtonText
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    RegistrationModel registration = new RegistrationModel();
+    bool HideError = true;
+    string ErrorText = "";
+    string ButtonText = "Зарегистрироваться";
+    bool loading = false;
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+    async Task HandleLogin()
+    {
+        ButtonText = "";
+        loading = true;
+        var result = await Http.PostAsJsonAsync("https://localhost:7175/api/v1/Authentication/registration", registration);
+        if (result.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("");
+        }
+        else
+        {
+            HideError = false;
+            ErrorText = await result.Content.ReadAsStringAsync();
+        }
+        loading = false;
+        ButtonText = "Зарегистрироваться";
+    }
+}

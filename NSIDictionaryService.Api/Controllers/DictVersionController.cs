@@ -45,6 +45,17 @@ namespace NSIDictionaryService.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("getCurrentVersion/{name}")]
+        public async Task<IActionResult> GetByName(string name)
+        {
+            name = name.ToUpper();
+            var code = _codeRepository.First(x => x.Name == name);
+            if (code == null) return NotFound("Нет справочника с таким названием");
+            var version = _repository.First(x => x.DictCodeId == code.Id && !x.IsDeleted);
+            if (version == null) return NotFound("Нет версий этого справочника");
+            return Ok(UniversalResponseMapper.ConvertToResponse(version, code));
+        }
+
         [HttpPost("addVersion")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PostAsync([FromBody] DictVersionDTO value)

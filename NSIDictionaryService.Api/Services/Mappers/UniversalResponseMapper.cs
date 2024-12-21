@@ -14,6 +14,7 @@ namespace NSIDictionaryService.Api.Services.Mappers
         {
             UploadInfoResponseDTO dto = new UploadInfoResponseDTO()
             {
+                Id = uploadInfo.Id,
                 UploadingUserId = uploadInfo.UploadingUserId,
                 UploadDate = uploadInfo.UploadDate,
                 DictCode = uploadInfo.DictCode,

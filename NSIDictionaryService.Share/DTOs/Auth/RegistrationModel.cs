@@ -4,17 +4,18 @@ namespace NSIDictionaryService.Share.DTOs.Auth
 {
     public class RegistrationModel
     {
-        [Required(ErrorMessage = "User Name is required")]
+        [Required(ErrorMessage = "Логин обязателен")]
         public string? Username { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
+        [Required(ErrorMessage = "Имя обязательно")]
         public string? Name { get; set; }
 
         [EmailAddress]
-        [Required(ErrorMessage = "Email is required")]
+        [Required(ErrorMessage = "Email обязателен")]
         public string? Email { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
+        [MinLength(8, ErrorMessage = "Пароль должен быть не менее 8 символов")]
+        [Required(ErrorMessage = "Пароль обязателен")]
         public string? Password { get; set; }
     }
 }
