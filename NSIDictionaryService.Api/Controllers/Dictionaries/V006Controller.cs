@@ -316,6 +316,11 @@ namespace NSIDictionaryService.Api.Controllers
                 _logger.LogError($"Ошибка при загрузке словаря V006 из XML: {ex.Message}");
                 return BadRequest(ex.Message);
             }
+            catch (XmlException ex)
+            {
+                _logger.LogError("Ошибка при загрузке словаря V006 из XML: неверный формат XML");
+                return BadRequest("Ошибка при загрузке словаря V006 из XML: неверный формат XML");
+            }
         }
 
         [HttpGet("downloadXML")]

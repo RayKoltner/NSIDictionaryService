@@ -71,7 +71,7 @@
         var result = await Http.PostAsJsonAsync("https://localhost:7175/api/v1/Authentication/registration", registration);
         if (result.IsSuccessStatusCode)
         {
-            NavigationManager.NavigateTo("");
+            NavigationManager.NavigateTo("accounts/login");
         }
         else
         {

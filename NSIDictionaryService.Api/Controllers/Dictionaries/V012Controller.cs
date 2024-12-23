@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using NSIDictionaryService.Data.Models.Users;
 using System.Security.Claims;
+using System.Xml;
 
 namespace NSIDictionaryService.Api.Controllers.Dictionaries
 {
@@ -341,6 +342,11 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             {
                 _logger.LogError($"Ошибка при загрузке словаря V012 из XML: {ex.Message}");
                 return BadRequest(ex.Message);
+            }
+            catch (XmlException ex)
+            {
+                _logger.LogError("Ошибка при загрузке словаря V012 из XML: неверный формат XML");
+                return BadRequest("Ошибка при загрузке словаря V012 из XML: неверный формат XML");
             }
         }
 
