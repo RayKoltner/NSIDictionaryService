@@ -1,0 +1,95 @@
+﻿@page "/versions"
+@attribute [StreamRendering]
+@attribute [Authorize]
+@inject HttpClient _httpClient
+@inject AuthenticationStateProvider _authStateProvider
+
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using NSIDictionaryService.Share.DTOs
+@using NSIDictionaryService.UI.Pages.Popups
+
+<PageTitle>Версии справочников</PageTitle>
+
+<h1>Текущие версии</h1>
+
+@if (!versions.Any())
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Код словаря</th>
+                <th>Номер версии</th>
+                <th>Дата публикации</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var version in versions)
+            {
+                <tr>
+                    <td>@version.Id</td>
+                    <td>@version.DictionaryCodeName</td>
+                    <td>@version.VersionCode</td>
+                    <td>@version.PublicationDate</td>
+                    <AuthorizeView Roles="Admin">
+                        <td class="narrow">
+                        <button class="btn btn-primary" @onclick=
+                        "() => Edit(version.Id, version.VersionCode, version.PublicationDate)">Изменить</button>
+                        </td>
+                        <td class="narrow">
+                        <button class="btn btn-danger" @onclick="() => Delete(version.Id)">Удалить</button>
+                        </td>
+                    </AuthorizeView>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<VersionPopup @ref="popup"></VersionPopup>
+
+<button class="btn btn-info" @onclick="GetData">Обновить</button>
+
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <button class="btn btn-success" @onclick="Add">Добавить новую запись</button>
+    </Authorized>
+</AuthorizeView>
+
+
+@code{
+    List<DictVersionResponseDTO> versions = [];
+    private VersionPopup popup;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+    }
+
+    public async Task GetData()
+    {
+        versions = await _httpClient.GetFromJsonAsync<List<DictVersionResponseDTO>>
+        ("https://localhost:7175/api/v1/DictVersion/getAllVersions") ?? versions;
+    }
+
+    private void Edit(int id, decimal code, string date)
+    {
+        popup.Show("Изменить", code, DateTime.Parse(date), id);
+    }
+
+    private void Add()
+    {
+        popup.Show("Добавить");
+    }
+
+    private async Task Delete(int id)
+    {
+        await _httpClient.DeleteAsync($"https://localhost:7175/api/v1/DictVersion/deleteVersion/{id}");
+        await GetData();
+    }
+}

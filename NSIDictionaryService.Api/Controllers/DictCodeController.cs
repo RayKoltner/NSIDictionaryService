@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NSIDictionaryService.Api.Repositories.Upload;
 
 namespace NSIDictionaryService.Api.Controllers
@@ -23,7 +22,7 @@ namespace NSIDictionaryService.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getById")]
+        [HttpGet("getById/{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _repository.GetByKeyAsync(id);

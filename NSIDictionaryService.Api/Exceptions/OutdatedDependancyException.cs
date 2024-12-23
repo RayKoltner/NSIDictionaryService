@@ -1,7 +1,7 @@
 ﻿namespace NSIDictionaryService.Api.Exceptions
 {
-    public class OutdatedDependancyException: Exception
+    public class OutdatedDependencyException: Exception
     {
-        public OutdatedDependancyException(string message) : base(message) { }
+        public OutdatedDependencyException(string message) : base(message) { }
     }
 }

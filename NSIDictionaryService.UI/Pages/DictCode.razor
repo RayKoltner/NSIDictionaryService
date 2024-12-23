@@ -1,0 +1,56 @@
+﻿@page "/codes"
+@attribute [StreamRendering]
+@attribute [Authorize (Roles = "Admin")]
+@inject HttpClient _httpClient
+@inject AuthenticationStateProvider _authStateProvider
+
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using NSIDictionaryService.Share.DTOs.DictCodeDTOs
+
+<PageTitle>Коды справочников</PageTitle>
+
+<h1>Текущие коды</h1>
+
+@if (!codes.Any())
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Код словаря</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dictCode in codes)
+            {
+                <tr>
+                    <td>@dictCode.Id</td>
+                    <td>@dictCode.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<button class="btn btn-info" @onclick="GetData">Обновить</button>
+
+
+@code {
+    List<DictCodeDTO> codes = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+    }
+
+    public async Task GetData()
+    {
+        codes = await _httpClient.GetFromJsonAsync<List<DictCodeDTO>>
+        ("https://localhost:7175/api/v1/DictCode/getAllStoredDicts") ?? codes;
+    }
+}

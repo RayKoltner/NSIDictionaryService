@@ -1,0 +1,58 @@
+﻿@inherits LayoutComponentBase
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService _localStorage
+@inject HttpClient Http
+
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Blazored.LocalStorage
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <AuthorizeView>
+            <NotAuthorized>
+                <div class="top-row px-4">
+                    <a href=/accounts/login>Войти</a>
+                </div>
+            </NotAuthorized>
+            <Authorized>
+                <div class="top-row px-4">
+                    Вы вошли как @context.User.Claims.FirstOrDefault().Value.ToString() &emsp;
+                    <button class="btn btn-secondary" @onclick="Logout">Выйти</button>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthStateProvider.GetAuthenticationStateAsync();
+        var expiry = user.User.FindFirst(c => c.Type == "exp");
+        if (expiry == null)
+        {
+            Console.WriteLine("You don't have an expiration claim!!!");
+            await Logout();
+            return;
+        }
+
+        var datetime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expiry.Value));
+        if (datetime.UtcDateTime <= DateTime.UtcNow) await Logout();
+    }
+
+    private async Task Logout()
+    {
+        Console.WriteLine("Logging out!");
+        await _localStorage.RemoveItemAsync("token");
+
+        await AuthStateProvider.GetAuthenticationStateAsync();
+    }
+}

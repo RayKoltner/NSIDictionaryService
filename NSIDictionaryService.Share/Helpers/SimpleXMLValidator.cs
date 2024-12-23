@@ -1,5 +1,4 @@
-﻿
-using NSIDictionaryService.Share.Exceptions;
+﻿using NSIDictionaryService.Share.Exceptions;
 using System.Xml.Linq;
 
 namespace NSIDictionaryService.Share.Helpers

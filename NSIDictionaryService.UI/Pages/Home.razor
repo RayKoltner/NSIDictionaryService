@@ -1,0 +1,16 @@
+﻿@page "/"
+
+<PageTitle>Домашняя</PageTitle>
+
+<Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+    <Authorized>
+        <h1>Добро пожаловать в сервис загрузки НСИ ОМС</h1>
+
+        Выберите интересующую Вас вкладку в меню слева.
+    </Authorized>
+    <NotAuthorized>
+        Для дальнейшей работы необходимо авторизоваться
+    </NotAuthorized>
+</Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+
+

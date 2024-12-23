@@ -38,8 +38,10 @@ namespace NSIDictionaryService.Api.Services
                 XElement zap = new XElement("zap");
                 foreach(var property in properties)
                 {
-                    zap.Add(new XElement(property.PropertyCode,
-                        dictType.GetProperty(property.PropertyName).GetValue(entry).ToString())); // To make this truly universal
+                    string value;
+                    object propertyValue = dictType.GetProperty(property.PropertyName).GetValue(entry);
+                    value = propertyValue is null ? "" : propertyValue.ToString(); // To make this truly universal
+                    zap.Add(new XElement(property.PropertyCode, value));
                 }
                 packet.Add(zap);
             }

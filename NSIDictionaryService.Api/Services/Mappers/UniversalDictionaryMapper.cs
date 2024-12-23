@@ -38,7 +38,10 @@ namespace NSIDictionaryService.Api.Services
                         {
                             result = null;
                         }
-                        result = Activator.CreateInstance(propertyType);
+                        else
+                        {
+                            result = Activator.CreateInstance(propertyType);
+                        }
                     }
                 }
                 Convert.ChangeType(result, propertyType);

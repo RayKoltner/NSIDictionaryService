@@ -1,0 +1,208 @@
+﻿@inject HttpClient _httpClient
+@using NSIDictionaryService.Share.DTOs.V012DTOs
+
+@{
+    var showClass = IsVisible ? "d-block" : "d-none";
+}
+
+<div class="position-fixed top-50 start-50 translate-middle toast-container bg-white @showClass" data-bs-autohide="false" style="z-index: 1050;">
+    <div class="toast show p-3" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">@HeaderText</strong>
+            <button type="button" class="btn-close" aria-label="Close" @onclick="Close"></button>
+        </div>
+
+        <div class="toast-body p-3">
+            <div class="alert @(isError ? "alert-danger" : "alert-success") @(HideError ? "d-none" : "d-show") mb-3">
+                @ErrorText
+            </div>
+            @if (Id != 0)
+            {
+                <div class="mb-3">
+                    <label for="recordId" class="form-label">ID записи</label>
+                    <input type="text" id="recordId" class="form-control" @bind-value="Id" />
+                </div>
+            }
+            <div class="mb-3">
+                <label for="recordCode" class="form-label">Код записи</label>
+                <input type="text" id="recordCode" class="form-control" @bind-value="Code" />
+            </div>
+            <div class="mb-3">
+                <label for="recordName" class="form-label">Название</label>
+                <input type="text" id="recordName" class="form-control" @bind-value="Name" />
+            </div>
+            <div class="mb-3">
+                <label for="recordUmpId" class="form-label">Код условия оказания медпомощи</label>
+                <input type="text" id="recordUmpId" class="form-control" @bind-value="UmpId" />
+            </div>
+            <div class="mb-3">
+                <label for="beginDate" class="form-label">Дата начала</label>
+                <input type="date" id="beginDate" class="form-control" @bind-value="BeginDate" />
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" id="hasEndDate" class="form-check-input" @bind="hasEndDate" />
+                <label class="form-check-label" for="hasEndDate">Есть ли дата окончания?</label>
+            </div>
+            @if (hasEndDate)
+            {
+                <div class="mb-3">
+                    <label for="endDate" class="form-label">Дата окончания</label>
+                    <input type="date" id="endDate" class="form-control" @bind-value="EndDate" />
+                </div>
+            }
+            <div class="mb-3">
+                <label for="comments" class="form-label">Комментарии</label>
+                <input type="text" id="comments" class="form-control" @bind-value="Comments" />
+            </div>
+            <button class="btn btn-primary" @onclick="Send">
+                @if (loading)
+                {
+                    <span class="spinner-border spinner-border-sm me-1"></span>
+                }
+                @HeaderText
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsVisibleChanged { get; set; }
+
+    [Parameter]
+    public string? HeaderText { get; set; }
+
+    int Id = 0;
+    int Code = 0;
+    DateTime BeginDate = DateTime.Now;
+    DateTime? EndDate = null;
+    string Name = "";
+    string Comments = "";
+    int VersionId = 0;
+    int UmpId = 0;
+
+    bool hasEndDate = false;
+
+    private bool HideError = true;
+    private string ErrorText = "";
+    bool isError = true;
+    bool loading = false;
+
+    public void Show(string headerText, int versionId)
+    {
+        Id = 0;
+        Code = 0;
+        BeginDate = DateTime.Now;
+        EndDate = null;
+        Name = "";
+        Comments = "";
+        VersionId = versionId;
+        UmpId = 0;
+        hasEndDate = false;
+
+        HeaderText = headerText;
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    public void Show(
+        string header,
+        int versionId,
+        int code,
+        int umpId,
+        string name,
+        string comments,
+        DateTime beginDate,
+        DateTime? endDate = null,
+        int id = 0)
+    {
+        Id = id;
+        Code = code;
+        BeginDate = beginDate;
+        EndDate = endDate;
+        Name = name;
+        Comments = comments;
+        VersionId = versionId;
+        UmpId = umpId;
+
+        hasEndDate = endDate == null ? false : true;
+
+        ErrorText = "";
+        HideError = true;
+        HeaderText = header;
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+
+    private void Close()
+    {
+        Id = 0;
+        Code = 0;
+        BeginDate = DateTime.Now;
+        EndDate = null;
+        Name = "";
+        Comments = "";
+        VersionId = 0;
+
+        HeaderText = string.Empty;
+        HideError = true;
+        ErrorText = "";
+        IsVisible = false;
+        StateHasChanged();
+    }
+
+    private async Task Send()
+    {
+        loading = true;
+        HttpResponseMessage result;
+        if (Id == 0)
+        {
+            V012DTO dto = new V012DTO
+                {
+                    Code = Code,
+                    BeginDate = BeginDate,
+                    EndDate = hasEndDate ? EndDate : null,
+                    Name = Name,
+                    Comments = Comments,
+                    DictVersionId = VersionId,
+                    UmpId = UmpId
+                };
+            result = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/v1/V012/addEntry", dto);
+        }
+        else
+        {
+            V012PutDTO dto = new V012PutDTO
+                {
+                    Id = Id,
+                    Code = Code,
+                    BeginDate = BeginDate,
+                    EndDate = hasEndDate ? EndDate : null,
+                    Name = Name,
+                    Comments = Comments,
+                    DictVersionId = VersionId,
+                    UmpId = UmpId
+                };
+
+            result = await _httpClient.PutAsJsonAsync("https://localhost:7175/api/v1/V012/changeEntry", dto);
+        }
+
+        HideError = false;
+        loading = false;
+        if (!result.IsSuccessStatusCode)
+        {
+            Console.WriteLine(result.ReasonPhrase);
+            isError = true;
+            ErrorText = await result.Content.ReadAsStringAsync();
+            return;
+        }
+        isError = false;
+        ErrorText = "Успешно! Обновите данные";
+        StateHasChanged();
+        await Task.Delay(2000);
+        Close();
+    }
+}

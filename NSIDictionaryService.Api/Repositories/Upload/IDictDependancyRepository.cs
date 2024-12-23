@@ -4,13 +4,13 @@ using NSIDictionaryService.Data.Models;
 
 namespace NSIDictionaryService.Api.Repositories.Upload
 {
-    public interface IDictDependancyRepository : ICodeRepository<DictDependancy>
+    public interface IDictDependencyRepository : ICodeRepository<DictDependency>
     {
     }
 
-    public class DictDependancyRepository : GenericCodeRepository<DictDependancy>, IDictDependancyRepository
+    public class DictDependencyRepository : GenericCodeRepository<DictDependency>, IDictDependencyRepository
     {
-        public DictDependancyRepository(ApplicationContext applicationContext) : base(applicationContext)
+        public DictDependencyRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
         }
     }

@@ -1,0 +1,15 @@
+﻿.error{
+    background-color: rgb(255, 152, 152);
+    padding: 1em;
+    color: black;
+    border: 2px solid red;
+    font-weight: bold;
+}
+
+.padded{
+    padding: 2em;
+}
+
+.wide{
+    width: 100%;
+}

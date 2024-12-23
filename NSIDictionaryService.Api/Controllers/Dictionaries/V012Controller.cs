@@ -17,11 +17,17 @@ using NSIDictionaryService.Share.Helpers;
 using System.Text;
 using System.Xml.Linq;
 using NSIDictionaryService.Api.Services.VersionChecker;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using NSIDictionaryService.Data.Models.Users;
+using System.Security.Claims;
+using System.Xml;
 
 namespace NSIDictionaryService.Api.Controllers.Dictionaries
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class V012Controller : Controller
     {
         private readonly int _dictionaryIdentifier;
@@ -37,7 +43,8 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         private readonly ILogger<V012Controller> _logger;
         private readonly UniversalXMLDocCreator _xmlCreator;
         private readonly VersionChecker _versionChecker;
-        private readonly IDictDependancyRepository _dependancyRepository;
+        private readonly IDictDependencyRepository _DependencyRepository;
+        private readonly UserManager<User> _userManager;
 
         public V012Controller(
             IV012Repository dictRepository,
@@ -48,9 +55,11 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             IWebHostEnvironment environment,
             IChangeRepository changeRepository,
             IDictCodeRepository codeRepository,
-            IDictDependancyRepository dependancyRepository,
+            IDictDependencyRepository DependencyRepository,
             ILogger<V012Controller> logger,
-            ILogger<V012Uploader> uploadLogger)
+            ILogger<V012Uploader> uploadLogger,
+            VersionChecker versionChecker,
+            UserManager<User> userManager)
         {
             _uploader = new V012Uploader(propertyRepository, dictRepository, uploadLogger, changeRepository);
             _apiService = apiService;
@@ -60,11 +69,13 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             _uploadRepository = uploadRepository;
             _storagePath = Path.Combine(environment.ContentRootPath, "Uploads");
             _outputPath = Path.Combine(environment.ContentRootPath, "Reports");
-            _dependancyRepository = dependancyRepository;
+            _DependencyRepository = DependencyRepository;
+            _userManager = userManager;
 
             _xmlCreator = new UniversalXMLDocCreator(propertyRepository);
 
-            _versionChecker = new VersionChecker(apiService, versionRepository, codeRepository); //Prob should DI this
+            //_versionChecker = new VersionChecker(apiService, versionRepository, codeRepository); //Prob should DI this
+            _versionChecker = versionChecker;
 
             var name = codeRepository.First(x => x.Name == _dictionaryIdentifierName);
             if (name == null) throw new Exception("Нет записи о справочнике V012 в таблице названий справочников");
@@ -87,7 +98,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         {
             var result = _dictRepository.GetAll();
             List<V012ResponseDTO> dtos = new List<V012ResponseDTO>();
-            foreach (var item in result) dtos.Add(new V012ResponseDTO(item));
+            foreach (var item in result) dtos.Add(UniversalResponseMapper.ConvertToResponse(item));
             return Ok(dtos);
         }
 
@@ -96,7 +107,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         {
             var result = await _dictRepository.GetByKeyAsync(id);
             if (result == null) return NotFound();
-            return Ok(new V012ResponseDTO(result));
+            return Ok(UniversalResponseMapper.ConvertToResponse(result));
         }
 
         [HttpGet("getEntryByCode")]
@@ -105,11 +116,12 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             var result = _dictRepository.FindBy(x => x.Code == code && !x.IsDeleted);
             if (result == null) return NotFound();
             List<V012ResponseDTO> dtos = new List<V012ResponseDTO>();
-            foreach (var item in result) dtos.Add(new V012ResponseDTO(item));
+            foreach (var item in result) dtos.Add(UniversalResponseMapper.ConvertToResponse(item));
             return Ok(dtos);
         }
 
         [HttpPost("addEntry")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PostAsync([FromBody] V012DTO value)
         {
             var version = await _versionRepository.GetByKeyAsync(value.DictVersionId);
@@ -126,6 +138,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         }
 
         [HttpPut("changeEntry")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put([FromBody] V012PutDTO value)
         {
             try
@@ -159,7 +172,8 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             }
         }
 
-        [HttpDelete("deleteEntry")]
+        [HttpDelete("deleteEntry/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var existing = await _dictRepository.GetByKeyAsync(id);
@@ -173,16 +187,21 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         {
             try
             {
-                _versionChecker.Check(_dependancyRepository.FindBy(x => x.DictId == _dictionaryIdentifier).ToList());
+                _versionChecker.Check(_DependencyRepository.FindBy(x => x.DictId == _dictionaryIdentifier).ToList());
             }
-            catch(OutdatedDependancyException ex)
+            catch(OutdatedDependencyException ex)
             {
                 return BadRequest(ex.Message);
             }
 
+            int userId;
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out userId))
+            {
+                userId = 0;
+            }
             UploadInfo uploadFile = new UploadInfo()
             {
-                UploadingUserId = 0, // TODO : Change this when you'll add users
+                UploadingUserId = userId,
                 UploadDate = DateTime.Now,
                 DictCode = _dictionaryIdentifierName,
                 UploadMethodId = 2, // TODO : Change this when you'll add proper codes
@@ -236,19 +255,24 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         {
             try
             {
-                _versionChecker.Check(_dependancyRepository.FindBy(x => x.DictId == _dictionaryIdentifier).ToList());
+                _versionChecker.Check(_DependencyRepository.FindBy(x => x.DictId == _dictionaryIdentifier).ToList());
             }
-            catch (OutdatedDependancyException ex)
+            catch (OutdatedDependencyException ex)
             {
                 return BadRequest(ex.Message);
             }
 
+            int userId;
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out userId))
+            {
+                userId = 0;
+            }
             UploadInfo uploadFile = new UploadInfo()
             {
-                UploadingUserId = 0, // TODO : Change this when you'll add users
+                UploadingUserId = userId,
                 UploadDate = DateTime.Now,
                 DictCode = _dictionaryIdentifierName,
-                UploadMethodId = 3, // TODO : Change this when you'll add proper codes
+                UploadMethodId = 2, // TODO : Change this when you'll add proper codes
                 UploadResultId = 1
             };
 
@@ -275,7 +299,6 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
 
                 XDocument XMLData;
 
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 using (var reader = new StreamReader(filePath, Encoding.GetEncoding("windows-1251")))
                 {
                     XMLData = XDocument.Load(reader);
@@ -320,9 +343,15 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
                 _logger.LogError($"Ошибка при загрузке словаря V012 из XML: {ex.Message}");
                 return BadRequest(ex.Message);
             }
+            catch (XmlException ex)
+            {
+                _logger.LogError("Ошибка при загрузке словаря V012 из XML: неверный формат XML");
+                return BadRequest("Ошибка при загрузке словаря V012 из XML: неверный формат XML");
+            }
         }
 
         [HttpGet("downloadXML")]
+        [AllowAnonymous]
         public async Task<IActionResult> getXML()
         {
             DictVersion version = await _versionRepository.FirstAsync(x => x.DictCodeId == _dictionaryIdentifier && !x.IsDeleted);
@@ -338,13 +367,12 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
 
             xdoc.Save(fileName);
 
-            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             //StreamReader file = new StreamReader(fileName, Encoding.GetEncoding("windows-1251"));
 
             //Response.Headers.Append("Content-Disposition", $"attachment; filename={_dictionaryIdentifierName}");
             Response.Headers.Append("Content-Encoding", "windows-1251");
 
-            return PhysicalFile(fileName, "text/xml");
+            return PhysicalFile(fileName, "text/xml; charset=windows-1251");
         }
 
         private async Task SetErrorStatusAsync(UploadInfo uploadFile, string message)

@@ -1,0 +1,22 @@
+﻿@inherits LayoutComponentBase
+@layout MainLayout
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
+
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components.Authorization
+
+<div class="col-md-6 offset-md-3 mt-5 justify-content-center align-items-center">
+    @Body
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        if(!string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("token")))
+        {
+            NavigationManager.NavigateTo("");
+        }
+    }
+}
