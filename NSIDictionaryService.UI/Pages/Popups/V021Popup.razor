@@ -1,5 +1,5 @@
 ﻿@inject HttpClient _httpClient
-@using NSIDictionaryService.Share.DTOs
+@using NSIDictionaryService.Share.DTOs.V021DTOs
 
 @{
     var showClass = IsVisible ? "d-block" : "d-none";
@@ -30,6 +30,14 @@
             <div class="mb-3">
                 <label for="recordName" class="form-label">Название</label>
                 <input type="text" id="recordName" class="form-control" @bind-value="Name" />
+            </div>
+            <div class="mb-3">
+                <label for="recordPostCode" class="form-label">Код должности</label>
+                <input type="text" id="recordPostCode" class="form-control" @bind-value="PostId" />
+            </div>
+            <div class="mb-3">
+                <label for="recordPostName" class="form-label">Название должности</label>
+                <input type="text" id="recordPostName" class="form-control" @bind-value="PostName" />
             </div>
             <div class="mb-3">
                 <label for="beginDate" class="form-label">Дата начала</label>
@@ -78,6 +86,8 @@
     string Name = "";
     string Comments = "";
     int VersionId = 0;
+    int PostId = 0;
+    string PostName = "";
 
     bool hasEndDate = false;
 
@@ -95,6 +105,8 @@
         Name = "";
         Comments = "";
         VersionId = versionId;
+        PostId = 0;
+        PostName = "";
         hasEndDate = false;
 
         HeaderText = headerText;
@@ -103,13 +115,15 @@
     }
 
     public void Show(
-        string header, 
-        int versionId, 
-        int code, 
-        string name, 
-        string comments, 
-        DateTime beginDate, 
-        DateTime? endDate = null, 
+        string header,
+        int versionId,
+        int code,
+        string name,
+        int postId,
+        string postName,
+        string comments,
+        DateTime beginDate,
+        DateTime? endDate = null,
         int id = 0)
     {
         Id = id;
@@ -119,6 +133,8 @@
         Name = name;
         Comments = comments;
         VersionId = versionId;
+        PostId = postId;
+        PostName = postName;
 
         hasEndDate = endDate == null ? false : true;
 
@@ -153,20 +169,22 @@
         HttpResponseMessage result;
         if (Id == 0)
         {
-            V006DTO dto = new V006DTO
+            V021DTO dto = new V021DTO
                 {
                     Code = Code,
                     BeginDate = BeginDate,
                     EndDate = hasEndDate ? EndDate : null,
                     Name = Name,
                     Comments = Comments,
-                    DictVersionId = VersionId
+                    DictVersionId = VersionId,
+                    PostId = PostId,
+                    PostName = PostName
                 };
-            result = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/v1/V006/addEntry", dto);
+            result = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/v1/V021/addEntry", dto);
         }
         else
         {
-            V006PutDTO dto = new V006PutDTO
+            V021PutDTO dto = new V021PutDTO
                 {
                     Id = Id,
                     Code = Code,
@@ -174,10 +192,12 @@
                     EndDate = hasEndDate ? EndDate : null,
                     Name = Name,
                     Comments = Comments,
-                    DictVersionId = VersionId
+                    DictVersionId = VersionId,
+                    PostId = PostId,
+                    PostName = PostName
                 };
 
-            result = await _httpClient.PutAsJsonAsync("https://localhost:7175/api/v1/V006/changeEntry", dto);
+            result = await _httpClient.PutAsJsonAsync("https://localhost:7175/api/v1/V021/changeEntry", dto);
         }
 
         HideError = false;

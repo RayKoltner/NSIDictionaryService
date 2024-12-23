@@ -1,5 +1,5 @@
 ﻿@inject HttpClient _httpClient
-@using NSIDictionaryService.Share.DTOs
+@using NSIDictionaryService.Share.DTOs.V025DTOs
 
 @{
     var showClass = IsVisible ? "d-block" : "d-none";
@@ -72,7 +72,7 @@
     public string? HeaderText { get; set; }
 
     int Id = 0;
-    int Code = 0;
+    decimal Code = 0;
     DateTime BeginDate = DateTime.Now;
     DateTime? EndDate = null;
     string Name = "";
@@ -103,13 +103,13 @@
     }
 
     public void Show(
-        string header, 
-        int versionId, 
-        int code, 
-        string name, 
-        string comments, 
-        DateTime beginDate, 
-        DateTime? endDate = null, 
+        string header,
+        int versionId,
+        decimal code,
+        string name,
+        string comments,
+        DateTime beginDate,
+        DateTime? endDate = null,
         int id = 0)
     {
         Id = id;
@@ -153,7 +153,7 @@
         HttpResponseMessage result;
         if (Id == 0)
         {
-            V006DTO dto = new V006DTO
+            V025DTO dto = new V025DTO
                 {
                     Code = Code,
                     BeginDate = BeginDate,
@@ -162,11 +162,11 @@
                     Comments = Comments,
                     DictVersionId = VersionId
                 };
-            result = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/v1/V006/addEntry", dto);
+            result = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/v1/V025/addEntry", dto);
         }
         else
         {
-            V006PutDTO dto = new V006PutDTO
+            V025PutDTO dto = new V025PutDTO
                 {
                     Id = Id,
                     Code = Code,
@@ -177,7 +177,7 @@
                     DictVersionId = VersionId
                 };
 
-            result = await _httpClient.PutAsJsonAsync("https://localhost:7175/api/v1/V006/changeEntry", dto);
+            result = await _httpClient.PutAsJsonAsync("https://localhost:7175/api/v1/V025/changeEntry", dto);
         }
 
         HideError = false;

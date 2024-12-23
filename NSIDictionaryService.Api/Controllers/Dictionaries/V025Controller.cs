@@ -154,7 +154,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             }
         }
 
-        [HttpDelete("deleteEntry")]
+        [HttpDelete("deleteEntry/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -306,9 +306,9 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             DictVersion version = await _versionRepository.FirstAsync(x => x.DictCodeId == _dictionaryIdentifier && !x.IsDeleted);
             if (version == null) return BadRequest($"Записи словаря {_dictionaryIdentifierName} отсутствуют");
 
-            var data = _dictRepository.GetAll().Cast<BaseDictionaryType<int>>().ToList();
+            var data = _dictRepository.GetAll().Cast<BaseDictionaryType<decimal>>().ToList();
 
-            var xdoc = _xmlCreator.CreateDocument<int>(data, version, _dictionaryIdentifierName);
+            var xdoc = _xmlCreator.CreateDocument<decimal>(data, version, _dictionaryIdentifierName);
 
             string fileName = Path.Combine(_outputPath,
                 $"{_dictionaryIdentifierName}_" +

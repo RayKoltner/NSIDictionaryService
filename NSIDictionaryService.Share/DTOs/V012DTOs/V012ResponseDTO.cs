@@ -2,6 +2,7 @@
 {
     public class V012ResponseDTO
     {
+        public int Id { get; set; }
         public int Code { get; set; }
 
         public DateTime? BeginDate { get; set; }
@@ -13,6 +14,8 @@
         public string Comments { get; set; } = string.Empty;
 
         public int UmpId { get; set; }
+
+        public int DictVersionId { get; set; }
         public V012ResponseDTO()
         {
         }

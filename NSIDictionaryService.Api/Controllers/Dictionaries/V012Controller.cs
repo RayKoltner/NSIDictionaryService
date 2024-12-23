@@ -165,7 +165,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             }
         }
 
-        [HttpDelete("deleteEntry")]
+        [HttpDelete("deleteEntry/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {

@@ -2,7 +2,15 @@
 
 <PageTitle>Домашняя</PageTitle>
 
-<h1>Welcome! Welcome to City-17!</h1>
+<Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+    <Authorized>
+        <h1>Добро пожаловать в сервис загрузки НСИ ОМС</h1>
 
-Authorized user accepted, enjoy your ride and there's a pimento t... Oh, nevermind
+        Выберите интересующую Вас вкладку в меню слева.
+    </Authorized>
+    <NotAuthorized>
+        Для дальнейшей работы необходимо авторизоваться
+    </NotAuthorized>
+</Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+
 

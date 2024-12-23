@@ -31,11 +31,13 @@ namespace NSIDictionaryService.Api.Services.Mappers
         {
             V006ResponseDTO dto = new V006ResponseDTO()
             {
+                Id = dictionary.Id,
                 Code = dictionary.Code,
                 BeginDate = dictionary.BeginDate,
                 EndDate = dictionary.EndDate,
                 Name = dictionary.Name,
-                Comments = dictionary.Comments
+                Comments = dictionary.Comments,
+                DictVersionId = dictionary.DictVersionId
             };
             return dto;
         }
@@ -44,12 +46,14 @@ namespace NSIDictionaryService.Api.Services.Mappers
         {
             V012ResponseDTO dto = new V012ResponseDTO()
             {
+                Id = dictionary.Id,
                 Code = dictionary.Code,
                 BeginDate = dictionary.BeginDate,
                 EndDate = dictionary.EndDate,
                 Name = dictionary.Name,
                 Comments = dictionary.Comments,
-                UmpId = dictionary.UMPId
+                UmpId = dictionary.UMPId,
+                DictVersionId = dictionary.DictVersionId
             };
             return dto;
         }
@@ -58,13 +62,15 @@ namespace NSIDictionaryService.Api.Services.Mappers
         {
             V021ResponseDTO dto = new V021ResponseDTO()
             {
+                Id = dictionary.Id,
                 Code = dictionary.Code,
                 BeginDate = dictionary.BeginDate,
                 EndDate = dictionary.EndDate,
                 Name = dictionary.Name,
                 Comments = dictionary.Comments,
                 PostName = dictionary.PostName,
-                PostId = dictionary.PostId
+                PostId = dictionary.PostId,
+                DictVersionId = dictionary.DictVersionId
             };
             return dto;
         }
@@ -73,11 +79,13 @@ namespace NSIDictionaryService.Api.Services.Mappers
         {
             V025ResponseDTO dto = new V025ResponseDTO()
             {
+                Id = dictionary.Id,
                 Code = dictionary.Code,
                 BeginDate = dictionary.BeginDate,
                 EndDate = dictionary.EndDate,
                 Name = dictionary.Name,
-                Comments = dictionary.Comments
+                Comments = dictionary.Comments,
+                DictVersionId = dictionary.DictVersionId
             };
             return dto;
         }

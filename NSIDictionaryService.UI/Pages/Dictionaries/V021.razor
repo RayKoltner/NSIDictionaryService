@@ -1,4 +1,4 @@
-﻿@page "/dictionaries/v006"
+﻿@page "/dictionaries/v021"
 @attribute [StreamRendering]
 @attribute [Authorize]
 @inject HttpClient _httpClient
@@ -8,14 +8,14 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using NSIDictionaryService.Share.DTOs
-@using NSIDictionaryService.Share.DTOs.V006DTOs
+@using NSIDictionaryService.Share.DTOs.V021DTOs
 @using NSIDictionaryService.UI.Pages.Popups
 
-<PageTitle>Справочник V006</PageTitle>
+<PageTitle>Справочник V021</PageTitle>
 
-<h1>Классификатор условий оказания медицинской помощи</h1>
+<h1>Классификатор медицинских специальностей</h1>
 
-@if(version is null)
+@if (version is null)
 {
     <p><em>Загрузка версии...</em></p>
 }
@@ -36,6 +36,8 @@ else
             <tr>
                 <th>Код записи</th>
                 <th>Название</th>
+                <th>Код должности</th>
+                <th>Название должности</th>
                 <th>Дата начала действия</th>
                 <th>Дата окончания действия</th>
             </tr>
@@ -46,6 +48,8 @@ else
                 <tr>
                     <td>@entry.Code</td>
                     <td>@entry.Name</td>
+                    <td>@entry.PostId</td>
+                    <td>@entry.PostName</td>
                     <td>@(entry.BeginDate is null ? "-" : entry.BeginDate.GetValueOrDefault().ToShortDateString())</td>
                     <td>@(entry.EndDate is null ? "-" : entry.EndDate.GetValueOrDefault().ToShortDateString())</td>
                     <AuthorizeView Roles="Admin">
@@ -85,17 +89,17 @@ else
     <div class="p-md-1 text-start mb-3">
         <div class="d-flex flex-column align-items-start p-1">
             <strong>Добавить новую версию</strong>
-            
+
             <div class="d-flex justify-content-center mb-2">
                 <button type="button"
                         class="btn @(method ? "btn-secondary" : "btn-outline-secondary") me-2"
                         @onclick="() => SelectOption(true)">
-                        API
+                    API
                 </button>
                 <button type="button"
                         class="btn @(!method ? "btn-secondary" : "btn-outline-secondary") me-2"
                         @onclick="() => SelectOption(false)">
-                        XML
+                    XML
                 </button>
             </div>
 
@@ -140,13 +144,13 @@ else
     </div>
 </div>
 
-<V006Popup @ref="popup"></V006Popup>
+<V021Popup @ref="popup"></V021Popup>
 
 <script src="/download.js"></script>
 
 @code {
     DictVersionResponseDTO version = null!;
-    List<V006ResponseDTO> entries = [];
+    List<V021ResponseDTO> entries = [];
 
     private bool apiLoading = false;
     private bool xmlLoading = false;
@@ -159,7 +163,7 @@ else
 
     private IBrowserFile? file;
 
-    private V006Popup popup;
+    private V021Popup popup;
 
     protected override async Task OnInitializedAsync()
     {
@@ -169,16 +173,16 @@ else
     async Task GetData()
     {
         version = await _httpClient.GetFromJsonAsync<DictVersionResponseDTO>
-        ("https://localhost:7175/api/v1/DictVersion/getCurrentVersion/v006") ?? version;
+        ("https://localhost:7175/api/v1/DictVersion/getCurrentVersion/V021") ?? version;
 
-        entries = await _httpClient.GetFromJsonAsync<List<V006ResponseDTO>>
-        ("https://localhost:7175/api/v1/V006/getAllEntries") ?? entries;
+        entries = await _httpClient.GetFromJsonAsync<List<V021ResponseDTO>>
+        ("https://localhost:7175/api/v1/V021/getAllEntries") ?? entries;
     }
 
     async Task AddFromApi()
     {
         apiLoading = true;
-        var result = await _httpClient.PostAsync("https://localhost:7175/api/v1/V006/AddFromApi", null);
+        var result = await _httpClient.PostAsync("https://localhost:7175/api/v1/V021/AddFromApi", null);
         apiLoading = false;
         if (!result.IsSuccessStatusCode)
         {
@@ -206,7 +210,7 @@ else
             var content = new MultipartFormDataContent();
             var fileContent = new StreamContent(file.OpenReadStream());
             content.Add(fileContent, "formFile", file.Name);
-            var result = await _httpClient.PostAsync("https://localhost:7175/api/v1/V006/AddFromXML", content);
+            var result = await _httpClient.PostAsync("https://localhost:7175/api/v1/V021/AddFromXML", content);
 
             xmlLoading = false;
             file = null;
@@ -227,12 +231,12 @@ else
     async Task GetXml()
     {
         xmlDownloading = true;
-        var response = await _httpClient.GetAsync("https://localhost:7175/api/v1/V006/downloadXML");
+        var response = await _httpClient.GetAsync("https://localhost:7175/api/v1/V021/downloadXML");
 
         if (response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsByteArrayAsync();
-            var fileName = "V006.xml";
+            var fileName = "V021.xml";
 
             await Task.Delay(500);
             await JS.InvokeVoidAsync("downloadFile", content, fileName);
@@ -244,7 +248,7 @@ else
         xmlDownloading = false;
     }
 
-    private void Edit(V006ResponseDTO dict)
+    private void Edit(V021ResponseDTO dict)
     {
         popup.Show(
             header: "Изменить",
@@ -254,7 +258,9 @@ else
             comments: dict.Comments,
             beginDate: dict.BeginDate.GetValueOrDefault(),
             endDate: dict.EndDate,
-            id: dict.Id);
+            id: dict.Id,
+            postId: dict.PostId,
+            postName: dict.PostName);
     }
 
     private void Add()
@@ -264,7 +270,7 @@ else
 
     private async Task Delete(int id)
     {
-        await _httpClient.DeleteAsync($"https://localhost:7175/api/v1/V006/deleteEntry/{id}");
+        await _httpClient.DeleteAsync($"https://localhost:7175/api/v1/V021/deleteEntry/{id}");
         await GetData();
     }
 

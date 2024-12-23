@@ -78,6 +78,7 @@ namespace NSIDictionaryService.Api.Services.Authentication
                 Issuer = _configuration["JWT:ValidIssuer"],
                 Audience = _configuration["JWT:ValidAudience"],
                 Expires = DateTime.UtcNow.AddHours(3),
+                //Expires = DateTime.UtcNow.AddSeconds(30), // For debug
                 SigningCredentials = new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256),
                 Subject = new ClaimsIdentity(claims)
             };

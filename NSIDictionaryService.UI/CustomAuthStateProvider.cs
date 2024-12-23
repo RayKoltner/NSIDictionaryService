@@ -45,9 +45,9 @@ namespace NSIDictionaryService.UI
             var jsonBytes = ParseBase64WithoutPadding(payload);
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
 
-            //foreach(var value in keyValuePairs) //For typeless claims
+            //foreach (var value in keyValuePairs) //For typeless claims
             //{
-            //    Console.WriteLine($"Claim key:{value.Key}, Claim value:{value.Value.ToString()}");   
+            //    Console.WriteLine($"Claim key:{value.Key}, Claim value:{value.Value.ToString()}");
             //}
             //return keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString()));
             List<Claim> claims = new List<Claim>(); //For typed claims so authentication can handle the rest

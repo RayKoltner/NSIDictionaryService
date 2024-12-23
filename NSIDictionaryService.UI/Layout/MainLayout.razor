@@ -33,6 +33,20 @@
 </div>
 
 @code{
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthStateProvider.GetAuthenticationStateAsync();
+        var expiry = user.User.FindFirst(c => c.Type == "exp");
+        if (expiry == null)
+        {
+            Console.WriteLine("You don't have an expiration claim!!!");
+            await Logout();
+            return;
+        }
+
+        var datetime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expiry.Value));
+        if (datetime.UtcDateTime <= DateTime.UtcNow) await Logout();
+    }
 
     private async Task Logout()
     {
