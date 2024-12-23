@@ -18,6 +18,9 @@ using System.Text;
 using System.Xml.Linq;
 using NSIDictionaryService.Api.Services.VersionChecker;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using NSIDictionaryService.Data.Models.Users;
+using System.Security.Claims;
 
 namespace NSIDictionaryService.Api.Controllers.Dictionaries
 {
@@ -40,6 +43,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
         private readonly UniversalXMLDocCreator _xmlCreator;
         private readonly VersionChecker _versionChecker;
         private readonly IDictDependencyRepository _DependencyRepository;
+        private readonly UserManager<User> _userManager;
 
         public V012Controller(
             IV012Repository dictRepository,
@@ -53,7 +57,8 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             IDictDependencyRepository DependencyRepository,
             ILogger<V012Controller> logger,
             ILogger<V012Uploader> uploadLogger,
-            VersionChecker versionChecker)
+            VersionChecker versionChecker,
+            UserManager<User> userManager)
         {
             _uploader = new V012Uploader(propertyRepository, dictRepository, uploadLogger, changeRepository);
             _apiService = apiService;
@@ -64,6 +69,7 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
             _storagePath = Path.Combine(environment.ContentRootPath, "Uploads");
             _outputPath = Path.Combine(environment.ContentRootPath, "Reports");
             _DependencyRepository = DependencyRepository;
+            _userManager = userManager;
 
             _xmlCreator = new UniversalXMLDocCreator(propertyRepository);
 
@@ -187,9 +193,14 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
                 return BadRequest(ex.Message);
             }
 
+            int userId;
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out userId))
+            {
+                userId = 0;
+            }
             UploadInfo uploadFile = new UploadInfo()
             {
-                UploadingUserId = 0, // TODO : Change this when you'll add users
+                UploadingUserId = userId,
                 UploadDate = DateTime.Now,
                 DictCode = _dictionaryIdentifierName,
                 UploadMethodId = 2, // TODO : Change this when you'll add proper codes
@@ -250,12 +261,17 @@ namespace NSIDictionaryService.Api.Controllers.Dictionaries
                 return BadRequest(ex.Message);
             }
 
+            int userId;
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out userId))
+            {
+                userId = 0;
+            }
             UploadInfo uploadFile = new UploadInfo()
             {
-                UploadingUserId = 0, // TODO : Change this when you'll add users
+                UploadingUserId = userId,
                 UploadDate = DateTime.Now,
                 DictCode = _dictionaryIdentifierName,
-                UploadMethodId = 3, // TODO : Change this when you'll add proper codes
+                UploadMethodId = 2, // TODO : Change this when you'll add proper codes
                 UploadResultId = 1
             };
 

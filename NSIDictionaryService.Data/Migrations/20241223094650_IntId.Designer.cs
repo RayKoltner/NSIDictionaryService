@@ -12,8 +12,8 @@ using NSIDictionaryService.Data;
 namespace NSIDictionaryService.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241217124543_initial")]
-    partial class initial
+    [Migration("20241223094650_IntId")]
+    partial class IntId
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,10 +25,13 @@ namespace NSIDictionaryService.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -52,7 +55,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,9 +69,8 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -77,7 +79,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,9 +93,8 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -102,7 +103,7 @@ namespace NSIDictionaryService.Data.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -113,9 +114,8 @@ namespace NSIDictionaryService.Data.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -124,13 +124,13 @@ namespace NSIDictionaryService.Data.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -139,10 +139,10 @@ namespace NSIDictionaryService.Data.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -318,11 +318,11 @@ namespace NSIDictionaryService.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreateDate = new DateTime(2024, 12, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             DeletedDate = new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999),
                             DeletedUserId = 0,
                             DictCodeId = 1,
-                            EditDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            EditDate = new DateTime(2024, 12, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             EditUserId = 0,
                             IsDeleted = false,
                             PropertyCode = "IDUMP",
@@ -331,11 +331,11 @@ namespace NSIDictionaryService.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreateDate = new DateTime(2024, 12, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             DeletedDate = new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999),
                             DeletedUserId = 0,
                             DictCodeId = 1,
-                            EditDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            EditDate = new DateTime(2024, 12, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             EditUserId = 0,
                             IsDeleted = false,
                             PropertyCode = "UMPNAME",
@@ -344,11 +344,11 @@ namespace NSIDictionaryService.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreateDate = new DateTime(2024, 12, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             DeletedDate = new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999),
                             DeletedUserId = 0,
                             DictCodeId = 1,
-                            EditDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            EditDate = new DateTime(2024, 12, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             EditUserId = 0,
                             IsDeleted = false,
                             PropertyCode = "DATEBEG",
@@ -357,11 +357,11 @@ namespace NSIDictionaryService.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreateDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreateDate = new DateTime(2024, 12, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             DeletedDate = new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999),
                             DeletedUserId = 0,
                             DictCodeId = 1,
-                            EditDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            EditDate = new DateTime(2024, 12, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             EditUserId = 0,
                             IsDeleted = false,
                             PropertyCode = "DATEEND",
@@ -768,8 +768,11 @@ namespace NSIDictionaryService.Data.Migrations
 
             modelBuilder.Entity("NSIDictionaryService.Data.Models.Users.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -836,16 +839,16 @@ namespace NSIDictionaryService.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.HasOne("NSIDictionaryService.Data.Models.Users.User", null)
                         .WithMany()
@@ -854,7 +857,7 @@ namespace NSIDictionaryService.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.HasOne("NSIDictionaryService.Data.Models.Users.User", null)
                         .WithMany()
@@ -863,9 +866,9 @@ namespace NSIDictionaryService.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -878,7 +881,7 @@ namespace NSIDictionaryService.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.HasOne("NSIDictionaryService.Data.Models.Users.User", null)
                         .WithMany()

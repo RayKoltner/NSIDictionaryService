@@ -17,6 +17,10 @@ using NSIDictionaryService.Share.Exceptions;
 using NSIDictionaryService.Api.Repositories.Upload;
 using System.Xml;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using NSIDictionaryService.Data.Models.Users;
+using System.Security.Claims;
+using System.Runtime.ConstrainedExecution;
 
 namespace NSIDictionaryService.Api.Controllers
 {
@@ -37,6 +41,7 @@ namespace NSIDictionaryService.Api.Controllers
         private readonly IDictVersionRepository _versionRepository;
         private readonly ILogger<V006Controller> _logger;
         private readonly UniversalXMLDocCreator _xmlCreator;
+        private readonly UserManager<User> _userManager;
 
         public V006Controller(
             IV006Repository dictRepository, 
@@ -48,7 +53,8 @@ namespace NSIDictionaryService.Api.Controllers
             IChangeRepository changeRepository,
             IDictCodeRepository codeRepository,
             ILogger<V006Controller> logger,
-            ILogger<V006Uploader> uploadLogger)
+            ILogger<V006Uploader> uploadLogger,
+            UserManager<User> userManager)
         {
             _uploader = new V006Uploader(propertyRepository, dictRepository, uploadLogger, changeRepository);
             _apiService = apiService;
@@ -56,6 +62,7 @@ namespace NSIDictionaryService.Api.Controllers
             _versionRepository = versionRepository;
             _versionHandler = new VersionHandler(versionRepository);
             _uploadRepository = uploadRepository;
+            _userManager = userManager;
             _storagePath = Path.Combine(environment.ContentRootPath, "Uploads");
             _outputPath = Path.Combine(environment.ContentRootPath, "Reports");
 
@@ -168,9 +175,14 @@ namespace NSIDictionaryService.Api.Controllers
         [HttpPost("AddFromApi")]
         public async Task<IActionResult> UploadFromApi()
         {
+            int userId;
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out userId))
+            {
+                userId = 0;
+            }
             UploadInfo uploadFile = new UploadInfo()
             {
-                UploadingUserId = 0, // TODO : Change this when you'll add users
+                UploadingUserId = userId,
                 UploadDate = DateTime.Now,
                 DictCode = _dictionaryIdentifierName,
                 UploadMethodId = 2, // TODO : Change this when you'll add proper codes
@@ -222,12 +234,17 @@ namespace NSIDictionaryService.Api.Controllers
         [HttpPost("AddFromXML")]
         public async Task<IActionResult> UploadFromXML(IFormFile formFile)
         {
+            int userId;
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out userId))
+            {
+                userId = 0;
+            }
             UploadInfo uploadFile = new UploadInfo()
             {
-                UploadingUserId = 0, // TODO : Change this when you'll add users
+                UploadingUserId = userId,
                 UploadDate = DateTime.Now,
                 DictCode = _dictionaryIdentifierName,
-                UploadMethodId = 3, // TODO : Change this when you'll add proper codes
+                UploadMethodId = 2, // TODO : Change this when you'll add proper codes
                 UploadResultId = 1
             };
 

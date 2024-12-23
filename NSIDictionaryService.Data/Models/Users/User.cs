@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NSIDictionaryService.Data.Models.Users;
 
-public class User: IdentityUser
+public class User: IdentityUser<int>
 {
     //Пользователи
     [MaxLength(50)]

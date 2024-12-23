@@ -11,9 +11,9 @@ namespace NSIDictionaryService.Api.Services.Authentication
     public class AuthService : IAuthService
     {
         private readonly UserManager<User> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<IdentityRole<int>> roleManager;
         private readonly IConfiguration _configuration;
-        public AuthService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthService(UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -38,7 +38,7 @@ namespace NSIDictionaryService.Api.Services.Authentication
                 return (0, "User creation failed! Please check user details and try again.");
 
             if (!await roleManager.RoleExistsAsync(role))
-                await roleManager.CreateAsync(new IdentityRole(role));
+                await roleManager.CreateAsync(new IdentityRole<int>(role));
 
             await userManager.AddToRoleAsync(user, role);
 
@@ -57,6 +57,7 @@ namespace NSIDictionaryService.Api.Services.Authentication
             var authClaims = new List<Claim>
             {
                new Claim(ClaimTypes.Name, user.UserName),
+               new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 

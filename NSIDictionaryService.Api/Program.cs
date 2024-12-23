@@ -40,7 +40,7 @@ namespace NSIDictionaryService.Api
             builder.Services.AddSwaggerGen();
 
             // For Identity  
-            builder.Services.AddIdentity<User, IdentityRole>()
+            builder.Services.AddIdentity<User, IdentityRole<int>>()
                             .AddEntityFrameworkStores<ApplicationContext>()
                             .AddDefaultTokenProviders();
             // Adding Authentication  
