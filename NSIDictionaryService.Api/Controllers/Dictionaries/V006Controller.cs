@@ -16,11 +16,17 @@ using NSIDictionaryService.Share.Helpers;
 using NSIDictionaryService.Share.Exceptions;
 using NSIDictionaryService.Api.Repositories.Upload;
 using System.Xml;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using NSIDictionaryService.Data.Models.Users;
+using System.Security.Claims;
+using System.Runtime.ConstrainedExecution;
 
 namespace NSIDictionaryService.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class V006Controller : Controller
     {
         private readonly int _dictionaryIdentifier;
@@ -35,6 +41,7 @@ namespace NSIDictionaryService.Api.Controllers
         private readonly IDictVersionRepository _versionRepository;
         private readonly ILogger<V006Controller> _logger;
         private readonly UniversalXMLDocCreator _xmlCreator;
+        private readonly UserManager<User> _userManager;
 
         public V006Controller(
             IV006Repository dictRepository, 
@@ -46,7 +53,8 @@ namespace NSIDictionaryService.Api.Controllers
             IChangeRepository changeRepository,
             IDictCodeRepository codeRepository,
             ILogger<V006Controller> logger,
-            ILogger<V006Uploader> uploadLogger)
+            ILogger<V006Uploader> uploadLogger,
+            UserManager<User> userManager)
         {
             _uploader = new V006Uploader(propertyRepository, dictRepository, uploadLogger, changeRepository);
             _apiService = apiService;
@@ -54,6 +62,7 @@ namespace NSIDictionaryService.Api.Controllers
             _versionRepository = versionRepository;
             _versionHandler = new VersionHandler(versionRepository);
             _uploadRepository = uploadRepository;
+            _userManager = userManager;
             _storagePath = Path.Combine(environment.ContentRootPath, "Uploads");
             _outputPath = Path.Combine(environment.ContentRootPath, "Reports");
 
@@ -80,7 +89,7 @@ namespace NSIDictionaryService.Api.Controllers
         {
             var result = _dictRepository.GetAll();
             List<V006ResponseDTO> dtos = new List<V006ResponseDTO>();
-            foreach (var item in result) dtos.Add(new V006ResponseDTO(item));
+            foreach (var item in result) dtos.Add(UniversalResponseMapper.ConvertToResponse(item));
             return Ok(dtos);
         }
 
@@ -89,7 +98,7 @@ namespace NSIDictionaryService.Api.Controllers
         {
             var result = await _dictRepository.GetByKeyAsync(id);
             if (result == null) return NotFound();
-            return Ok(new V006ResponseDTO(result));
+            return Ok(UniversalResponseMapper.ConvertToResponse(result));
         }
 
         [HttpGet("getEntryByCode")]
@@ -98,11 +107,12 @@ namespace NSIDictionaryService.Api.Controllers
             var result = _dictRepository.FindBy(x => x.Code == code && !x.IsDeleted);
             if (result == null) return NotFound();
             List<V006ResponseDTO> dtos = new List<V006ResponseDTO>();
-            foreach (var item in result) dtos.Add(new V006ResponseDTO(item));
+            foreach (var item in result) dtos.Add(UniversalResponseMapper.ConvertToResponse(item));
             return Ok(dtos);
         }
 
         [HttpPost("addEntry")]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> PostAsync([FromBody] V006DTO value)
         {
             var version = await _versionRepository.GetByKeyAsync(value.DictVersionId);
@@ -119,6 +129,7 @@ namespace NSIDictionaryService.Api.Controllers
         }
 
         [HttpPut("changeEntry")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put([FromBody] V006PutDTO value)
         {
             try
@@ -151,7 +162,8 @@ namespace NSIDictionaryService.Api.Controllers
             }
         }
 
-        [HttpDelete("deleteEntry")]
+        [HttpDelete("deleteEntry/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var existing = await _dictRepository.GetByKeyAsync(id);
@@ -163,9 +175,14 @@ namespace NSIDictionaryService.Api.Controllers
         [HttpPost("AddFromApi")]
         public async Task<IActionResult> UploadFromApi()
         {
+            int userId;
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out userId))
+            {
+                userId = 0;
+            }
             UploadInfo uploadFile = new UploadInfo()
             {
-                UploadingUserId = 0, // TODO : Change this when you'll add users
+                UploadingUserId = userId,
                 UploadDate = DateTime.Now,
                 DictCode = _dictionaryIdentifierName,
                 UploadMethodId = 2, // TODO : Change this when you'll add proper codes
@@ -217,12 +234,17 @@ namespace NSIDictionaryService.Api.Controllers
         [HttpPost("AddFromXML")]
         public async Task<IActionResult> UploadFromXML(IFormFile formFile)
         {
+            int userId;
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out userId))
+            {
+                userId = 0;
+            }
             UploadInfo uploadFile = new UploadInfo()
             {
-                UploadingUserId = 0, // TODO : Change this when you'll add users
+                UploadingUserId = userId,
                 UploadDate = DateTime.Now,
                 DictCode = _dictionaryIdentifierName,
-                UploadMethodId = 3, // TODO : Change this when you'll add proper codes
+                UploadMethodId = 2, // TODO : Change this when you'll add proper codes
                 UploadResultId = 1
             };
 
@@ -249,7 +271,7 @@ namespace NSIDictionaryService.Api.Controllers
 
                 XDocument XMLData;
 
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                
                 using (var reader = new StreamReader(filePath, Encoding.GetEncoding("windows-1251")))
                 {
                     XMLData = XDocument.Load(reader);
@@ -294,9 +316,15 @@ namespace NSIDictionaryService.Api.Controllers
                 _logger.LogError($"Ошибка при загрузке словаря V006 из XML: {ex.Message}");
                 return BadRequest(ex.Message);
             }
+            catch (XmlException ex)
+            {
+                _logger.LogError("Ошибка при загрузке словаря V006 из XML: неверный формат XML");
+                return BadRequest("Ошибка при загрузке словаря V006 из XML: неверный формат XML");
+            }
         }
 
         [HttpGet("downloadXML")]
+        [AllowAnonymous]
         public async Task<IActionResult> getXML()
         {
             DictVersion version = await _versionRepository.FirstAsync(x => x.DictCodeId == _dictionaryIdentifier && !x.IsDeleted);
@@ -312,13 +340,11 @@ namespace NSIDictionaryService.Api.Controllers
 
             xdoc.Save(fileName);
 
-            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             //StreamReader file = new StreamReader(fileName, Encoding.GetEncoding("windows-1251"));
 
             //Response.Headers.Append("Content-Disposition", $"attachment; filename={_dictionaryIdentifierName}");
-            Response.Headers.Append("Content-Encoding", "windows-1251");
 
-            return PhysicalFile(fileName, "text/xml");
+            return PhysicalFile(fileName, "text/xml; charset=windows-1251");
         }
 
         private async Task SetErrorStatusAsync(UploadInfo uploadFile, string message)

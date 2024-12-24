@@ -1,0 +1,281 @@
+﻿@page "/dictionaries/v021"
+@attribute [StreamRendering]
+@attribute [Authorize]
+@inject HttpClient _httpClient
+@inject AuthenticationStateProvider _authStateProvider
+@inject IJSRuntime JS
+
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using NSIDictionaryService.Share.DTOs
+@using NSIDictionaryService.Share.DTOs.V021DTOs
+@using NSIDictionaryService.UI.Pages.Popups
+
+<PageTitle>Справочник V021</PageTitle>
+
+<h1>Классификатор медицинских специальностей</h1>
+
+@if (version is null)
+{
+    <p><em>Загрузка версии...</em></p>
+}
+else
+{
+    <h2>Текущая версия:</h2>
+    <p>Версия @version.VersionCode от @version.PublicationDate</p>
+}
+
+@if (!entries.Any())
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Код записи</th>
+                <th>Название</th>
+                <th>Код должности</th>
+                <th>Название должности</th>
+                <th>Дата начала действия</th>
+                <th>Дата окончания действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in entries)
+            {
+                <tr>
+                    <td>@entry.Code</td>
+                    <td>@entry.Name</td>
+                    <td>@entry.PostId</td>
+                    <td>@entry.PostName</td>
+                    <td>@(entry.BeginDate is null ? "-" : entry.BeginDate.GetValueOrDefault().ToShortDateString())</td>
+                    <td>@(entry.EndDate is null ? "-" : entry.EndDate.GetValueOrDefault().ToShortDateString())</td>
+                    <AuthorizeView Roles="Admin">
+                        <td class="narrow">
+                            <button class="btn btn-primary" @onclick="() => Edit(entry)">Изменить</button>
+                        </td>
+                        <td class="narrow">
+                            <button class="btn btn-danger" @onclick="() => Delete(entry.Id)">Удалить</button>
+                        </td>
+                    </AuthorizeView>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<div class="p-lg-1">
+    <button class="btn btn-info" @onclick="GetData">Обновить</button>
+    <button class="btn btn-secondary" @onclick="GetXml">
+        @if (xmlDownloading)
+        {
+            <span class="spinner-border spinner-border-sm mr-1"></span>
+        }
+        else
+        {
+            <text>Выгрузить данные</text>
+        }
+    </button>
+    <AuthorizeView Roles="Admin">
+        <Authorized>
+            <button class="btn btn-success" @onclick="Add">Добавить новую запись</button>
+        </Authorized>
+    </AuthorizeView>
+</div>
+
+
+<div class="container mt-4 border align-items-start">
+    <div class="p-md-1 text-start mb-3">
+        <div class="d-flex flex-column align-items-start p-1">
+            <strong>Добавить новую версию</strong>
+
+            <div class="d-flex justify-content-center mb-2">
+                <button type="button"
+                        class="btn @(method ? "btn-secondary" : "btn-outline-secondary") me-2"
+                        @onclick="() => SelectOption(true)">
+                    API
+                </button>
+                <button type="button"
+                        class="btn @(!method ? "btn-secondary" : "btn-outline-secondary") me-2"
+                        @onclick="() => SelectOption(false)">
+                    XML
+                </button>
+            </div>
+
+            @if (method)
+            {
+                <div class="w-100">
+                    <button class="btn btn-success mb-2" @onclick="AddFromApi">
+                        @if (apiLoading)
+                        {
+                            <span class="spinner-border spinner-border-sm mr-1"></span>
+                        }
+                        else
+                        {
+                            <text>Добавить новую версию с API</text>
+                        }
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div class="w-100">
+                    <InputFile OnChange="UpdatePath" class="mb-2" />
+                </div>
+                <div class="w-100">
+                    <button class="btn btn-warning" @onclick="UploadFile">
+                        @if (xmlLoading)
+                        {
+                            <span class="spinner-border spinner-border-sm mr-1"></span>
+                        }
+                        else
+                        {
+                            <text>Добавить из XML</text>
+                        }
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="alert @(isError ? "alert-danger" : "alert-success") @(HideError ? "d-none" : "d-block")" role="alert">
+        @ErrorText
+    </div>
+</div>
+
+<V021Popup @ref="popup"></V021Popup>
+
+<script src="/download.js"></script>
+
+@code {
+    DictVersionResponseDTO version = null!;
+    List<V021ResponseDTO> entries = [];
+
+    private bool apiLoading = false;
+    private bool xmlLoading = false;
+    private bool xmlDownloading = false;
+    private bool method = true;
+
+    private string ErrorText = "";
+    private bool HideError = true;
+    private bool isError = false;
+
+    private IBrowserFile? file;
+
+    private V021Popup popup;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+    }
+
+    async Task GetData()
+    {
+        version = await _httpClient.GetFromJsonAsync<DictVersionResponseDTO>
+        ("https://localhost:7175/api/v1/DictVersion/getCurrentVersion/V021") ?? version;
+
+        entries = await _httpClient.GetFromJsonAsync<List<V021ResponseDTO>>
+        ("https://localhost:7175/api/v1/V021/getAllEntries") ?? entries;
+    }
+
+    async Task AddFromApi()
+    {
+        apiLoading = true;
+        var result = await _httpClient.PostAsync("https://localhost:7175/api/v1/V021/AddFromApi", null);
+        apiLoading = false;
+        if (!result.IsSuccessStatusCode)
+        {
+            ErrorText = await result.Content.ReadAsStringAsync();
+            HideError = false;
+            isError = true;
+            return;
+        }
+        HideError = false;
+        isError = false;
+        ErrorText = "Успешно добавлено";
+        GetData();
+    }
+
+    private void UpdatePath(InputFileChangeEventArgs e)
+    {
+        file = e.File;
+    }
+
+    async Task UploadFile()
+    {
+        if (file is not null)
+        {
+            xmlLoading = true;
+            var content = new MultipartFormDataContent();
+            var fileContent = new StreamContent(file.OpenReadStream());
+            content.Add(fileContent, "formFile", file.Name);
+            var result = await _httpClient.PostAsync("https://localhost:7175/api/v1/V021/AddFromXML", content);
+
+            xmlLoading = false;
+            file = null;
+            if (!result.IsSuccessStatusCode)
+            {
+                ErrorText = await result.Content.ReadAsStringAsync();
+                HideError = false;
+                isError = true;
+                return;
+            }
+            HideError = false;
+            isError = false;
+            ErrorText = "Успешно добавлено";
+            await GetData();
+        }
+    }
+
+    async Task GetXml()
+    {
+        xmlDownloading = true;
+        var response = await _httpClient.GetAsync("https://localhost:7175/api/v1/V021/downloadXML");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsByteArrayAsync();
+            var fileName = "V021.xml";
+
+            await Task.Delay(500);
+            await JS.InvokeVoidAsync("downloadFile", content, fileName);
+        }
+        else
+        {
+            Console.WriteLine("Error fetching file.");
+        }
+        xmlDownloading = false;
+    }
+
+    private void Edit(V021ResponseDTO dict)
+    {
+        popup.Show(
+            header: "Изменить",
+            versionId: dict.DictVersionId,
+            code: dict.Code,
+            name: dict.Name,
+            comments: dict.Comments,
+            beginDate: dict.BeginDate.GetValueOrDefault(),
+            endDate: dict.EndDate,
+            id: dict.Id,
+            postId: dict.PostId,
+            postName: dict.PostName);
+    }
+
+    private void Add()
+    {
+        popup.Show("Добавить", version.Id);
+    }
+
+    private async Task Delete(int id)
+    {
+        await _httpClient.DeleteAsync($"https://localhost:7175/api/v1/V021/deleteEntry/{id}");
+        await GetData();
+    }
+
+    private void SelectOption(bool val)
+    {
+        method = val;
+    }
+}

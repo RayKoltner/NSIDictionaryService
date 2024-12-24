@@ -1,0 +1,140 @@
+﻿@inject HttpClient _httpClient
+@using NSIDictionaryService.Share.DTOs
+
+@{
+    var showClass = IsVisible ? "d-block" : "d-none";
+}
+
+<div class="position-fixed top-50 start-50 translate-middle toast-container bg-white @showClass" data-bs-autohide="true" data-bs-delay="5000">
+    <div class="toast show p-3" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">@HeaderText</strong>
+            <button type="button" class="btn-close" aria-label="Close" @onclick="Close"></button>
+        </div>
+       
+        <div class="toast-body p-3">
+            <div class="alert @(isError ? "alert-danger" : "alert-success") @(HideError ? "d-none" : "d-show") mb-3">
+                @ErrorText
+            </div>
+
+            <div class="mb-3">
+                <label for="referenceCode" class="form-label">
+                    @(Post ? "Код справочника" : "Код")
+                </label>
+                <input type="text" id="referenceCode" class="form-control" @bind-value="Id" />
+            </div>
+
+            <div class="mb-3">
+                <label for="recordCode" class="form-label">Код версии</label>
+                <input type="text" id="recordCode" class="form-control" @bind-value="Code" />
+            </div>
+
+            <div class="mb-3">
+                <label for="entryDate" class="form-label">Дата</label>
+                <input type="date" id="entryDate" class="form-control" @bind-value="temp" />
+            </div>
+
+            <button class="btn btn-primary" @onclick="Send">
+                @if (loading)
+                {
+                    <span class="spinner-border spinner-border-sm me-1"></span>
+                }
+                @HeaderText
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsVisibleChanged { get; set; }
+
+    [Parameter]
+    public string? HeaderText { get; set; }
+
+    int Id = 0;
+    decimal Code = 0;
+    DateTime temp = DateTime.Now;
+
+    bool Post = true;
+    private bool HideError = true;
+    private string ErrorText = "";
+    bool isError = true;
+    bool loading = false;
+
+    public void Show(string headerText)
+    {
+        Post = true;
+        HeaderText = headerText;
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    public void Show(string header, decimal code, DateTime date, int id = 0)
+    {
+        Id = id;
+        Code = code;
+        temp = date;
+        ErrorText = "";
+        HideError = true;
+        HeaderText = header;
+        Post = false;
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+
+    private void Close()
+    {
+        HeaderText = string.Empty;
+        Id = 0;
+        Code = 0;
+        HideError = true;
+        ErrorText = "";
+        temp = DateTime.Now;
+        IsVisible = false;
+        StateHasChanged();
+    }
+
+    private async Task Send()
+    {
+        loading = true;
+        HttpResponseMessage result;
+        if (Post)
+        {
+            DictVersionDTO dto = new DictVersionDTO()
+                {
+                    DictionaryCodeId = Id,
+                    VersionCode = Code,
+                    PublicationDate = temp.ToShortDateString()
+                };
+            result = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/v1/DictVersion/addVersion", dto);
+        }
+        else
+        {
+            DictVersionPutDTO dto = new DictVersionPutDTO()
+                {
+                    Id = Id,
+                    VersionCode = Code,
+                    PublicationDate = temp.ToShortDateString()
+                };
+            result = await _httpClient.PutAsJsonAsync("https://localhost:7175/api/v1/DictVersion/changeVersion", dto);
+        }
+        HideError = false;
+        loading = false;
+        if (!result.IsSuccessStatusCode)
+        {
+            isError = true;
+            ErrorText = await result.Content.ReadAsStringAsync();
+            return;
+        }
+        isError = false;
+        ErrorText = "Успешно! Обновите данные";
+        StateHasChanged();
+        await Task.Delay(2000);
+        Close();
+    }
+}

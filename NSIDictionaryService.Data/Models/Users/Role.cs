@@ -1,10 +1,9 @@
-﻿namespace NSIDictionaryService.Data.Models
-{
-    public class Role: BaseEntity
-    {
-        //Роли пользователей
-        public string RoleName { get; set; } = string.Empty;
+﻿using Microsoft.AspNetCore.Identity;
 
-        public string Privileges { get; set; } = string.Empty;
+namespace NSIDictionaryService.Data.Models.Users
+{
+    public class Role: IdentityRole<int>
+    {
+        public Role(string role): base(role) { }
     }
 }

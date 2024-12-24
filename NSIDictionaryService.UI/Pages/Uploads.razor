@@ -1,0 +1,68 @@
+﻿@page "/uploads"
+@attribute [StreamRendering]
+@attribute [Authorize(Roles = "Admin")]
+@inject HttpClient _httpClient
+@inject AuthenticationStateProvider _authStateProvider
+
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using NSIDictionaryService.Share.DTOs
+
+<PageTitle>Загрузки</PageTitle>
+
+<h1>Загрузки</h1>
+
+@if (!uploads.Any())
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ID пользователя</th>
+                <th>Дата загрузки</th>
+                <th>Словарь/файл</th>
+                <th>Id версии</th>
+                <th>Метод загрузки</th>
+                <th>Код результата</th>
+                <th>Описание ошибки</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var upload in uploads)
+            {
+                <tr>
+                    <td>@upload.Id</td>
+                    <td>@upload.UploadingUserId</td>
+                    <td>@upload.UploadDate</td>
+                    <td class ="text-wrap text-break">@upload.DictCode</td>
+                    <td>@upload.DictVersionId</td>
+                    <td>@upload.UploadMethodId</td>
+                    <td>@upload.UploadResultId</td>
+                    <td>@upload.ErrorDescription</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<button class="btn btn-info" @onclick="GetData">Обновить</button>
+
+
+@code {
+    List<UploadInfoResponseDTO> uploads = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+    }
+
+    public async Task GetData()
+    {
+        uploads = await _httpClient.GetFromJsonAsync<List<UploadInfoResponseDTO>>
+        ("https://localhost:7175/api/v1/UploadInfo/getAllUploads") ?? uploads;
+    }
+}

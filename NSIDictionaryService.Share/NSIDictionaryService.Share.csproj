@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\NSIDictionaryService.Data\NSIDictionaryService.Data.csproj" />
-  </ItemGroup>
-
 </Project>

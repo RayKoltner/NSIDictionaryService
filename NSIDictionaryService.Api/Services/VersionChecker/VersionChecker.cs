@@ -22,17 +22,17 @@ namespace NSIDictionaryService.Api.Services.VersionChecker
             _codeRepository = codeRepository;
         }
 
-        public void Check(List<DictDependancy> dependancies)
+        public void Check(List<DictDependency> dependancies)
         {
             List<string> errors = new List<string>();
-            foreach (DictDependancy dependency in dependancies)
+            foreach (DictDependency dependency in dependancies)
             {
-                var dict = _codeRepository.GetByKey(dependency.DependancyId);
+                var dict = _codeRepository.GetByKey(dependency.DependencyId);
 
                 if (dict is null) throw new Exception("Такого словаря нет в базе");
                 string dictName = dict.Name;
 
-                var storedVersion = _versionRepository.First(x => x.DictCodeId == dependency.DependancyId && !x.IsDeleted);
+                var storedVersion = _versionRepository.First(x => x.DictCodeId == dependency.DependencyId && !x.IsDeleted);
 
                 if (storedVersion is null)
                 {
@@ -50,7 +50,7 @@ namespace NSIDictionaryService.Api.Services.VersionChecker
             if (errors.Count > 0)
             {
                 string errorString = string.Join(", ", errors); 
-                throw new OutdatedDependancyException($"Сначала обновите следующие словари: {errorString}");
+                throw new OutdatedDependencyException($"Сначала обновите следующие словари: {errorString}");
             }
         }
     }

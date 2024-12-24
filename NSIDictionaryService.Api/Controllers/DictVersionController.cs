@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NSIDictionaryService.Api.Repositories;
 using NSIDictionaryService.Api.Repositories.Upload;
 using NSIDictionaryService.Api.Services.Mappers;
@@ -9,6 +10,7 @@ namespace NSIDictionaryService.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class DictVersionController : Controller
     {
         private readonly IDictVersionRepository _repository;
@@ -22,10 +24,17 @@ namespace NSIDictionaryService.Api.Controllers
         }
 
         [HttpGet("getAllVersions")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var result = _repository.GetAll();
-            return Ok(result);
+            var codes = _codeRepository.GetAll().ToList();
+            List<DictVersionResponseDTO> response = new List<DictVersionResponseDTO>();
+            foreach (var item in result)
+            {
+                var code = codes.FirstOrDefault(x => x.Id == item.DictCodeId);
+                response.Add(UniversalResponseMapper.ConvertToResponse(item, code));
+            }
+            return Ok(response);
         }
 
         [HttpGet("getVersion")]
@@ -36,7 +45,19 @@ namespace NSIDictionaryService.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("getCurrentVersion/{name}")]
+        public async Task<IActionResult> GetByName(string name)
+        {
+            name = name.ToUpper();
+            var code = _codeRepository.First(x => x.Name == name);
+            if (code == null) return NotFound("Нет справочника с таким названием");
+            var version = _repository.First(x => x.DictCodeId == code.Id && !x.IsDeleted);
+            if (version == null) return NotFound("Нет версий этого справочника");
+            return Ok(UniversalResponseMapper.ConvertToResponse(version, code));
+        }
+
         [HttpPost("addVersion")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PostAsync([FromBody] DictVersionDTO value)
         {
             try
@@ -64,6 +85,7 @@ namespace NSIDictionaryService.Api.Controllers
         }
 
         [HttpPut("changeVersion")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put([FromBody] DictVersionPutDTO value)
         {
             try
@@ -86,7 +108,8 @@ namespace NSIDictionaryService.Api.Controllers
             }
         }
 
-        [HttpDelete("deleteVersion")]
+        [HttpDelete("deleteVersion/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var existing = await _repository.GetByKeyAsync(id);

@@ -1,14 +1,11 @@
-﻿namespace NSIDictionaryService.Data.Models
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+
+namespace NSIDictionaryService.Data.Models.Users;
+
+public class User: IdentityUser<int>
 {
-    public class User: BaseEntity
-    {
-        //Пользователи
-        public string UserName { get; set; } = string.Empty;
-
-        public string Password { get; set; } = string.Empty;
-
-        public int RoleId { get; set; }
-
-        public virtual Role? Role { get; private set; }
-    }
+    //Пользователи
+    [MaxLength(50)]
+    public string Name { get; set; } = string.Empty;
 }
