@@ -244,7 +244,7 @@ namespace NSIDictionaryService.Api.Controllers
                 UploadingUserId = userId,
                 UploadDate = DateTime.Now,
                 DictCode = _dictionaryIdentifierName,
-                UploadMethodId = 2, // TODO : Change this when you'll add proper codes
+                UploadMethodId = 3, // TODO : Change this when you'll add proper codes
                 UploadResultId = 1
             };
 
